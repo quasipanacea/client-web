@@ -3,10 +3,10 @@
 		<RouterView />
 	</div>
 	<nav class="root-nav">
-		<a @click="showSettings = true">
+		<a :class="{ hide: doHide }" @click="showSettings = true">
 			<FeatherSettings />
 		</a>
-		<a @click="showHelp = true"><FeatherHelp /></a>
+		<a :class="{ hide: doHide }" @click="showHelp = true"><FeatherHelp /></a>
 	</nav>
 	<dialog :open="showSettings" class="root-settings">
 		<h1>Settings</h1>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onDeactivated, onMounted, ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 
 import { usePluginsStore } from './stores/plugins'
@@ -38,8 +38,27 @@ import FeatherSettings from './components/icons/IconFeatherSettings.vue'
 const router = useRouter()
 const pluginsStore = usePluginsStore()
 
+const doHide = ref(false)
 const showSettings = ref(false)
 const showHelp = ref(false)
+
+function onSemiColon(ev: KeyboardEvent) {
+	ev.preventDefault()
+	if (
+		((ev.ctrlKey && ev.shiftKey) ||
+			(ev.ctrlKey && ev.altKey) ||
+			(ev.shiftKey && ev.altKey)) &&
+		(ev.key === ';' || ev.key === ':')
+	) {
+		doHide.value = !doHide.value
+	}
+}
+onMounted(() => {
+	document.addEventListener('keypress', onSemiColon)
+})
+onDeactivated(() => {
+	document.removeEventListener('keypress', onSemiColon)
+})
 </script>
 
 <style lang="postcss">
@@ -85,6 +104,11 @@ body {
 		background-color: var(--oc-gray-9);
 		color: var(--oc-gray-1);
 		padding: 3px;
+		transition: 100ms ease-in-out transform;
+	}
+
+	& > a.hide {
+		transform: translateY(-30px);
 	}
 
 	& > a > svg {
