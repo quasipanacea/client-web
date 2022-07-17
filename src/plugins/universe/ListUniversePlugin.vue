@@ -17,7 +17,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Documents</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Filepath</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +37,8 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
+import * as schema from '../../schema'
+import * as util from '../../util/util'
 
 const el = ref()
 
@@ -44,8 +48,6 @@ let documentsTitle = ref({})
 let documents = ref({})
 
 let globals = reactive({ documentsDir: '' })
-
-function fetchw() {}
 
 onMounted(async () => {
 	const appData = await (
@@ -69,24 +71,10 @@ async function refetchDocuments() {
 }
 
 async function createNewDocument(documentId: string) {
-	const data = await fetch('/api/document/create', {
-		method: 'POST',
-		body: JSON.stringify(
-			{
-				documentId,
-			},
-			null,
-			'\t',
-		),
-	})
-	if (!data.ok) {
-		try {
-			const jsonData = await data.json()
-			console.log(jsonData)
-		} catch (err: unknown) {
-			console.log(err)
-		}
-	}
+	const [success, data] = await util.extractResponse<
+		schema.documentCreateResType,
+		schema.documentCreateReqType
+	>('/api/document/create', { name: 'thing' })
 
 	await refetchDocuments()
 }

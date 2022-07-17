@@ -3,10 +3,12 @@
 		<RouterView />
 	</div>
 	<nav class="root-nav">
-		<a :class="{ hide: doHide }" @click="showSettings = true">
+		<a :class="{ 'hide-navbar': !showNavbar }" @click="showSettings = true">
 			<FeatherSettings />
 		</a>
-		<a :class="{ hide: doHide }" @click="showHelp = true"><FeatherHelp /></a>
+		<a :class="{ 'hide-navbar': !showNavbar }" @click="showHelp = true"
+			><FeatherHelp
+		/></a>
 	</nav>
 	<dialog :open="showSettings" class="root-settings">
 		<h1>Settings</h1>
@@ -29,7 +31,7 @@
 
 <script setup lang="ts">
 import { onDeactivated, onMounted, ref } from 'vue'
-import { RouterView, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { usePluginsStore } from './stores/plugins'
 import FeatherHelp from './components/icons/IconFeatherHelp.vue'
@@ -38,19 +40,18 @@ import FeatherSettings from './components/icons/IconFeatherSettings.vue'
 const router = useRouter()
 const pluginsStore = usePluginsStore()
 
-const doHide = ref(false)
+const showNavbar = ref(false)
 const showSettings = ref(false)
 const showHelp = ref(false)
 
 function onSemiColon(ev: KeyboardEvent) {
-	ev.preventDefault()
 	if (
 		((ev.ctrlKey && ev.shiftKey) ||
 			(ev.ctrlKey && ev.altKey) ||
 			(ev.shiftKey && ev.altKey)) &&
 		(ev.key === ';' || ev.key === ':')
 	) {
-		doHide.value = !doHide.value
+		showNavbar.value = !showNavbar.value
 	}
 }
 onMounted(() => {
@@ -107,7 +108,7 @@ body {
 		transition: 100ms ease-in-out transform;
 	}
 
-	& > a.hide {
+	& > a.hide-navbar {
 		transform: translateY(-30px);
 	}
 
