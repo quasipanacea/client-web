@@ -40,31 +40,40 @@ import FeatherSettings from './components/icons/IconFeatherSettings.vue'
 const router = useRouter()
 const pluginsStore = usePluginsStore()
 
-const showNavbar = ref(false)
+const showNavbar = ref(true)
 const showSettings = ref(false)
 const showHelp = ref(false)
 
-function onSemiColon(ev: KeyboardEvent) {
-	if (
-		((ev.ctrlKey && ev.shiftKey) ||
-			(ev.ctrlKey && ev.altKey) ||
-			(ev.shiftKey && ev.altKey)) &&
-		(ev.key === ';' || ev.key === ':')
-	) {
-		showNavbar.value = !showNavbar.value
-	}
-}
-onMounted(() => {
-	document.addEventListener('keypress', onSemiColon)
-})
-onDeactivated(() => {
-	document.removeEventListener('keypress', onSemiColon)
-})
+// function onSemiColon(ev: KeyboardEvent) {
+// 	if (
+// 		((ev.ctrlKey && ev.shiftKey) ||
+// 			(ev.ctrlKey && ev.altKey) ||
+// 			(ev.shiftKey && ev.altKey)) &&
+// 		(ev.key === ';' || ev.key === ':')
+// 	) {
+// 		showNavbar.value = !showNavbar.value
+// 	}
+// }
+// onMounted(() => {
+// 	document.addEventListener('keypress', onSemiColon)
+// })
+// onDeactivated(() => {
+// 	document.removeEventListener('keypress', onSemiColon)
+// })
 </script>
+
+<style>
+[data-lava] {
+	border: 1px solid white;
+}
+[data-lava][data-lava-active] {
+	border: 1px solid black;
+}
+</style>
 
 <style lang="postcss">
 @import './assets/base.css';
-@import 'bulma/css/bulma.css';
+/* @import 'bulma/css/bulma.css'; */
 
 :root {
 	--oc-white: #ffffff;

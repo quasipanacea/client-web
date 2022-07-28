@@ -1,6 +1,6 @@
 <template>
 	<div class="plugin-root">
-		<FormKit
+		<!-- <FormKit
 			type="text"
 			label="Document Name"
 			value="original"
@@ -13,8 +13,25 @@
 			label="New Document"
 			@click="createNewDocument(userDocumentName)"
 		>
-		</FormKit>
-		<table class="table">
+		</FormKit> -->
+		<span>position: </span>
+		<span id="lavaPosition">navigation</span>
+		<h2>List</h2>
+		<NavigatableList />
+		<h2>Choice</h2>
+		<NavigatableChoice />
+		<h2>Table</h2>
+		<NavigatableTable />
+		<h2>Lava Composable</h2>
+
+		<LavaVerticalList parent="ul" child="li">
+			<ul>
+				<li>a</li>
+				<li>b</li>
+				<li>c</li>
+			</ul>
+		</LavaVerticalList>
+		<!-- <table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -31,7 +48,7 @@
 					</th>
 				</tr>
 			</tbody>
-		</table>
+		</table> -->
 	</div>
 </template>
 
@@ -39,6 +56,10 @@
 import { ref, reactive, onMounted } from 'vue'
 import * as schema from '../../schema'
 import * as util from '../../util/util'
+import NavigatableList from '../../components/NavigatableList.vue'
+import NavigatableTable from '../../components/NavigatableTable.vue'
+import NavigatableChoice from '../../components/NavigatableChoice.vue'
+import LavaVerticalList from '../../components/lava/LavaVerticalList.vue'
 
 const el = ref()
 
