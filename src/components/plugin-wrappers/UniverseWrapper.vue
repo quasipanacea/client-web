@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import DragAndDropUniversePlugin from '@/plugins/universe/DragAndDropUniversePlugin.vue'
-import ExampleUniversePlugin from '@/plugins/universe/ExampleUniversePlugin.vue'
-import ListUniversePlugin from '@/plugins/universe/ListUniversePlugin.vue'
-import NullUniversePlugin from '@/plugins/universe/NullUniversePlugin.vue'
-import TreeUniversePlugin from '@/plugins/universe/TreeUniversePlugin.vue'
+import DragAndDropUniversePlugin from '@/components/plugins/universe/DragAndDropPlugin.vue'
+import ExampleUniversePlugin from '@/components/plugins/universe/ExamplePlugin.vue'
+import ListUniversePlugin from '@/components/plugins/universe/ListPlugin.vue'
+import NullUniversePlugin from '@/components/plugins/universe/NullPlugin.vue'
+import TreeUniversePlugin from '@/components/plugins/universe/TreePlugin.vue'
 
 const props = defineProps<{
 	pluginName?: string

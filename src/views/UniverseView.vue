@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { usePluginsStore } from '../stores/plugins'
-import UniversePluginWrapper from '../components/PluginWrapperUniverse.vue'
+import UniversePluginWrapper from '../components/plugin-wrappers/UniverseWrapper.vue'
 
 const router = useRouter()
 

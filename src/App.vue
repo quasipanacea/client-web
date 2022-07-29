@@ -36,7 +36,7 @@ import { defineComponent, ref } from 'vue'
 import { usePluginsStore } from './stores/plugins'
 import FeatherHelp from './components/icons/IconFeatherHelp.vue'
 import FeatherSettings from './components/icons/IconFeatherSettings.vue'
-import ActionPopup from './actionpopup/ActionPopup.vue'
+import ActionPopup from './subprojects/actionpopup/ActionPopup.vue'
 
 export default defineComponent({
 	setup() {
@@ -62,7 +62,7 @@ export default defineComponent({
 </script>
 
 <style>
-@import './lavakey/style.css';
+@import './subprojects/lavakey/style.css';
 </style>
 
 <style lang="postcss">

@@ -186,3 +186,4 @@ export class LavakeyManager {
 		return (ev: KeyboardEvent) => {}
 	}
 }
+export const lavaKey = new LavakeyManager()

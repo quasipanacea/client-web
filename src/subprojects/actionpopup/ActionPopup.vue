@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { lavaKey } from '../singletons'
+import { lavaKey } from '../../subprojects/lavakey/LavakeyManager'
 import { defineComponent, onMounted, ref } from 'vue'
 import { popupPrompt } from './popupPrompt'
 

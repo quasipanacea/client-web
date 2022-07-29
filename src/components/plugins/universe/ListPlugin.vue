@@ -46,16 +46,15 @@
 </template>
 
 <script setup lang="ts">
-import { bus } from '../../bus'
 import { ref, reactive, onMounted, defineEmits } from 'vue'
-import * as schema from '../../schema'
-import * as util from '../../util/util'
-import NavigatableList from '../../components/NavigatableList.vue'
-import NavigatableTable from '../../components/NavigatableTable.vue'
-import NavigatableChoice from '../../components/NavigatableChoice.vue'
-import LavaVerticalList from '../../lavakey/LavaVerticalList.vue'
-import { popupPrompt } from '../../actionpopup/popupPrompt'
-import { lavaKey } from '../../singletons'
+import * as schema from '../../../schema'
+import * as util from '../../../util/util'
+import NavigatableList from '../../../components/NavigatableList.vue'
+import NavigatableTable from '../../../components/NavigatableTable.vue'
+import NavigatableChoice from '../../../components/NavigatableChoice.vue'
+import LavaVerticalList from '../../../subprojects/lavakey/LavaVerticalList.vue'
+import { popupPrompt } from '../../../subprojects/actionpopup/popupPrompt'
+import { lavaKey } from '../../../subprojects/lavakey/LavakeyManager'
 
 const el = ref()
 
