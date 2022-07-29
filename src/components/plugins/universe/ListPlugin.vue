@@ -59,7 +59,7 @@ import NavigatableTable from '../../../components/NavigatableTable.vue'
 import NavigatableChoice from '../../../components/NavigatableChoice.vue'
 import LavaVerticalList from '../../../subprojects/lavakey/LavaVerticalList.vue'
 import { popupPrompt } from '../../../subprojects/actionpopup/popupPrompt'
-import { lavaKey } from '../../../subprojects/lavakey/LavakeyManager'
+import { lavaKey } from '../../../subprojects/lavakey/lavakeyManager'
 import DisplayVerticalList from '../../DisplayVerticalList.vue'
 import DisplayHorizontalList from '../../DisplayHorizontalList.vue'
 

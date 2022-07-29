@@ -1,4 +1,4 @@
-import { lavaKey } from '../../subprojects/lavakey/LavakeyManager'
+import { lavaKey } from '../../subprojects/lavakey/lavakeyManager'
 import mitt from 'mitt'
 
 export const popupPrompt = (() => {

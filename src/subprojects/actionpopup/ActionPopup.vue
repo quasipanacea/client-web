@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { lavaKey } from '../../subprojects/lavakey/LavakeyManager'
+import { lavaKey } from '../../subprojects/lavakey/lavakeyManager'
 import { defineComponent, onMounted, ref } from 'vue'
 import { popupPrompt } from './popupPrompt'
 

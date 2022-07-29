@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { plugin as formkitPlugin, defaultConfig } from '@formkit/vue'
-import { lavaKey } from './subprojects/lavakey/LavakeyManager'
+import { lavaKey } from './subprojects/lavakey/lavakeyManager'
 
 import App from './App.vue'
 import router from './router'

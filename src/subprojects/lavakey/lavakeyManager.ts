@@ -3,12 +3,13 @@ import {
 	findParentNode,
 	findSiblingLeftNode,
 	findSiblingRightNode,
-	type NodeResult,
 } from './nodeFinder'
+
+type Orientation = 'vertical' | 'horizontal'
 
 export class LavakeyManager {
 	currentMode: 'navigation' | 'insert' = 'navigation'
-	currentOrientation: 'vertical' | 'horizontal'
+	currentOrientation: Orientation
 	currentPosition: Element
 	historyStack: Element[] = []
 
@@ -20,7 +21,7 @@ export class LavakeyManager {
 		this.currentPosition = app
 	}
 
-	dealWithModeSwitching(ev: KeyboardEvent) {
+	private maybeSwitchMode(ev: KeyboardEvent) {
 		if (ev.code == 'Escape') {
 			if (this.currentMode === 'navigation') {
 				this.currentMode = 'insert'
@@ -35,40 +36,44 @@ export class LavakeyManager {
 		}
 	}
 
-	changeHighlight(newNode: NodeResult) {
-		if (!newNode.node) return
+	private changeHighlight(node: Element | null) {
+		if (!node) return
 
 		// Remove highlight of old node
 		if (this.currentPosition) {
 			this.currentPosition.removeAttribute('data-lava-active')
-			this.currentPosition.classList.remove('lava-active')
 		}
 
 		// Add highlight of new node
-		newNode.node.setAttribute('data-lava-active', '')
-		newNode.node.classList.add('lava-active')
-		this.currentPosition = newNode.node
+		node.setAttribute('data-lava-active', '')
+		this.currentPosition = node
 	}
 
-	changeOrientation(newNode: NodeResult) {
-		if (!newNode.node) return
+	private changeOrientation(node: Element) {
+		if (!node) return
 
-		const attr = newNode.node.getAttribute('data-lava-orientation')
-		if (attr) {
-			if (attr !== 'vertical' && attr !== 'horizontal') {
-				throw new Error('invalid value of orientation')
-			}
-			this.currentOrientation = attr
+		const orientationRaw = node.getAttribute('data-lava-orientation')
+		let orientation: Orientation
+		switch (orientationRaw) {
+			case 'vertical':
+			case 'horizontal':
+				orientation = orientationRaw
+				break
+			default:
+				orientation = 'vertical'
+				break
 		}
+
+		this.currentOrientation = orientation
 	}
 
 	// 0
-	historyPush(node: Element): void {
+	private historyPush(node: Element): void {
 		this.historyStack.push(this.currentPosition)
 		this.historyStack.push(node)
 	}
 
-	historyPop(): void {
+	private historyPop(): void {
 		this.changeHighlight({
 			node: this.historyStack.at(-1),
 			orientation: 'vertical', // TODO: remove object interface thing to changeHighlight
@@ -76,8 +81,9 @@ export class LavakeyManager {
 		this.historyPop()
 	}
 
-	// 1
-	navigateAbove(): void {
+	// Above, Below
+	private navigateAbove(): void {
+		// TODO cleanup
 		const f = (currentNode: Element): Element | null => {
 			if (currentNode.hasAttribute('data-lava-orientation')) {
 				return currentNode
@@ -101,10 +107,7 @@ export class LavakeyManager {
 			throw new Error('invalid value of orientation')
 		}
 		if (node) {
-			this.changeOrientation({
-				node,
-				orientation: x,
-			})
+			this.changeOrientation(node)
 		} else {
 			this.currentOrientation = x
 		}
@@ -112,50 +115,45 @@ export class LavakeyManager {
 		this.changeHighlight(n)
 	}
 
-	navigateBelow(): void {
+	private navigateBelow(): void {
 		const node = findChildNode(this.currentPosition)
-		this.changeOrientation({
-			node: this.currentPosition,
-			orientation: this.currentOrientation,
-		})
+		this.changeOrientation(this.currentPosition)
 		this.changeHighlight(node)
 	}
 
-	// 2
-	navigateLeft(): void {
+	// Left, Down, Up, Right
+	private navigateLeft(): void {
 		const node = findSiblingLeftNode(this.currentPosition)
 		this.changeHighlight(node)
 	}
 
-	navigateDown() {
+	private navigateDown() {
 		this.navigateBelow()
 	}
 
-	navigateUp(): void {
+	private navigateUp(): void {
 		const node = findSiblingLeftNode(this.currentPosition)
 		this.changeHighlight(node)
 	}
 
-	navigateRight(): void {
+	private navigateRight(): void {
 		const node = findSiblingRightNode(this.currentPosition)
 		this.changeHighlight(node)
 	}
 
-	getHandlerKeyDown() {
+	public getHandlerKeyDown() {
 		return (ev: KeyboardEvent): void => {
-			this.dealWithModeSwitching(ev)
+			this.maybeSwitchMode(ev)
 
 			if (this.currentMode === 'navigation') {
 				ev.preventDefault()
 
-				// 1
 				if (ev.code === 'KeyU') {
 					this.navigateAbove()
 				} else if (ev.code === 'KeyM') {
 					this.navigateBelow()
 				}
 
-				// 2
 				if (this.currentOrientation === 'vertical') {
 					if (ev.code === 'KeyJ') {
 						this.navigateRight()
@@ -173,11 +171,13 @@ export class LavakeyManager {
 		}
 	}
 
-	getHandlerKeypress() {
+	public getHandlerKeypress() {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
 		return (ev: KeyboardEvent) => {}
 	}
 
-	getHandlerKeyup() {
+	public getHandlerKeyup() {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
 		return (ev: KeyboardEvent) => {}
 	}
 }

@@ -1,32 +1,4 @@
-export type NodeResult =
-	| {
-			node: null
-	  }
-	| {
-			node: Element
-			orientation: 'vertical' | 'horizontal'
-	  }
-
-function wrapNodeResult(node: Element | null): NodeResult {
-	if (node) {
-		// vertical is default
-		const orientation = node.getAttribute('data-lava-orientation') || 'vertical'
-		if (orientation !== 'vertical' && orientation !== 'horizontal') {
-			throw new Error('invalid value of orientation')
-		}
-
-		return {
-			node,
-			orientation,
-		}
-	} else {
-		return {
-			node: null,
-		}
-	}
-}
-
-export function findParentNode(node: Element): NodeResult {
+export function findParentNode(node: Element): Element | null {
 	const findNode = (currentNode: Element): Element | null => {
 		if (currentNode.hasAttribute('data-lava')) {
 			return currentNode
@@ -45,10 +17,10 @@ export function findParentNode(node: Element): NodeResult {
 	const startNode = node.parentElement
 	if (!startNode) throw new Error('not start')
 
-	return wrapNodeResult(findNode(startNode))
+	return findNode(startNode)
 }
 
-export function findChildNode(node: Element): NodeResult {
+export function findChildNode(node: Element): Element | null {
 	const findNode = (startNode: Element): Element | null => {
 		for (let i = 0; i < startNode.children.length; ++i) {
 			const childNode = startNode.children[i]
@@ -69,10 +41,10 @@ export function findChildNode(node: Element): NodeResult {
 	}
 
 	const startNode = node
-	return wrapNodeResult(findNode(startNode))
+	return findNode(startNode)
 }
 
-export function findSiblingLeftNode(node: Element): NodeResult {
+export function findSiblingLeftNode(node: Element): Element | null {
 	const findNode = (startNode: Element): Element | null => {
 		if (startNode.hasAttribute('data-lava')) {
 			return startNode
@@ -89,12 +61,12 @@ export function findSiblingLeftNode(node: Element): NodeResult {
 	}
 
 	const startNode = node.previousElementSibling
-	if (!startNode) return { node: null }
+	if (!startNode) return null
 
-	return wrapNodeResult(findNode(startNode))
+	return findNode(startNode)
 }
 
-export function findSiblingRightNode(node: Element): NodeResult {
+export function findSiblingRightNode(node: Element): Element | null {
 	const findNode = (startNode: Element): Element | null => {
 		if (startNode.hasAttribute('data-lava')) {
 			return startNode
@@ -111,7 +83,7 @@ export function findSiblingRightNode(node: Element): NodeResult {
 	}
 
 	const startNode = node.nextElementSibling
-	if (!startNode) return { node: null }
+	if (!startNode) return null
 
-	return wrapNodeResult(findNode(startNode))
+	return findNode(startNode)
 }
