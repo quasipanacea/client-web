@@ -24,8 +24,8 @@
 		<DisplayHorizontalList :items="dataHorizontalList" />
 
 		<h2>Popup Thing</h2>
-		<div style="margin: 5px" data-lava data-lava-type="group">
-			<button @click="showActionPopup" data-lava data-lava-type="item">
+		<div style="margin: 5px" data-lava="group">
+			<button @click="showActionPopup" data-lava="item">
 				Show Action Popup
 			</button>
 		</div>

@@ -1,8 +1,8 @@
 <template>
-	<div data-lava data-lava-type="group" data-lava-orientation="horizontal">
-		<span data-lava data-lava-type="item">Alfa</span>
-		<span data-lava data-lava-type="item">Bravo</span>
-		<span data-lava data-lava-type="item">Charlie</span>
+	<div data-lava="group" data-lava-orientation="horizontal">
+		<span data-lava="item">Alfa</span>
+		<span data-lava="item">Bravo</span>
+		<span data-lava="item">Charlie</span>
 	</div>
 </template>
 

@@ -8,11 +8,10 @@
 			ref="choiceGroup"
 			v-for="choice in choices"
 			:key="choice.id"
-			data-lava
-			data-lava-type="group"
-			data-lava-orientation="column"
+			data-lava="group"
+			data-lava-orientation="vertical"
 		>
-			<div class="choice" @click="closePopup(choice.id)" data-lava-type="item">
+			<div class="choice" @click="closePopup(choice.id)" data-lava="item">
 				{{ choice.name }}
 			</div>
 		</div>

@@ -1,12 +1,6 @@
 <template>
-	<ul data-lava data-lava-type="group" data-lava-orientation="horizontal">
-		<li
-			class="item"
-			v-for="item in items"
-			:key="item.value"
-			data-lava
-			data-lava-type="item"
-		>
+	<ul data-lava="group" data-lava-orientation="horizontal">
+		<li class="item" v-for="item in items" :key="item.value" data-lava="item">
 			{{ item.value }}
 		</li>
 	</ul>

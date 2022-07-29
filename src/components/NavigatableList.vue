@@ -1,8 +1,8 @@
 <template>
-	<ul data-lava data-lava-type="group" data-lava-orientation="vertical">
-		<li data-lava data-lava-type="item">One</li>
-		<li data-lava data-lava-type="item">Two</li>
-		<li data-lava data-lava-type="item">Three</li>
+	<ul data-lava="group" data-lava-orientation="vertical">
+		<li data-lava="item">One</li>
+		<li data-lava="item">Two</li>
+		<li data-lava="item">Three</li>
 	</ul>
 </template>
 
