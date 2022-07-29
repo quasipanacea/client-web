@@ -37,7 +37,6 @@ export class LavakeyManager {
 
 	changeHighlight(newNode: NodeResult) {
 		if (!newNode.node) return
-		console.log(newNode)
 
 		// Remove highlight of old node
 		if (this.currentPosition) {
@@ -57,7 +56,6 @@ export class LavakeyManager {
 		const attr = newNode.node.getAttribute('data-lava-orientation')
 		if (attr) {
 			if (attr !== 'vertical' && attr !== 'horizontal') {
-				console.log('av', attr)
 				throw new Error('invalid value of orientation')
 			}
 			this.currentOrientation = attr
@@ -95,13 +93,11 @@ export class LavakeyManager {
 			return null
 		}
 		const a = this.currentPosition.parentElement?.parentElement
-		console.log(a)
 		if (!a) throw new Error('four')
 		const node = f(a)
 		let x = node?.getAttribute('data-lava-orientation')
 		if (!x) x = 'vertical'
 		if (x !== 'vertical' && x !== 'horizontal') {
-			console.log('v', node)
 			throw new Error('invalid value of orientation')
 		}
 		if (node) {
@@ -128,7 +124,6 @@ export class LavakeyManager {
 	// 2
 	navigateLeft(): void {
 		const node = findSiblingLeftNode(this.currentPosition)
-		console.log(node)
 		this.changeHighlight(node)
 	}
 

@@ -16,14 +16,19 @@
 		</FormKit> -->
 		<span>position: </span>
 		<span id="lavaPosition">navigation</span>
-		<h2>List</h2>
-		<NavigatableList />
-		<h2>Choice</h2>
-		<NavigatableChoice />
-		<h2>Table</h2>
-		<NavigatableTable />
-		<h2>Lava Composable</h2>
-		<button @click="showActionPopup">Show Action Popup</button>
+		<br /><br />
+
+		<h2>Vertical List</h2>
+		<DisplayVerticalList :items="dataVerticalList" />
+		<h2>HorizontalList</h2>
+		<DisplayHorizontalList :items="dataHorizontalList" />
+
+		<h2>Popup Thing</h2>
+		<div style="margin: 5px" data-lava data-lava-type="group">
+			<button @click="showActionPopup" data-lava data-lava-type="item">
+				Show Action Popup
+			</button>
+		</div>
 		<!-- <table class="table">
 			<thead>
 				<tr>
@@ -46,8 +51,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, defineEmits } from 'vue'
-import * as schema from '../../../schema'
+import { ref, reactive, onMounted } from 'vue'
+import type * as schema from '../../../schema'
 import * as util from '../../../util/util'
 import NavigatableList from '../../../components/NavigatableList.vue'
 import NavigatableTable from '../../../components/NavigatableTable.vue'
@@ -55,6 +60,8 @@ import NavigatableChoice from '../../../components/NavigatableChoice.vue'
 import LavaVerticalList from '../../../subprojects/lavakey/LavaVerticalList.vue'
 import { popupPrompt } from '../../../subprojects/actionpopup/popupPrompt'
 import { lavaKey } from '../../../subprojects/lavakey/LavakeyManager'
+import DisplayVerticalList from '../../DisplayVerticalList.vue'
+import DisplayHorizontalList from '../../DisplayHorizontalList.vue'
 
 const el = ref()
 
@@ -64,6 +71,39 @@ let documentsTitle = ref({})
 let documents = ref({})
 
 let globals = reactive({ documentsDir: '' })
+
+const dataVerticalList = [
+	{
+		value: 'Alpha',
+	},
+	{
+		value: 'Bravo',
+	},
+	{
+		value: 'Charlie',
+	},
+	{
+		value: 'Delta',
+	},
+	{
+		value: 'Echo',
+	},
+]
+
+const dataHorizontalList = [
+	{
+		value: 'Three',
+	},
+	{
+		value: 'Four',
+	},
+	{
+		value: 'Five',
+	},
+	{
+		value: 'Six',
+	},
+]
 
 onMounted(async () => {
 	const appData = await (

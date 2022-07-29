@@ -12,7 +12,6 @@ function wrapNodeResult(node: Element | null): NodeResult {
 		// vertical is default
 		const orientation = node.getAttribute('data-lava-orientation') || 'vertical'
 		if (orientation !== 'vertical' && orientation !== 'horizontal') {
-			console.log('v', node)
 			throw new Error('invalid value of orientation')
 		}
 
