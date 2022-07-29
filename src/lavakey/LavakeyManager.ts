@@ -10,6 +10,7 @@ export class LavakeyManager {
 	currentMode: 'navigation' | 'insert' = 'navigation'
 	currentOrientation: 'vertical' | 'horizontal'
 	currentPosition: Element
+	historyStack: Element[] = []
 
 	constructor() {
 		const app = document.querySelector('#app')
@@ -61,6 +62,20 @@ export class LavakeyManager {
 			}
 			this.currentOrientation = attr
 		}
+	}
+
+	// 0
+	historyPush(node: Element): void {
+		this.historyStack.push(this.currentPosition)
+		this.historyStack.push(node)
+	}
+
+	historyPop(): void {
+		this.changeHighlight({
+			node: this.historyStack.at(-1),
+			orientation: 'vertical', // TODO: remove object interface thing to changeHighlight
+		})
+		this.historyPop()
 	}
 
 	// 1

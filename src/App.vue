@@ -27,48 +27,42 @@
 		<button @click="showHelp = false">Close</button>
 		<h1>Help</h1>
 	</dialog>
+	<ActionPopup />
 </template>
 
-<script setup lang="ts">
-import { onDeactivated, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
 import { usePluginsStore } from './stores/plugins'
 import FeatherHelp from './components/icons/IconFeatherHelp.vue'
 import FeatherSettings from './components/icons/IconFeatherSettings.vue'
+import ActionPopup from './actionpopup/ActionPopup.vue'
 
-const router = useRouter()
-const pluginsStore = usePluginsStore()
+export default defineComponent({
+	setup() {
+		const pluginsStore = usePluginsStore()
 
-const showNavbar = ref(true)
-const showSettings = ref(false)
-const showHelp = ref(false)
+		const showNavbar = ref(true)
+		const showSettings = ref(false)
+		const showHelp = ref(false)
 
-// function onSemiColon(ev: KeyboardEvent) {
-// 	if (
-// 		((ev.ctrlKey && ev.shiftKey) ||
-// 			(ev.ctrlKey && ev.altKey) ||
-// 			(ev.shiftKey && ev.altKey)) &&
-// 		(ev.key === ';' || ev.key === ':')
-// 	) {
-// 		showNavbar.value = !showNavbar.value
-// 	}
-// }
-// onMounted(() => {
-// 	document.addEventListener('keypress', onSemiColon)
-// })
-// onDeactivated(() => {
-// 	document.removeEventListener('keypress', onSemiColon)
-// })
+		return {
+			showNavbar,
+			showSettings,
+			showHelp,
+			pluginsStore,
+		}
+	},
+	components: {
+		FeatherHelp,
+		FeatherSettings,
+		ActionPopup,
+	},
+})
 </script>
 
 <style>
-[data-lava] {
-	border: 1px solid white;
-}
-[data-lava][data-lava-active] {
-	border: 1px solid black;
-}
+@import './lavakey/style.css';
 </style>
 
 <style lang="postcss">
@@ -91,18 +85,18 @@ const showHelp = ref(false)
 html,
 body {
 	height: 100%;
+	overflow: hidden;
 }
 
 #app {
-	position: relative;
 	height: 100%;
 }
 
 .root-view {
 	position: absolute;
-	top: 0;
 	width: 100%;
 	height: 100%;
+	overflow: auto;
 }
 
 /* It would be a lot cleaner to use Flexbox and 'justify-content: space-between',

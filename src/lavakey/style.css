@@ -1,0 +1,6 @@
+[data-lava] {
+	border: 1px solid white;
+}
+[data-lava][data-lava-active] {
+	border: 1px solid black;
+}
