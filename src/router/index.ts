@@ -16,13 +16,13 @@ const router = createRouter({
 		{
 			name: 'universe',
 			path: '/universe/:pluginName',
-			component: () => import('../views/UniverseView.vue'),
+			component: () => import('@/views/UniverseView.vue'),
 			props: true,
 		},
 		{
 			name: 'document',
 			path: '/document/:document',
-			component: () => import('../views/Document.vue'),
+			component: () => import('@/views/DocumentView.vue'),
 		},
 	],
 })

@@ -1,7 +1,6 @@
-
 [project]
 ecosystem = 'nodejs'
-form = 'unknown'
+form = 'app'
 for = 'me'
 status = 'experimental'
 
