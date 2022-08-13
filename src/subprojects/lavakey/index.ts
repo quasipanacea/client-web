@@ -3,11 +3,12 @@ import {
 	findParentNode,
 	findSiblingLeftNode,
 	findSiblingRightNode,
+	findFirstEnterableNode,
 } from './nodeFinder'
 
 type Orientation = 'vertical' | 'horizontal'
 
-export class LavakeyManager {
+export class Lavakey {
 	currentMode: 'navigation' | 'insert' = 'navigation'
 	currentOrientation: Orientation
 	currentPosition: Element
@@ -29,7 +30,7 @@ export class LavakeyManager {
 				this.currentMode = 'navigation'
 			}
 
-			const bar = document.getElementById('lavaPosition')
+			const bar = document.getElementById('lava-position')
 			if (bar) {
 				bar.innerText = this.currentMode
 			}
@@ -141,31 +142,44 @@ export class LavakeyManager {
 		this.changeHighlight(node)
 	}
 
+	private actionEnter(): void {
+		const node = findFirstEnterableNode(this.currentPosition)
+		// if (node) node.
+	}
+
 	public getHandlerKeyDown() {
 		return (ev: KeyboardEvent): void => {
 			this.maybeSwitchMode(ev)
 
 			if (this.currentMode === 'navigation') {
+				if (ev.code === 'KeyR' && ev.ctrlKey) return // TODO: remove
+
 				ev.preventDefault()
 
 				if (ev.code === 'KeyU') {
 					this.navigateAbove()
 				} else if (ev.code === 'KeyM') {
 					this.navigateBelow()
-				}
-
-				if (this.currentOrientation === 'vertical') {
-					if (ev.code === 'KeyJ') {
-						this.navigateRight()
-					} else if (ev.code === 'KeyK') {
-						this.navigateLeft()
-					}
-				} else if (this.currentOrientation === 'horizontal') {
-					if (ev.code === 'KeyH') {
-						this.navigateLeft()
-					} else if (ev.code === 'KeyL') {
+				} else if (ev.code === 'KeyJ') {
+					if (this.currentOrientation === 'vertical') {
 						this.navigateRight()
 					}
+				} else if (ev.code === 'KeyK') {
+					if (this.currentOrientation === 'vertical') {
+						this.navigateLeft()
+					}
+				} else if (ev.code === 'KeyH') {
+					if (this.currentOrientation === 'horizontal') {
+						this.navigateLeft()
+					}
+				} else if (ev.code === 'KeyL') {
+					if (this.currentOrientation === 'horizontal') {
+						this.navigateRight()
+					}
+				} else if (ev.code === 'Enter') {
+					this.actionEnter()
+				} else {
+					console.info(ev.code)
 				}
 			}
 		}
@@ -181,4 +195,4 @@ export class LavakeyManager {
 		return (ev: KeyboardEvent) => {}
 	}
 }
-export const lavaKey = new LavakeyManager()
+export const lavaKey = new Lavakey()

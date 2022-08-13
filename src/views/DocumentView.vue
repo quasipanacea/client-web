@@ -1,12 +1,12 @@
 <template>
-	<h1>Document</h1>
-	<router-link to="/universe">Back</router-link>
-	<br />
-	<textarea
-		v-model="documentText"
-		@keypress="saveDocument()"
-		rows="60"
-	></textarea>
+	<div class="container">
+		<header class="header">
+			<h1 class="title">Document</h1>
+			<router-link to="/universe">Back</router-link>
+		</header>
+
+		<textarea v-model="documentText" @keypress="saveDocument()"></textarea>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +16,7 @@ import { debounce } from 'lodash'
 
 const route = useRoute()
 
-let documentText = ref('fff')
+let documentText = ref('')
 
 const saveDocument = debounce(async () => {
 	const res = await fetch('/api/document/write', {
@@ -56,7 +56,21 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.container {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	height: 100%;
+}
+
+.header {
+}
+
+.title {
+	display: inline;
+}
+
 textarea {
-	width: 800px;
+	width: 100%;
+	height: 100%;
 }
 </style>

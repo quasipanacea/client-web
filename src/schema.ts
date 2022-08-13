@@ -31,7 +31,13 @@ export type documentWriteResType = z.infer<typeof documentWriteRes>
 
 // documentList
 export const documentListReq = z.object({})
-export const documentListRes = z.object({})
+export const documentListRes = z.object({
+	documents: z.array(
+		z.object({
+			name: z.string().min(1),
+		}),
+	),
+})
 export type documentListReqType = z.infer<typeof documentListReq>
 export type documentListResType = z.infer<typeof documentListRes>
 

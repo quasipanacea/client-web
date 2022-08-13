@@ -1,9 +1,21 @@
 <template>
-	<DragAndDropUniversePlugin v-if="$props.pluginName === 'DragAndDropPlugin'" />
-	<ExampleUniversePlugin v-else-if="$props.pluginName === 'ExamplePlugin'" />
-	<ListUniversePlugin v-else-if="$props.pluginName === 'ListPlugin'" />
-	<TreeUniversePlugin v-else-if="$props.pluginName === 'TreePlugin'" />
-	<NullUniversePlugin v-else />
+	<DragAndDropUniversePlugin
+		class="plugin-root"
+		v-if="$props.pluginName === 'DragAndDropPlugin'"
+	/>
+	<ExampleUniversePlugin
+		class="plugin-root"
+		v-else-if="$props.pluginName === 'ExamplePlugin'"
+	/>
+	<ListUniversePlugin
+		class="plugin-root"
+		v-else-if="$props.pluginName === 'ListPlugin'"
+	/>
+	<TreeUniversePlugin
+		class="plugin-root"
+		v-else-if="$props.pluginName === 'TreePlugin'"
+	/>
+	<NullUniversePlugin class="plugin-root" v-else />
 </template>
 
 <script lang="ts">
@@ -27,3 +39,9 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style scoped>
+.plugin-root {
+	padding: 30px;
+}
+</style>

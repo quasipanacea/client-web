@@ -28,15 +28,17 @@
 		<h1>Help</h1>
 	</dialog>
 	<ActionPopup />
+	<LavakeyIndicator />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { usePluginsStore } from './stores/plugins'
-import FeatherHelp from './components/icons/IconFeatherHelp.vue'
-import FeatherSettings from './components/icons/IconFeatherSettings.vue'
-import ActionPopup from './subprojects/actionpopup/ActionPopup.vue'
+import { usePluginsStore } from '@/stores/plugins'
+import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
+import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
+import ActionPopup from '@/subprojects/actionpopup/ActionPopup.vue'
+import LavakeyIndicator from '@/subprojects/lavakey/LavakeyIndicator.vue'
 
 export default defineComponent({
 	setup() {
@@ -57,6 +59,7 @@ export default defineComponent({
 		FeatherHelp,
 		FeatherSettings,
 		ActionPopup,
+		LavakeyIndicator,
 	},
 })
 </script>

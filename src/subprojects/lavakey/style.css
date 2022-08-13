@@ -1,6 +1,16 @@
 [data-lava] {
-	border: 1px solid white;
+	border: 2px solid cyan;
 }
+
+[data-lava='group'] {
+	border: 2px solid green;
+}
+
+[data-lava='item'] {
+	border: 2px solid indigo;
+}
+
 [data-lava][data-lava-active] {
-	border: 1px solid black;
+	border: 2px solid black;
+	background-color: antiquewhite;
 }

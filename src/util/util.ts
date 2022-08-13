@@ -18,9 +18,27 @@ export async function extractResponse<T, U = Record<string, unknown>>(
 	}
 
 	if (res.ok) {
-		const data: T = res.json()
+		try {
+			const data: T = await res.json()
 
-		return [true, data]
+			return [true, data]
+		} catch (err: unknown) {
+			if (!(err instanceof Error)) {
+				return [
+					false,
+					{
+						error: `Generic failure to decode json of resource: ${uri}`,
+					},
+				]
+			} else {
+				return [
+					false,
+					{
+						error: err.message,
+					},
+				]
+			}
+		}
 	} else {
 		try {
 			const data = await res.json()

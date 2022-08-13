@@ -87,3 +87,7 @@ export function findSiblingRightNode(node: Element): Element | null {
 
 	return findNode(startNode)
 }
+
+export function findFirstEnterableNode(node: Element): Element | null {
+	
+}
