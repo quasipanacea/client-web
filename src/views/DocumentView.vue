@@ -22,6 +22,7 @@ const saveDocument = debounce(async () => {
 	const res = await fetch('/api/document/write', {
 		method: 'POST',
 		body: JSON.stringify({
+			type: 'type-regular',
 			name: route.fullPath.split('/').at(-1),
 			content: documentText.value,
 		}),
@@ -38,6 +39,7 @@ onMounted(async () => {
 		method: 'POST',
 		body: JSON.stringify(
 			{
+				type: 'type-regular',
 				name: route.fullPath.split('/').at(-1),
 			},
 			null,
