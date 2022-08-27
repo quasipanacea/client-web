@@ -5,54 +5,32 @@
 			<router-link to="/universe">Back</router-link>
 		</header>
 
-		<textarea v-model="documentText" @keypress="saveDocument()"></textarea>
+		<textarea v-model="documentText" @keypress="saveDocument()"> </textarea>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { onDeactivated, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
+import * as documentUtils from '@/util/documentUtils'
 
 const route = useRoute()
 
-let documentText = ref('')
+const documentText = ref('')
 
 const saveDocument = debounce(async () => {
-	const res = await fetch('/api/document/write', {
-		method: 'POST',
-		body: JSON.stringify({
-			type: 'type-regular',
-			name: route.fullPath.split('/').at(-1),
-			content: documentText.value,
-		}),
-	})
+	const documentId = route.fullPath.split('/').at(-1)
+	if (!documentId) throw new Error('documentId is undefined')
 
-	if (!res.ok) {
-		console.log(await res.json())
-		return
-	}
+	await documentUtils.writeDocument(documentId, documentText.value)
 }, 300)
 
 onMounted(async () => {
-	const res = await fetch('/api/document/read', {
-		method: 'POST',
-		body: JSON.stringify(
-			{
-				type: 'type-regular',
-				name: route.fullPath.split('/').at(-1),
-			},
-			null,
-			'\t',
-		),
-	})
-	if (!res.ok) {
-		const err = await res.json()
-		console.log('error', err)
-		return
-	}
+	const documentId = route.fullPath.split('/').at(-1)
+	if (!documentId) throw new Error('documentId is undefined')
 
-	const json = await res.json()
+	const json = await documentUtils.readDocument(documentId)
 	documentText.value = json.content
 })
 </script>
