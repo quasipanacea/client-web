@@ -8,7 +8,7 @@ export async function extractResponse<T, U = Record<string, unknown>>(
 	try {
 		res = await fetch(uri, {
 			method: 'POST',
-			body: JSON.stringify(bodyContent || '{}', null, '\t'),
+			body: JSON.stringify(bodyContent || {}, null, '\t'),
 		})
 	} catch (err: unknown) {
 		if (!(err instanceof Error))
@@ -45,7 +45,14 @@ export async function extractResponse<T, U = Record<string, unknown>>(
 			if (data?.error) {
 				return [false, { error: data.error }]
 			} else {
-				return [false, { error: `Generic failure from remote: ${uri}` }]
+				return [
+					false,
+					{
+						error: `Generic failure from remote: ${uri} ${JSON.stringify(
+							data,
+						)}`,
+					},
+				]
 			}
 		} catch (err: unknown) {
 			if (!(err instanceof Error)) {

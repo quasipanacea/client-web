@@ -13,7 +13,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
-import * as documentUtils from '@/util/documentUtils'
+import * as api from '@/util/clientApi'
 
 const route = useRoute()
 
@@ -23,14 +23,14 @@ const saveDocument = debounce(async () => {
 	const documentId = route.fullPath.split('/').at(-1)
 	if (!documentId) throw new Error('documentId is undefined')
 
-	await documentUtils.writeDocument(documentId, documentText.value)
+	await api.writeDocument(documentId, documentText.value)
 }, 300)
 
 onMounted(async () => {
 	const documentId = route.fullPath.split('/').at(-1)
 	if (!documentId) throw new Error('documentId is undefined')
 
-	const json = await documentUtils.readDocument(documentId)
+	const json = await api.readDocument(documentId)
 	documentText.value = json.content
 })
 </script>
