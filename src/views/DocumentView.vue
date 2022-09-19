@@ -23,14 +23,14 @@ const saveDocument = debounce(async () => {
 	const documentId = route.fullPath.split('/').at(-1)
 	if (!documentId) throw new Error('documentId is undefined')
 
-	await api.writeDocument(documentId, documentText.value)
+	await api.writeDocumentSingle(documentId, documentText.value)
 }, 300)
 
 onMounted(async () => {
 	const documentId = route.fullPath.split('/').at(-1)
 	if (!documentId) throw new Error('documentId is undefined')
 
-	const json = await api.readDocument(documentId)
+	const json = await api.readDocumentSingle(documentId)
 	documentText.value = json.content
 })
 </script>
