@@ -4,34 +4,56 @@
 			<h1 class="title">Document</h1>
 			<router-link to="/universe">Back</router-link>
 		</header>
-
-		<textarea v-model="documentText" @keypress="saveDocument()"> </textarea>
+		<codemirror
+			v-model="documentText"
+			:extensions="mirrorExtensions"
+			@ready="mirrorReady"
+			@keypress="saveDocument()"
+		/>
 	</div>
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
+<script lang="ts">
+import { onMounted, defineComponent, ref, shallowRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
 import * as api from '@/util/clientApi'
+import { EditorState } from '@codemirror/state'
+import { markdown as mirrorMarkdown } from '@codemirror/lang-markdown'
+import { Codemirror } from 'vue-codemirror'
 
-const route = useRoute()
+export default defineComponent({
+	setup() {
+		const route = useRoute()
 
-const documentText = ref('')
+		const documentText = ref('')
 
-const saveDocument = debounce(async () => {
-	const documentId = route.fullPath.split('/').at(-1)
-	if (!documentId) throw new Error('documentId is undefined')
+		const saveDocument = debounce(async () => {
+			const documentId = route.fullPath.split('/').at(-1)
+			if (!documentId) throw new Error('documentId is undefined')
 
-	await api.writeDocumentSingle(documentId, documentText.value)
-}, 300)
+			await api.writeDocumentSingle(documentId, documentText.value)
+		}, 300)
 
-onMounted(async () => {
-	const documentId = route.fullPath.split('/').at(-1)
-	if (!documentId) throw new Error('documentId is undefined')
+		onMounted(async () => {
+			const documentId = route.fullPath.split('/').at(-1)
+			if (!documentId) throw new Error('documentId is undefined')
 
-	const json = await api.readDocumentSingle(documentId)
-	documentText.value = json.content
+			const json = await api.readDocumentSingle(documentId)
+			documentText.value = json.content
+		})
+
+		// CodeMirror
+		const mirrorExtensions = [mirrorMarkdown()]
+		const view = shallowRef()
+		const mirrorReady = (payload) => {
+			view.value = payload.view
+		}
+		return { documentText, saveDocument, mirrorExtensions, mirrorReady }
+	},
+	components: {
+		Codemirror,
+	},
 })
 </script>
 
