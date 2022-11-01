@@ -15,7 +15,6 @@ task.build () {
 task.release-nightly() {
 	task.build
 
-	# Build
 	mkdir -p './output'
 	tar czf './output/build.tar.gz' './dist'
 

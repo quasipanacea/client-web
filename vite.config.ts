@@ -16,15 +16,15 @@ export default defineConfig({
 		},
 	],
 	server: {
-		port: 8080,
+		port: 15_801,
 		proxy: {
 			'/api': {
-				target: 'http://localhost:3000',
+				target: 'http://localhost:15800',
 				secure: false,
 				changeOrigin: true,
 			},
 			'/public': {
-				target: 'http://localhost:3000',
+				target: 'http://localhost:15800',
 				secure: false,
 				changeOrigin: true,
 			},
