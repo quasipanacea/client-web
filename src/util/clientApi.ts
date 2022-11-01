@@ -1,6 +1,66 @@
 import * as schema from '../../common/schema'
 import * as util from '@/util/util'
 
+// GROUP
+export async function groupList() {
+	const [success, data] = await util.extractResponse<
+		schema.groupListResponseType,
+		schema.groupListRequestType
+	>('/api/group/list', {})
+	if (!success) {
+		console.error(data)
+		throw new Error('Request failed')
+	}
+
+	return data
+}
+
+export async function groupCreate(name: string) {
+	const [success, data] = await util.extractResponse<
+		schema.groupCreateResponseType,
+		schema.groupCreateRequestType
+	>('/api/group/create', {
+		name,
+	})
+	if (!success) {
+		console.error(data)
+		throw new Error('Request failed')
+	}
+
+	return data
+}
+
+export async function groupDelete(name: string) {
+	const [success, data] = await util.extractResponse<
+		schema.groupDeleteResponseType,
+		schema.groupDeleteRequestType
+	>('/api/group/delete', {
+		name,
+	})
+	if (!success) {
+		console.error(data)
+		throw new Error('Request failed')
+	}
+
+	return data
+}
+
+export async function groupRename(oldName: string, newName: string) {
+	const [success, data] = await util.extractResponse<
+		schema.groupRenameResponseType,
+		schema.groupRenameRequestType
+	>('/api/group/rename', {
+		oldName,
+		newName,
+	})
+	if (!success) {
+		console.error(data)
+		throw new Error('Request failed')
+	}
+
+	return data
+}
+
 /* ---------------------- document ---------------------- */
 
 // create single
