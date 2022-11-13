@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import * as schema from '@/../common/schema'
-import * as api from '@/util/clientApi'
+import * as api from '@/util/clientApiV1'
 
 export default defineComponent({
 	props: {

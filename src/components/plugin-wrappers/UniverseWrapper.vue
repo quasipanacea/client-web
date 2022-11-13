@@ -3,9 +3,9 @@
 		class="plugin-root"
 		v-if="$props.pluginName === 'DragAndDropPlugin'"
 	/>
-	<ExampleUniversePlugin
+	<PaneUniversePlugin
 		class="plugin-root"
-		v-else-if="$props.pluginName === 'ExamplePlugin'"
+		v-else-if="$props.pluginName === 'PanePlugin'"
 	/>
 	<ListUniversePlugin
 		class="plugin-root"
@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import DragAndDropUniversePlugin from '@/components/plugins/universe/DragAndDropPlugin.vue'
-import ExampleUniversePlugin from '@/components/plugins/universe/ExamplePlugin.vue'
+import PaneUniversePlugin from '@/components/plugins/universe/PanePlugin.vue'
 import ListUniversePlugin from '@/components/plugins/universe/ListPlugin.vue'
 import NullUniversePlugin from '@/components/plugins/universe/NullPlugin.vue'
 import TreeUniversePlugin from '@/components/plugins/universe/TreePlugin.vue'
@@ -32,7 +32,7 @@ export default defineComponent({
 	},
 	components: {
 		DragAndDropUniversePlugin,
-		ExampleUniversePlugin,
+		PaneUniversePlugin,
 		ListUniversePlugin,
 		NullUniversePlugin,
 		TreeUniversePlugin,

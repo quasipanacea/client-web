@@ -6,7 +6,7 @@ export const usePluginsStore = defineStore('plugins', {
 	state: () => {
 		const plugins = [
 			'DragAndDropPlugin',
-			'ExamplePlugin',
+			'PanePlugin',
 			'ListPlugin',
 			'TreePlugin',
 		]

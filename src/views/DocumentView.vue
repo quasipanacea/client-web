@@ -17,7 +17,7 @@
 import { onMounted, defineComponent, ref, shallowRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
-import * as api from '@/util/clientApi'
+import * as api from '@/util/clientApiV1'
 import { EditorState } from '@codemirror/state'
 import { markdown as mirrorMarkdown } from '@codemirror/lang-markdown'
 import { Codemirror } from 'vue-codemirror'

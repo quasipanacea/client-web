@@ -15,7 +15,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 import { FormKit } from '@formkit/vue'
 import GroupList from '@/components/GroupList.vue'
 import * as schema from '@/../common/schema'
-import * as api from '@/util/clientApi'
+import * as api from '@/util/clientApiV1'
 
 export default defineComponent({
 	components: {
