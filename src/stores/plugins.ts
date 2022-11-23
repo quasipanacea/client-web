@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const currentPluginDefault = 'ListPlugin'
+export const currentPluginDefault = 'PanePlugin'
 
 export const usePluginsStore = defineStore('plugins', {
 	state: () => {
