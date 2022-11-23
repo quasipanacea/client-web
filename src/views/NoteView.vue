@@ -1,5 +1,4 @@
 <template>
-	<h1>Note</h1>
 	<div class="container">
 		<header class="header">
 			<h1 class="title">Document</h1>
@@ -9,13 +8,13 @@
 			v-model="documentText"
 			:extensions="mirrorExtensions"
 			@ready="mirrorReady"
-			@keypress="saveDocument()"
+			@keydown="saveDocument()"
 		/>
 	</div>
 </template>
 
 <script lang="ts">
-import { onMounted, defineComponent, ref, shallowRef } from 'vue'
+import { onMounted, defineComponent, ref, shallowRef, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
 import * as api from '@/util/clientApiV2'
@@ -46,7 +45,15 @@ export default defineComponent({
 			}
 		}, 300)
 
+		async function ss(ev: KeyboardEvent) {
+			if (ev.ctrlKey && ev.code == 'KeyS') {
+				ev.preventDefault()
+				await saveDocument()
+			}
+		}
 		onMounted(async () => {
+			document.addEventListener('keydown', ss)
+
 			const documentId = route.fullPath.split('/').at(-1)
 			if (!documentId) throw new Error('documentId is undefined')
 
@@ -63,6 +70,9 @@ export default defineComponent({
 			if (!json) return
 
 			documentText.value = json.content
+		})
+		onUnmounted(() => {
+			document.removeEventListener('keydown', ss)
 		})
 
 		// CodeMirror
