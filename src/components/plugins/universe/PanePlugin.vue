@@ -1,15 +1,16 @@
 <template>
-	<h1>ExampleUniversePlugin</h1>
+	<div>
+		<DocumentPane />
+	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import DocumentPane from '@/components/DocumentPane.vue'
 
 export default defineComponent({
-	setup() {
-		function getAreas() {
-
-		}
+	components: {
+		DocumentPane,
 	},
 })
 </script>

@@ -6,7 +6,7 @@ export async function groupList() {
 	const [success, data] = await util.extractResponse<
 		schema.groupListResponseType,
 		schema.groupListRequestType
-	>('/api/group/list', {})
+	>('/api/v1/group/list', {})
 	if (!success) {
 		console.error(data)
 		throw new Error('Request failed')
@@ -19,7 +19,7 @@ export async function groupCreate(name: string) {
 	const [success, data] = await util.extractResponse<
 		schema.groupCreateResponseType,
 		schema.groupCreateRequestType
-	>('/api/group/create', {
+	>('/api/v1/group/create', {
 		name,
 	})
 	if (!success) {
@@ -34,7 +34,7 @@ export async function groupDelete(name: string) {
 	const [success, data] = await util.extractResponse<
 		schema.groupDeleteResponseType,
 		schema.groupDeleteRequestType
-	>('/api/group/delete', {
+	>('/api/v1/group/delete', {
 		name,
 	})
 	if (!success) {
@@ -49,7 +49,7 @@ export async function groupRename(oldName: string, newName: string) {
 	const [success, data] = await util.extractResponse<
 		schema.groupRenameResponseType,
 		schema.groupRenameRequestType
-	>('/api/group/rename', {
+	>('/api/v1/group/rename', {
 		oldName,
 		newName,
 	})
@@ -68,7 +68,7 @@ export async function documentCreateSingle(name: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentCreateSingleResponseType,
 		schema.documentCreateSingleRequestType
-	>('/api/document/create?kind=KindSingle', {
+	>('/api/v1/document/create?kind=KindSingle', {
 		name,
 	})
 	if (!success) {
@@ -84,7 +84,7 @@ export async function documentCreateCouple(channel: string, id: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentCreateCoupledResponseType,
 		schema.documentCreateCoupledRequestType
-	>('/api/document/create?kind=KindCoupled', {
+	>('/api/v1/document/create?kind=KindCoupled', {
 		channel,
 		id,
 	})
@@ -101,7 +101,7 @@ export async function readDocumentSingle(name: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentReadSingleResponseType,
 		schema.documentReadSingleRequestType
-	>('/api/document/read?kind=KindSingle', {
+	>('/api/v1/document/read?kind=KindSingle', {
 		name,
 	})
 	if (!success) {
@@ -117,7 +117,7 @@ export async function readDocumentCouple(channel: string, id: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentReadCoupleResponseType,
 		schema.documentReadCoupleRequestType
-	>('/api/document/read?kind=KindCoupled', {
+	>('/api/v1/document/read?kind=KindCoupled', {
 		channel,
 		id,
 	})
@@ -134,7 +134,7 @@ export async function writeDocumentSingle(name: string, content: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentWriteSingleResponseType,
 		schema.documentWriteSingleRequestType
-	>('/api/document/write?kind=KindSingle', {
+	>('/api/v1/document/write?kind=KindSingle', {
 		name,
 		content,
 	})
@@ -155,7 +155,7 @@ export async function writeDocumentCouple(
 	const [success, data] = await util.extractResponse<
 		schema.documentWriteCoupleResponseType,
 		schema.documentWriteCoupleRequestType
-	>('/api/document/write?kind=KindCoupled', {
+	>('/api/v1/document/write?kind=KindCoupled', {
 		channel,
 		id,
 		content,
@@ -173,7 +173,7 @@ export async function deleteDocumentSingle(name: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentDeleteSingleResponseType,
 		schema.documentDeleteSingleRequestType
-	>('/api/document/delete?kind=KindSingle', {
+	>('/api/v1/document/delete?kind=KindSingle', {
 		name,
 	})
 	if (!success) {
@@ -189,7 +189,7 @@ export async function deleteDocumentCouple(channel: string, id: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentDeleteCoupleResponseType,
 		schema.documentDeleteCoupleRequestType
-	>('/api/document/delete?kind=KindCoupled', {
+	>('/api/v1/document/delete?kind=KindCoupled', {
 		channel,
 		id,
 	})
@@ -206,7 +206,7 @@ export async function documentListSingle() {
 	const [success, data] = await util.extractResponse<
 		schema.documentListSingleResponseType,
 		schema.documentListSingleRequestType
-	>('/api/document/list?kind=KindSingle')
+	>('/api/v1/document/list?kind=KindSingle')
 	if (!success) {
 		throw new Error(`Request failed: ${JSON.stringify(data)}`)
 	}
@@ -219,7 +219,7 @@ export async function documentListCouple(channel: string) {
 	const [success, data] = await util.extractResponse<
 		schema.documentListCoupleResponseType,
 		schema.documentListCoupleRequestType
-	>('/api/document/list?kind=KindCoupled', {
+	>('/api/v1/document/list?kind=KindCoupled', {
 		channel,
 	})
 	if (!success) {
