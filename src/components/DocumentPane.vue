@@ -3,9 +3,14 @@
 		<h1>Areas</h1>
 		<FormKit type="button" @click="loadAreas">Refresh</FormKit>
 	</div>
-	<ul v-for="area in areas" :key="area">
+	<ul v-for="area in areaList" :key="area">
 		<div
-			style="display: flex; justify-content: space-between; max-width: 150px"
+			style="
+				display: flex;
+				justify-content: space-between;
+				max-width: 300px;
+				border-block-end: 1px solid gray;
+			"
 		>
 			<li @click="areaClick(area)">
 				{{ area }}
@@ -14,38 +19,48 @@
 		</div>
 	</ul>
 	<div style="display: flex">
-		<FormKit type="text" v-model="newAreaName" /><FormKit
+		<FormKit type="text" v-model="areaNewName" /><FormKit
 			type="button"
 			@click="addArea"
 			>New</FormKit
 		>
 	</div>
 
-	<h1>Topics of {{ currentArea }}</h1>
-	<ul v-for="topic in topics" :key="topic">
+	<h1>Topics of {{ areaCurrent }}</h1>
+	<ul v-for="topic in topicList" :key="topic">
 		<div
-			style="display: flex; justify-content: space-between; max-width: 150px"
+			style="
+				display: flex;
+				justify-content: space-between;
+				max-width: 300px;
+				border-block-end: 1px solid gray;
+			"
 		>
 			<li @click="topicClick(topic)">{{ topic }}</li>
 			<FormKit type="submit" @click="removeTopic(topic)">Delete</FormKit>
 		</div>
 	</ul>
 	<div style="display: flex">
-		<FormKit type="text" v-model="newTopicName" /><FormKit
+		<FormKit type="text" v-model="topicNewName" /><FormKit
 			type="button"
 			@click="addTopic"
 			>New</FormKit
 		>
 	</div>
 
-	<h1>Notes of {{ currentTopic }}</h1>
-	<ul v-for="note in notes" :key="note">
+	<h1>Notes of {{ topicCurrent }}</h1>
+	<ul v-for="note in noteList" :key="note">
 		<div
-			style="display: flex; justify-content: space-between; max-width: 150px"
+			style="
+				display: flex;
+				justify-content: space-between;
+				max-width: 300px;
+				border-block-end: 1px solid gray;
+			"
 		>
 			<li>
 				<router-link
-					:to="`/note?area=${currentArea}&topic=${currentTopic}&note=${note}`"
+					:to="`/note?area=${areaCurrent}&topic=${topicCurrent}&note=${note}`"
 					>{{ note }}</router-link
 				>
 			</li>
@@ -53,17 +68,24 @@
 		</div>
 	</ul>
 	<div style="display: flex">
-		<FormKit type="text" v-model="newNoteName" /><FormKit
-			type="button"
-			@click="addNote"
-			>New</FormKit
-		>
+		<FormKit type="group" v-model="noteForm">
+			<FormKit type="text" name="newName" validation="required" />
+			<FormKit
+				type="select"
+				name="newType"
+				:options="noteTypeOptions"
+				default="markdown"
+				validation="required"
+				@click="addNote"
+			></FormKit>
+			<FormKit type="button" @click="addNote">New</FormKit>
+		</FormKit>
 	</div>
 </template>
 
 <script lang="ts">
 import { FormKit } from '@formkit/vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch, reactive } from 'vue'
 import * as api from '@/util/clientApiV2'
 
 export default defineComponent({
@@ -71,162 +93,179 @@ export default defineComponent({
 		FormKit,
 	},
 	setup() {
-		const currentArea = ref('')
-		const areas = ref<string[]>([])
-		const newAreaName = ref('')
+		const areaCurrent = ref('')
+		const areaList = ref<string[]>([])
+		const areaNewName = ref('')
 
 		async function loadAreas() {
 			const result = await api.areaList({})
 			if (!result) return
 
-			areas.value = result.areas
+			areaList.value = result.areas
 		}
 		async function addArea() {
 			const result = await api.areaAdd({
-				name: newAreaName.value,
+				name: areaNewName.value,
 			})
 			if (!result) return
 
 			await loadAreas()
-			newAreaName.value = ''
-		}
-		async function areaClick(newArea: string) {
-			currentArea.value = newArea
-			if (currentArea.value) {
-				await loadTopics(currentArea.value)
-			}
+			areaNewName.value = ''
 		}
 		async function removeArea(areaName: string) {
+			if (!confirm(`Delete ${areaName}?`)) {
+				return
+			}
+
 			const result = await api.areaRemove({
 				name: areaName,
 			})
 			if (!result) return
 
 			await loadAreas()
-			currentArea.value = areas.value[0]
-			if (currentArea.value) {
-				await loadTopics(currentArea.value)
-			}
-
-			currentTopic.value = topics.value[0]
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
 		}
+		async function areaClick(newCurrent: string) {
+			areaCurrent.value = newCurrent
+			await loadTopics(areaCurrent.value)
+		}
+		watch(areaList, (newAreaList) => {
+			if (!newAreaList.includes(areaCurrent.value)) {
+				areaCurrent.value = newAreaList[0] || ''
+			}
+		})
+		watch(areaCurrent, async (newAreaCurrent, oldAreaCurrent) => {
+			if (newAreaCurrent !== oldAreaCurrent) {
+				await loadTopics(newAreaCurrent)
+			}
+		})
 
 		// topics
-		const currentTopic = ref('')
-		const topics = ref<string[]>([])
-		const newTopicName = ref('')
+		const topicCurrent = ref('')
+		const topicList = ref<string[]>([])
+		const topicNewName = ref('')
 		async function loadTopics(areaName: string) {
+			if (!areaName) {
+				areaList.value = []
+			}
+
 			const result = await api.topicList({
 				area: areaName,
 			})
 			if (!result) return
 
-			topics.value = result.topics
+			topicList.value = result.topics
 		}
 		async function topicClick(newTopic: string) {
-			currentTopic.value = newTopic
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
+			topicCurrent.value = newTopic
+			await loadNotes(areaCurrent.value, topicCurrent.value)
 		}
 		async function addTopic() {
 			const result = await api.topicAdd({
-				area: currentArea.value,
-				name: newTopicName.value,
+				area: areaCurrent.value,
+				name: topicNewName.value,
 			})
 			if (!result) return
 
-			await loadTopics(currentArea.value)
-			newTopicName.value = ''
+			await loadTopics(areaCurrent.value)
+			topicNewName.value = ''
 		}
 		async function removeTopic(topicName: string) {
+			if (!confirm(`Delete ${topicName}?`)) {
+				return
+			}
+
 			const result = await api.topicRemove({
-				area: currentArea.value,
+				area: areaCurrent.value,
 				name: topicName,
 			})
 			if (!result) return
 
-			await loadTopics(currentArea.value)
-			currentTopic.value = topics.value[0]
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
+			await loadTopics(areaCurrent.value)
+			await loadNotes(areaCurrent.value, topicCurrent.value)
 		}
+		watch(topicList, (newTopicList) => {
+			topicCurrent.value = newTopicList[0] || ''
+		})
+		watch(topicCurrent, async (newTopicCurrent, oldTopicCurrent) => {
+			if (newTopicCurrent !== oldTopicCurrent) {
+				await loadNotes(areaCurrent.value, newTopicCurrent)
+			}
+		})
 
 		// notes
-		const notes = ref<string[]>([])
-		const newNoteName = ref('')
+		const noteList = ref<string[]>([])
+		const noteForm = reactive<{
+			newName: string
+			newType: string
+		}>({ newName: '', newType: '' })
+		const noteTypeOptions = ['markdown']
 		async function loadNotes(areaName: string, topicName: string) {
+			if (!areaName || !topicName) {
+				if (!areaName) topicList.value = []
+				if (!topicName) noteList.value = []
+				return
+			}
+
 			const result = await api.noteList({
 				area: areaName,
 				topic: topicName,
 			})
 			if (!result) return
 
-			notes.value = result.notes
+			noteList.value = result.notes
 		}
 		async function addNote() {
+			if (!noteForm.newName) return
+
 			const result = await api.noteAdd({
-				area: currentArea.value,
-				topic: currentTopic.value,
-				name: newNoteName.value,
+				area: areaCurrent.value,
+				topic: topicCurrent.value,
+				name: noteForm.newName,
 			})
 			if (!result) return
 
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
-			newNoteName.value = ''
+			await loadNotes(areaCurrent.value, topicCurrent.value)
+			noteForm.newName = ''
 		}
 		async function removeNote(noteName: string) {
+			if (!confirm(`Delete ${noteName}?`)) {
+				return
+			}
+
 			const result = await api.noteRemove({
-				area: currentArea.value,
-				topic: currentTopic.value,
+				area: areaCurrent.value,
+				topic: topicCurrent.value,
 				name: noteName,
 			})
 			if (!result) return
 
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
+			await loadNotes(areaCurrent.value, topicCurrent.value)
 		}
 
 		;(async () => {
 			await loadAreas()
-
-			currentArea.value = areas.value[0]
-			if (currentArea.value) {
-				await loadTopics(currentArea.value)
-			}
-
-			currentTopic.value = topics.value[0]
-			if (currentArea.value && currentTopic.value) {
-				await loadNotes(currentArea.value, currentTopic.value)
-			}
 		})()
 
 		return {
-			currentArea,
-			areas,
-			newAreaName,
+			areaList,
+			areaCurrent,
+			areaNewName,
 			loadAreas,
 			addArea,
 			removeArea,
 			areaClick,
 
-			currentTopic,
-			topicClick,
-			topics,
-			newTopicName,
+			topicList,
+			topicCurrent,
+			topicNewName,
 			loadTopics,
 			addTopic,
 			removeTopic,
+			topicClick,
 
-			notes,
-			newNoteName,
+			noteList,
+			noteTypeOptions,
+			noteForm,
 			addNote,
 			removeNote,
 		}
