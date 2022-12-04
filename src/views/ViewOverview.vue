@@ -1,11 +1,11 @@
 <template>
-	<UniversePluginWrapper :pluginName="$props.pluginName" />
+	<PluginOverview :pluginName="$props.pluginName" class="plugin-root" />
 </template>
 
 <script lang="ts">
 import { useRouter } from 'vue-router'
 import { usePluginsStore } from '../stores/plugins'
-import UniversePluginWrapper from '../components/plugin-wrappers/UniverseWrapper.vue'
+import PluginOverview from '../components/plugins/PluginOverview.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -18,12 +18,18 @@ export default defineComponent({
 		const pluginStore = usePluginsStore()
 		pluginStore.$subscribe((mutation, state) => {
 			router.push({
-				path: `/universe/${state.currentPlugin}`,
+				path: `/overview/${state.currentPlugin}`,
 			})
 		})
 	},
 	components: {
-		UniversePluginWrapper,
+		PluginOverview,
 	},
 })
 </script>
+
+<style scoped>
+.plugin-root {
+	padding: 30px;
+}
+</style>

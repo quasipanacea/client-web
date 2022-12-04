@@ -1,11 +1,11 @@
 <template>
-	<h1>Tree Plugin</h1>
+	<h1>Raw</h1>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-export default defineComponent({
-	setup() {},
-})
+export default defineComponent({})
 </script>
+
+<style scoped></style>

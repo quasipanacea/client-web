@@ -72,6 +72,6 @@ if (!import.meta.env.SSR) {
 </script>
 
 <template>
-	<h1>DragAndDropUniversePlugin</h1>
+	<h1>OverviewDragAndDrop</h1>
 	<canvas id="demo" width="600" height="400" />
 </template>

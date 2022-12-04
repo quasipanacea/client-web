@@ -60,7 +60,7 @@
 		>
 			<li>
 				<router-link
-					:to="`/note?area=${areaCurrent}&topic=${topicCurrent}&note=${note}`"
+					:to="`/note-old?area=${areaCurrent}&topic=${topicCurrent}&note=${note}`"
 					>{{ note }}</router-link
 				>
 			</li>

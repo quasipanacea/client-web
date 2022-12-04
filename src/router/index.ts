@@ -1,35 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { currentPluginDefault } from '../stores/plugins'
+import { currentOverviewDefault } from '../stores/plugins'
 
-const router = createRouter({
+export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
+		// new routes
 		{
 			path: '/',
-			redirect: 'universe',
+			redirect: '/overview',
 		},
 		{
-			path: '/universe',
-			redirect: `/universe/${currentPluginDefault}`,
+			path: '/overview',
+			redirect: `/overview/${currentOverviewDefault}`,
 		},
 		{
-			name: 'universe',
-			path: '/universe/:pluginName',
-			component: () => import('@/views/UniverseView.vue'),
+			name: 'overview',
+			path: '/overview/:pluginName',
+			component: () => import('@/views/ViewOverview.vue'),
 			props: true,
 		},
 		{
-			name: 'document',
-			path: '/document/:document',
-			component: () => import('@/views/DocumentView.vue'),
-		},
-		{
-			name: 'note',
-			path: '/note',
-			component: () => import('@/views/NoteView.vue'),
+			name: 'note-old',
+			path: '/note-old',
+			component: () => import('@/views/ViewNote.vue'),
 		},
 	],
 })
-
-export default router

@@ -2,7 +2,7 @@
 	<div class="container">
 		<header class="header">
 			<h1 class="title">Document</h1>
-			<router-link to="/universe/PanePlugin">Back</router-link>
+			<router-link to="/overview">Back</router-link>
 		</header>
 		<codemirror
 			v-model="documentText"
