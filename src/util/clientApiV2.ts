@@ -1,14 +1,71 @@
-import * as schema from '../../common/schemaV2'
+import type * as schema from '../../common/schemaV2'
 import * as util from '@/util/util'
 
-export type Result<T> = Promise<T | null>
+//
+//
+// Pod
+export async function podAdd(
+	data: schema.podAdd_reqT,
+): Promise<schema.podAdd_resT> {
+	const result = await util.unwrap<schema.podAdd_reqT, schema.podAdd_resT>(
+		'/api/v2/pod/add',
+		data,
+	)
+	if (result instanceof Error) {
+		return {}
+	} else {
+		return result
+	}
+}
+
+export async function podRemove(
+	data: schema.podRemove_reqT,
+): Promise<schema.podRemove_resT> {
+	const result = await util.unwrap<
+		schema.podRemove_reqT,
+		schema.podRemove_resT
+	>('/api/v2/pod/remove', data)
+	if (result instanceof Error) {
+		return {}
+	} else {
+		return result
+	}
+}
+
+export async function podList(
+	data: schema.podList_reqT,
+): Promise<schema.podList_resT> {
+	const result = await util.unwrap<schema.podList_reqT, schema.podList_resT>(
+		'/api/v2/pod/list',
+		data,
+	)
+	if (result instanceof Error) {
+		return { pods: [] }
+	} else {
+		return result
+	}
+}
+
+export async function podListPlugins(
+	data: schema.podListPlugins_reqT,
+): Promise<schema.podListPlugins_resT> {
+	const result = await util.unwrap<
+		schema.podListPlugins_reqT,
+		schema.podListPlugins_resT
+	>('/api/v2/pod/list-plugins', data)
+	if (result instanceof Error) {
+		return { plugins: [] }
+	} else {
+		return result
+	}
+}
 
 //
 //
 // Area
 export async function areaAdd(
 	data: schema.areaAdd_reqT,
-): Result<schema.areaAdd_resT> {
+): Promise<schema.areaAdd_resT> {
 	const result = await util.unwrap<schema.areaAdd_reqT, schema.areaAdd_resT>(
 		'/api/v2/area/add',
 		data,
@@ -22,7 +79,7 @@ export async function areaAdd(
 
 export async function areaRemove(
 	data: schema.areaRemove_reqT,
-): Result<schema.areaRemove_resT> {
+): Promise<schema.areaRemove_resT> {
 	const result = await util.unwrap<
 		schema.areaRemove_reqT,
 		schema.areaRemove_resT
@@ -36,7 +93,7 @@ export async function areaRemove(
 
 export async function areaRename(
 	data: schema.areaRename_reqT,
-): Result<schema.areaRename_resT> {
+): Promise<schema.areaRename_resT> {
 	const result = await util.unwrap<
 		schema.areaRename_reqT,
 		schema.areaRename_resT
@@ -50,13 +107,13 @@ export async function areaRename(
 
 export async function areaList(
 	data: schema.areaList_reqT,
-): Result<schema.areaList_resT> {
+): Promise<schema.areaList_resT> {
 	const result = await util.unwrap<schema.areaList_reqT, schema.areaList_resT>(
 		'/api/v2/area/list',
 		data,
 	)
 	if (result instanceof Error) {
-		return {}
+		return { areas: [] }
 	} else {
 		return result
 	}
@@ -67,7 +124,7 @@ export async function areaList(
 // Topic
 export async function topicAdd(
 	data: schema.topicAdd_reqT,
-): Result<schema.topicAdd_resT> {
+): Promise<schema.topicAdd_resT> {
 	const result = await util.unwrap<schema.topicAdd_reqT, schema.topicAdd_resT>(
 		'/api/v2/topic/add',
 		data,
@@ -81,7 +138,7 @@ export async function topicAdd(
 
 export async function topicRemove(
 	data: schema.topicRemove_reqT,
-): Result<schema.topicRemove_resT> {
+): Promise<schema.topicRemove_resT> {
 	const result = await util.unwrap<
 		schema.topicRemove_reqT,
 		schema.topicRemove_resT
@@ -95,7 +152,7 @@ export async function topicRemove(
 
 export async function topicRename(
 	data: schema.topicRename_reqT,
-): Result<schema.topicRename_resT> {
+): Promise<schema.topicRename_resT> {
 	const result = await util.unwrap<
 		schema.topicRename_reqT,
 		schema.topicRename_resT
@@ -109,7 +166,7 @@ export async function topicRename(
 
 export async function topicList(
 	data: schema.topicList_reqT,
-): Result<schema.topicList_resT> {
+): Promise<schema.topicList_resT> {
 	const result = await util.unwrap<
 		schema.topicList_reqT,
 		schema.topicList_resT
@@ -126,7 +183,7 @@ export async function topicList(
 // Note
 export async function noteAdd(
 	data: schema.noteAdd_reqT,
-): Result<schema.noteAdd_resT> {
+): Promise<schema.noteAdd_resT> {
 	const result = await util.unwrap<schema.noteAdd_reqT, schema.noteAdd_resT>(
 		'/api/v2/note/add',
 		data,
@@ -140,7 +197,7 @@ export async function noteAdd(
 
 export async function noteRemove(
 	data: schema.noteRemove_reqT,
-): Result<schema.noteRemove_resT> {
+): Promise<schema.noteRemove_resT> {
 	const result = await util.unwrap<
 		schema.noteRemove_reqT,
 		schema.noteRemove_resT
@@ -154,7 +211,7 @@ export async function noteRemove(
 
 export async function noteRename(
 	data: schema.noteRename_reqT,
-): Result<schema.noteRename_resT> {
+): Promise<schema.noteRename_resT> {
 	const result = await util.unwrap<
 		schema.noteRename_reqT,
 		schema.noteRename_resT
@@ -168,13 +225,13 @@ export async function noteRename(
 
 export async function noteRead(
 	data: schema.noteRead_reqT,
-): Result<schema.noteRead_resT> {
+): Promise<schema.noteRead_resT> {
 	const result = await util.unwrap<schema.noteRead_reqT, schema.noteRead_resT>(
 		'/api/v2/note/read',
 		data,
 	)
 	if (result instanceof Error) {
-		return {}
+		return { content: '' }
 	} else {
 		return result
 	}
@@ -182,7 +239,7 @@ export async function noteRead(
 
 export async function noteWrite(
 	data: schema.noteWrite_reqT,
-): Result<schema.noteWrite_resT> {
+): Promise<schema.noteWrite_resT> {
 	const result = await util.unwrap<
 		schema.noteWrite_reqT,
 		schema.noteWrite_resT
@@ -196,7 +253,7 @@ export async function noteWrite(
 
 export async function noteQuery(
 	data: schema.noteQuery_reqT,
-): Result<schema.noteQuery_resT> {
+): Promise<schema.noteQuery_resT> {
 	const result = await util.unwrap<
 		schema.noteQuery_reqT,
 		schema.noteQuery_resT
@@ -212,7 +269,7 @@ export async function noteQuery(
 
 export async function noteList(
 	data: schema.noteList_reqT,
-): Result<schema.noteList_resT> {
+): Promise<schema.noteList_resT> {
 	const result = await util.unwrap<schema.noteList_reqT, schema.noteList_resT>(
 		'/api/v2/note/list',
 		data,
