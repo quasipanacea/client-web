@@ -7,7 +7,6 @@ export const usePluginsStore = defineStore('plugins', {
 		const plugins = [
 			'OverviewHier',
 			'OverviewExperimentalPod',
-			'OverviewDragAndDrop',
 			'OverviewRaw',
 			'OverviewNull',
 		]

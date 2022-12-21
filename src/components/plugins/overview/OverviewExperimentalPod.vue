@@ -30,11 +30,9 @@ export default defineComponent({
 		;(async () => {
 			const result = await api.podListPlugins({})
 			for (const plugin of result.plugins) {
-				console.log(plugin)
 				const { pods } = await api.podList({
 					wraps: plugin.wraps,
 				})
-				console.log(plugin, pods)
 				podPlugins.value.push({ plugin, pods })
 			}
 		})()
