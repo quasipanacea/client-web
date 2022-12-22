@@ -60,6 +60,20 @@ export async function podListPlugins(
 	}
 }
 
+export async function podQuery(
+	data: schema.podQuery_reqT,
+): Promise<schema.podQuery_resT> {
+	const result = await util.unwrap<schema.podQuery_reqT, schema.podQuery_resT>(
+		'/api/v2/pod/query',
+		data,
+	)
+	if (result instanceof Error) {
+		return { wraps: '', name: '' }
+	} else {
+		return result
+	}
+}
+
 //
 //
 // Area

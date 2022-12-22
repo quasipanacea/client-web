@@ -5,7 +5,8 @@
 			<template v-if="plugin.pods.length > 0">
 				<h2>Wraps: {{ plugin.pods[0].wraps }}</h2>
 				<div v-for="pod in plugin.pods" :key="pod.uuid">
-					<p>{{ pod.name }}</p>
+					<RouterLink :to="'/pod/' + pod.uuid">{{ pod.name }}</RouterLink>
+					<p></p>
 				</div>
 			</template>
 		</div>
@@ -17,6 +18,7 @@ import { defineComponent, ref } from 'vue'
 
 import type * as schema from '../../../../common/schemaV2'
 import * as api from '@/util/clientApiV2'
+import { RouterLink } from 'vue-router'
 
 export default defineComponent({
 	setup() {
@@ -26,7 +28,6 @@ export default defineComponent({
 				pods: schema.podList_resT['pods']
 			}[]
 		>([])
-
 		;(async () => {
 			const result = await api.podListPlugins({})
 			for (const plugin of result.plugins) {
@@ -36,10 +37,10 @@ export default defineComponent({
 				podPlugins.value.push({ plugin, pods })
 			}
 		})()
-
 		return {
 			podPlugins,
 		}
 	},
+	components: { RouterLink },
 })
 </script>
