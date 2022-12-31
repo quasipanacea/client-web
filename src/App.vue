@@ -1,15 +1,20 @@
 <template>
+	<nav class="root-nav-hack">
+		<span @click="showSettings = true">
+			<FeatherSettings />
+		</span>
+	</nav>
 	<div class="root-view">
 		<RouterView />
 	</div>
-	<nav class="root-nav">
+	<!-- <nav class="root-nav">
 		<a :class="{ 'hide-navbar': !showNavbar }" @click="showSettings = true">
 			<FeatherSettings />
 		</a>
 		<a :class="{ 'hide-navbar': !showNavbar }" @click="showHelp = true"
 			><FeatherHelp
 		/></a>
-	</nav>
+	</nav> -->
 	<dialog :open="showSettings" class="root-settings">
 		<h1>Settings</h1>
 		<select v-model="pluginsStore.currentPlugin">
@@ -78,6 +83,8 @@ export default defineComponent({
 
 	--oc-gray-0: #f8f9fa;
 	--oc-gray-1: #f1f3f5;
+	--oc-gray-2: #e9ecef;
+	--oc-gray-3: #dee2e6;
 	--oc-gray-8: #343a40;
 	--oc-gray-9: #212529;
 
@@ -93,6 +100,21 @@ body {
 
 #app {
 	height: 100%;
+}
+
+.root-nav-hack {
+	display: flex;
+	background-color: var(--oc-gray-1);
+	box-shadow: 2px 2px 3px var(--oc-gray-2);
+
+	& > span {
+		margin: 2px;
+		cursor: pointer;
+	}
+
+	& > span > svg {
+		display: block;
+	}
 }
 
 .root-view {

@@ -68,7 +68,7 @@ export async function podQuery(
 		data,
 	)
 	if (result instanceof Error) {
-		return { wraps: '', name: '' }
+		return { type: '', name: '' }
 	} else {
 		return result
 	}

@@ -1,12 +1,28 @@
 <template>
-	<PluginOverview :pluginName="$props.pluginName" class="plugin-root" />
+	<OverviewHier
+		v-if="$props.pluginName === 'OverviewHier'"
+		class="plugin-root"
+	/>
+	<OverviewExperimentalPod
+		v-else-if="$props.pluginName === 'OverviewExperimentalPod'"
+		class="plugin-root"
+	/>
+	<OverviewRaw
+		v-else-if="$props.pluginName === 'OverviewRaw'"
+		class="plugin-root"
+	/>
+	<OverviewNull v-else class="plugin-root" />
 </template>
 
 <script lang="ts">
-import { useRouter } from 'vue-router'
-import { usePluginsStore } from '../stores/plugins'
-import PluginOverview from '../components/plugins/PluginOverview.vue'
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
+
+import { usePluginsStore } from '@/stores/plugins'
+import OverviewHier from '@/components/plugins/overview/OverviewHier.vue'
+import OverviewExperimentalPod from '@/components/plugins/overview/OverviewExperimentalPod.vue'
+import OverviewRaw from '@/components/plugins/overview/OverviewRaw.vue'
+import OverviewNull from '@/components/plugins/overview/OverviewNull.vue'
 
 export default defineComponent({
 	props: {
@@ -23,7 +39,10 @@ export default defineComponent({
 		})
 	},
 	components: {
-		PluginOverview,
+		OverviewHier,
+		OverviewExperimentalPod,
+		OverviewRaw,
+		OverviewNull,
 	},
 })
 </script>

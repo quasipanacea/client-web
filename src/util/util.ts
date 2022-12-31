@@ -1,4 +1,6 @@
-import { z } from 'zod'
+export function podTypeToDirname(type: string) {
+	return `Pod${type[0].toUpperCase()}${type.slice(1)}`
+}
 
 // TODO: improve handling
 export async function unwrap<U, T>(uri: string, body: U): Promise<T | Error> {

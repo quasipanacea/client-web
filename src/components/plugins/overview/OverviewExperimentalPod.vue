@@ -3,11 +3,12 @@
 		<h1>Pods</h1>
 		<div v-for="plugin of podPlugins" :key="plugin.plugin.name">
 			<template v-if="plugin.pods.length > 0">
-				<h2>Wraps: {{ plugin.pods[0].wraps }}</h2>
-				<div v-for="pod in plugin.pods" :key="pod.uuid">
-					<RouterLink :to="'/pod/' + pod.uuid">{{ pod.name }}</RouterLink>
-					<p></p>
-				</div>
+				<h2>Type: {{ plugin.pods[0].type }}</h2>
+				<ul v-for="pod in plugin.pods" :key="pod.uuid">
+					<li>
+						<RouterLink :to="'/pod/' + pod.uuid">{{ pod.name }}</RouterLink>
+					</li>
+				</ul>
 			</template>
 		</div>
 	</div>
@@ -32,7 +33,7 @@ export default defineComponent({
 			const result = await api.podListPlugins({})
 			for (const plugin of result.plugins) {
 				const { pods } = await api.podList({
-					wraps: plugin.wraps,
+					type: plugin.type,
 				})
 				podPlugins.value.push({ plugin, pods })
 			}
