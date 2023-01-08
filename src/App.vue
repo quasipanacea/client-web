@@ -32,8 +32,10 @@
 		<button @click="showHelp = false">Close</button>
 		<h1>Help</h1>
 	</dialog>
-	<ActionPopup />
-	<LavakeyIndicator />
+	<!-- <PopupController /> -->
+	<ControllerPSingle />
+	<!-- <ActionPopup />
+	<LavakeyIndicator /> -->
 </template>
 
 <script lang="ts">
@@ -44,6 +46,8 @@ import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
 import ActionPopup from '@/subprojects/actionpopup/ActionPopup.vue'
 import LavakeyIndicator from '@/subprojects/lavakey/LavakeyIndicator.vue'
+import ControllerPMultiple from './components/controllers/ControllerPMultiple.vue'
+import ControllerPSingle from './components/controllers/ControllerPSingle.vue'
 
 export default defineComponent({
 	setup() {
@@ -65,6 +69,8 @@ export default defineComponent({
 		FeatherSettings,
 		ActionPopup,
 		LavakeyIndicator,
+		ControllerPMultiple,
+		ControllerPSingle,
 	},
 })
 </script>

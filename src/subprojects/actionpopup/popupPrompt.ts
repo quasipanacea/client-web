@@ -1,4 +1,3 @@
-import { lavaKey } from '../lavakey'
 import mitt from 'mitt'
 
 export const popupPrompt = (() => {

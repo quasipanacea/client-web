@@ -67,7 +67,7 @@ export default defineComponent({
 			dialogOpen.value = true
 			window.requestAnimationFrame(() => {
 				dialogShown.value = true
-				lavaKey.historyPush(choiceGroup)
+				// lavaKey.historyPush(choiceGroup)
 			})
 		})
 

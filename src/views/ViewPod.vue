@@ -1,13 +1,14 @@
 <template>
 	<div>
 		<h1>Pod</h1>
+		<FormKit type="button" label="Delete" @submit="onDelete" />
 		<RouterLink to="/overview/OverviewExperimentalPod">Back</RouterLink>
 		<template v-if="queryResult">
 			<p>uuid: {{ uuid }}</p>
 			<p>name: {{ queryResult.name }}</p>
 		</template>
 		<hr />
-		<PodWorkaround v-if="queryResult" :type="queryResult.type" />
+		<PodWorkaround v-if="queryResult" :handler="queryResult.handler" />
 		<!-- <p>{{ dynamicComponentName }}</p>
 		<component :is="dynamicComponent" /> -->
 	</div>
@@ -15,6 +16,8 @@
 
 <script lang="ts">
 import { defineComponent, markRaw, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 import * as util from '../../src/util/util'
 import * as utilsPlugin from '../../src/util/utilsPlugin'
 import type * as schema from '../../common/schemaV2'
@@ -32,6 +35,8 @@ export default defineComponent({
 		PodWorkaround,
 	},
 	setup(props) {
+		const router = useRouter()
+
 		const queryResult = ref<null | schema.podQuery_resT>(null)
 
 		// const dynamicComponentName = ref('nil')
@@ -56,6 +61,13 @@ export default defineComponent({
 			// }
 		})()
 
+		async function onDelete() {
+			if (!props.uuid) return
+
+			await api.podRemove({ uuid: props.uuid })
+			router.push('/')
+		}
+
 		// const dynamicComponent = markRaw(nil)
 		// const dynamicComponentName = ref('nil')
 		// ;(async () => {
@@ -69,6 +81,7 @@ export default defineComponent({
 
 		return {
 			queryResult,
+			onDelete,
 			// dynamicComponent,
 			// dynamicComponentName,
 		}
