@@ -1,17 +1,43 @@
 <template>
-	<div>
-		<h1>Pod</h1>
-		<FormKit type="button" label="Delete" @submit="onDelete" />
-		<RouterLink to="/overview/OverviewExperimentalPod">Back</RouterLink>
-		<template v-if="queryResult">
-			<p>uuid: {{ uuid }}</p>
-			<p>name: {{ queryResult.name }}</p>
-		</template>
-		<hr />
-		<PodWorkaround v-if="queryResult" :handler="queryResult.handler" />
-		<!-- <p>{{ dynamicComponentName }}</p>
-		<component :is="dynamicComponent" /> -->
-	</div>
+	<template v-if="pod">
+		<div class="header">
+			<h1 class="title">{{ pod.name }}</h1>
+			<span class="menu">
+				<ul class="pure-menu pure-menu-horizontal">
+					<li class="pure-menu-item">
+						<RouterLink to="/overview/OverviewPod" class="pure-menu-link"
+							>Back</RouterLink
+						>
+					</li>
+					<li
+						class="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
+					>
+						<a class="pure-menu-link">Actions</a>
+						<ul class="pure-menu-children">
+							<li class="pure-menu-item">
+								<a class="pure-menu-link" @click="onDelete">Delete</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</span>
+		</div>
+
+		<table class="pure-table">
+			<thead>
+				<th>Property</th>
+				<th>Value</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>UUID</td>
+					<td>{{ uuid }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<PodWorkaround :handler="pod.handler" />
+		<!-- <component :is="dynamicComponent" /> -->
+	</template>
 </template>
 
 <script lang="ts">
@@ -37,7 +63,7 @@ export default defineComponent({
 	setup(props) {
 		const router = useRouter()
 
-		const queryResult = ref<null | schema.podQuery_resT>(null)
+		const pod = ref<null | schema.podQuery_resT>(null)
 
 		// const dynamicComponentName = ref('nil')
 		// const dynamicComponent = ref<null | unknown>(null)
@@ -48,8 +74,7 @@ export default defineComponent({
 			}
 
 			// get type
-			const pod = await api.podQuery({ uuid: props.uuid })
-			queryResult.value = pod
+			pod.value = await api.podQuery({ uuid: props.uuid })
 
 			// const prettyName = util.podTypeToDirname(pod.type)
 			// const modules = await utilsPlugin.loadPluginVueComponents()
@@ -80,7 +105,7 @@ export default defineComponent({
 		// })()
 
 		return {
-			queryResult,
+			pod,
 			onDelete,
 			// dynamicComponent,
 			// dynamicComponentName,
@@ -88,3 +113,16 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style scoped>
+.title {
+	font-size: 42px;
+	font-weight: bold;
+}
+
+.menu {
+	position: absolute;
+	right: 10px;
+	top: 15px;
+}
+</style>

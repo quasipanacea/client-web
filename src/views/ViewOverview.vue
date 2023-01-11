@@ -3,8 +3,8 @@
 		v-if="$props.pluginName === 'OverviewHier'"
 		class="plugin-root"
 	/>
-	<OverviewExperimentalPod
-		v-else-if="$props.pluginName === 'OverviewExperimentalPod'"
+	<OverviewPod
+		v-else-if="$props.pluginName === 'OverviewPod'"
 		class="plugin-root"
 	/>
 	<OverviewRaw
@@ -20,7 +20,7 @@ import { useRouter } from 'vue-router'
 
 import { usePluginsStore } from '@/stores/plugins'
 import OverviewHier from '@/components/plugins/overview/OverviewHier.vue'
-import OverviewExperimentalPod from '@/components/plugins/overview/OverviewExperimentalPod.vue'
+import OverviewPod from '@/components/plugins/overview/OverviewPod.vue'
 import OverviewRaw from '@/components/plugins/overview/OverviewRaw.vue'
 import OverviewNull from '@/components/plugins/overview/OverviewNull.vue'
 
@@ -40,7 +40,7 @@ export default defineComponent({
 	},
 	components: {
 		OverviewHier,
-		OverviewExperimentalPod,
+		OverviewPod,
 		OverviewRaw,
 		OverviewNull,
 	},
@@ -49,6 +49,6 @@ export default defineComponent({
 
 <style scoped>
 .plugin-root {
-	padding: 30px;
+	padding: 10px;
 }
 </style>

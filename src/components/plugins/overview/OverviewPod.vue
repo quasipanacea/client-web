@@ -1,11 +1,16 @@
 <template>
 	<div>
-		<h1>Pods</h1>
-		<FormKit type="submit" @click="popupNewPod">New Pod</FormKit>
+		<span class="menu">
+			<ul class="pure-menu pure-menu-horizontal pure-menu-active-hover">
+				<li class="pure-menu-item">
+					<a class="pure-menu-link" @click="popupNewPod">New Pod</a>
+				</li>
+			</ul>
+		</span>
 		<div v-for="plugin of podPlugins" :key="plugin.plugin.name">
 			<template v-if="plugin.pods.length > 0">
-				<h2>Type: {{ plugin.pods[0].handler }}</h2>
-				<ul v-for="pod in plugin.pods" :key="pod.uuid">
+				<h2>{{ plugin.pods[0].handler }}</h2>
+				<ul v-for="pod in plugin.pods" :key="pod.uuid" class="pod-list">
 					<li>
 						<RouterLink :to="'/pod/' + pod.uuid">{{ pod.name }}</RouterLink>
 					</li>
@@ -67,3 +72,20 @@ export default defineComponent({
 	components: { RouterLink, FormKit },
 })
 </script>
+
+<style scoped>
+.menu {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+}
+
+.pod-list {
+	margin-inline-start: 10px;
+	list-style-type: none;
+}
+
+.pod-list > li {
+	margin-block-end: 5px;
+}
+</style>

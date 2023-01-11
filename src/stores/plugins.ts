@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 
-export const currentOverviewDefault = 'OverviewHier'
+export const currentOverviewDefault = 'OverviewPod'
 
 export const usePluginsStore = defineStore('plugins', {
 	state: () => {
 		const plugins = [
 			'OverviewHier',
-			'OverviewExperimentalPod',
+			'OverviewPod',
 			'OverviewRaw',
 			'OverviewNull',
 		]
