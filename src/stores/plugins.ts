@@ -7,7 +7,8 @@ export const usePluginsStore = defineStore('plugins', {
 		const plugins = [
 			'OverviewHier',
 			'OverviewPod',
-			'OverviewRaw',
+			'OverviewGraph',
+			'OverviewDebug',
 			'OverviewNull',
 		]
 		const currentPlugin = currentOverviewDefault

@@ -15,19 +15,16 @@ export default createRouter({
 			redirect: `/overview/${currentOverviewDefault}`,
 		},
 		{
-			name: 'overview',
 			path: '/overview/:pluginName',
 			component: () => import('@/views/ViewOverview.vue'),
 			props: true,
 		},
 		{
-			name: 'pod',
 			path: '/pod/:uuid',
 			component: () => import('@/views/ViewPod.vue'),
 			props: true,
 		},
 		{
-			name: 'note-old',
 			path: '/note-old',
 			component: () => import('@/views/ViewNote.vue'),
 		},

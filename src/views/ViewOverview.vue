@@ -1,35 +1,29 @@
 <template>
-	<OverviewHier
-		v-if="$props.pluginName === 'OverviewHier'"
-		class="plugin-root"
-	/>
-	<OverviewPod
-		v-else-if="$props.pluginName === 'OverviewPod'"
-		class="plugin-root"
-	/>
-	<OverviewRaw
-		v-else-if="$props.pluginName === 'OverviewRaw'"
-		class="plugin-root"
-	/>
-	<OverviewNull v-else class="plugin-root" />
+	<component v-if="currentModule" :is="currentModule" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { usePluginsStore } from '@/stores/plugins'
-import OverviewHier from '@/components/plugins/overview/OverviewHier.vue'
-import OverviewPod from '@/components/plugins/overview/OverviewPod.vue'
-import OverviewRaw from '@/components/plugins/overview/OverviewRaw.vue'
-import OverviewNull from '@/components/plugins/overview/OverviewNull.vue'
 
 export default defineComponent({
 	props: {
 		pluginName: String,
 	},
-	setup() {
+	setup(props) {
 		const router = useRouter()
+
+		const currentModule = ref(null)
+
+		onMounted(async () => {
+			const module = (
+				await import(`../../common/symlinks/overviews/${props.pluginName}.vue`)
+			).default
+			console.log('module', module)
+			currentModule.value = module
+		})
 
 		const pluginStore = usePluginsStore()
 		pluginStore.$subscribe((mutation, state) => {
@@ -37,12 +31,10 @@ export default defineComponent({
 				path: `/overview/${state.currentPlugin}`,
 			})
 		})
-	},
-	components: {
-		OverviewHier,
-		OverviewPod,
-		OverviewRaw,
-		OverviewNull,
+
+		return {
+			currentModule,
+		}
 	},
 })
 </script>
