@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { currentOverviewDefault } from '../stores/plugins'
+const defaultOverview = 'by-pod'
 
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,11 +8,7 @@ export default createRouter({
 		// new routes
 		{
 			path: '/',
-			redirect: '/overview',
-		},
-		{
-			path: '/overview',
-			redirect: `/overview/${currentOverviewDefault}`,
+			redirect: `/overview/${defaultOverview}`,
 		},
 		{
 			path: '/overview/:pluginName',

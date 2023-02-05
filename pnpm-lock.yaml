@@ -27,6 +27,7 @@ specifiers:
   postcss: ^8.4.21
   postcss-nesting: ^10.2.0
   prettier: ^2.8.1
+  purecss: ^3.0.0
   rollup-plugin-import-map: ^2.2.2
   springy: ^2.8.0
   start-server-and-test: ^1.15.2
@@ -53,6 +54,7 @@ dependencies:
   lodash: 4.17.21
   mitt: 3.0.0
   pinia: 2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
+  purecss: 3.0.0
   springy: 2.8.0
   typescript: 4.9.4
   vis-data: 7.1.4
@@ -3400,6 +3402,10 @@ packages:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
     dev: true
+
+  /purecss/3.0.0:
+    resolution: {integrity: sha512-IdYbGwbmuA7Hy9ACIO1q7ks4xGLcJSVHxJT2BXIz2c4Ve1aSrNU5bAzA1ILT4Gmdy5K59ruWoRPf9WvJZU5fbA==}
+    dev: false
 
   /qs/6.5.3:
     resolution: {integrity: sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==}

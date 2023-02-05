@@ -5,7 +5,7 @@
 			<span class="menu">
 				<ul class="pure-menu pure-menu-horizontal">
 					<li class="pure-menu-item">
-						<RouterLink to="/overview/OverviewPod" class="pure-menu-link"
+						<RouterLink to="/overview/OverviewByPod" class="pure-menu-link"
 							>Back</RouterLink
 						>
 					</li>
@@ -47,7 +47,7 @@ import { useRouter } from 'vue-router'
 import * as util from '../../src/util/util'
 import * as utilsPlugin from '../../src/util/utilsPlugin'
 import type * as schema from '../../common/schemaV2'
-import * as api from '../util/clientApiV2'
+import * as apiv2 from '../util/apiv2'
 
 import nil from '@/components/PodNull.vue'
 import PodWorkaround from '../../common/util/PodWorkaround.vue'
@@ -74,7 +74,7 @@ export default defineComponent({
 			}
 
 			// get type
-			pod.value = await api.podQuery({ uuid: props.uuid })
+			pod.value = await apiv2.podQuery({ uuid: props.uuid })
 
 			// const prettyName = util.podTypeToDirname(pod.type)
 			// const modules = await utilsPlugin.loadPluginVueComponents()
@@ -89,7 +89,7 @@ export default defineComponent({
 		async function onDelete() {
 			if (!props.uuid) return
 
-			await api.podRemove({ uuid: props.uuid })
+			await apiv2.podRemove({ uuid: props.uuid })
 			router.push('/')
 		}
 

@@ -33,7 +33,6 @@
 </template>
 
 <script lang="ts">
-import { lavaKey } from '../lavakey'
 import { defineComponent, onMounted, ref } from 'vue'
 import { popupPrompt } from './popupPrompt'
 
@@ -67,7 +66,6 @@ export default defineComponent({
 			dialogOpen.value = true
 			window.requestAnimationFrame(() => {
 				dialogShown.value = true
-				// lavaKey.historyPush(choiceGroup)
 			})
 		})
 

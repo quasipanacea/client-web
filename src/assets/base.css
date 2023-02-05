@@ -6,9 +6,21 @@
 	padding: 0;
 }
 
-h1, h2, h3 {
-	margin: 0 !important;
+:root {
+	--oc-white: #ffffff;
+	--oc-black: #000000;
+
+	--oc-gray-0: #f8f9fa;
+	--oc-gray-1: #f1f3f5;
+	--oc-gray-2: #e9ecef;
+	--oc-gray-3: #dee2e6;
+	--oc-gray-8: #343a40;
+	--oc-gray-9: #212529;
+
+	--nav-border: 5px;
+	--settings-border: 10px;
 }
+
 
 .pure-menu-item:hover {
 	cursor: pointer;
@@ -16,22 +28,38 @@ h1, h2, h3 {
 
 dialog {
 	margin: 0 auto;
+	padding: 5px;
+	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: var(--settings-border);
+	margin-top: 20%;
+	min-width: 400px;
+	min-height: 200px;
+
 }
 
 dialog > * {
-	margin: 5px !important;
+	margin: 5px;
 }
 
+body {
+	/* line-height: 1.6; */
+	font-family: 'IBM Plex Sans', sans-serif;
+	/* font-size: 15px; */
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
+table {
+	border-collapse: collapse;
+}
 
-
-
-// regular
-@font-face {
+/* @font-face {
 	font-family: 'IBM Plex Sans';
 	font-style: normal;
 	src: url(/public/fonts/IBMPlexSans-Regular.ttf) format("truetype");
-}
+} */
 
 /* @font-face {
 	font-family: 'IBM Plex Sans';;
@@ -39,13 +67,12 @@ dialog > * {
 	src: url(/public/fonts/IBMPlexSans-RegularItalic.ttf) format("truetype");
 } */
 
-// semi bold
-@font-face {
+/* @font-face {
 	font-family: 'IBM Plex Sans';
 	font-style: normal;
 	font-weight: bold;
 	src: url(/public/fonts/IBMPlexSans-Bold.ttf) format("truetype");
-}
+} */
 
 /* @font-face {
 	font-family: 'IBM Plex Sans';
@@ -55,15 +82,3 @@ dialog > * {
 } */
 
 
-body {
-	/* line-height: 1.6; */
-	font-family: 'IBM Plex Sans', sans-serif;
-	font-size: 15px;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-table {
-	border-collapse: collapse;
-}

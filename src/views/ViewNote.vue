@@ -17,7 +17,7 @@
 import { onMounted, defineComponent, ref, shallowRef, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { debounce } from 'lodash'
-import * as api from '@/util/clientApiV2'
+import * as apiv2 from '@/util/apiv2.js'
 import { EditorState } from '@codemirror/state'
 import { markdown as mirrorMarkdown } from '@codemirror/lang-markdown'
 import { Codemirror } from 'vue-codemirror'
@@ -34,7 +34,7 @@ export default defineComponent({
 
 		const saveDocument = debounce(async () => {
 			if (q.area && q.topic && q.note) {
-				await api.noteWrite({
+				await apiv2.noteWrite({
 					area: q.area as string,
 					topic: q.topic as string,
 					name: q.note as string,
@@ -59,7 +59,7 @@ export default defineComponent({
 
 			let json
 			if (q.area && q.topic && q.note) {
-				json = await api.noteRead({
+				json = await apiv2.noteRead({
 					area: q.area as string,
 					topic: q.topic as string,
 					name: q.note as string,

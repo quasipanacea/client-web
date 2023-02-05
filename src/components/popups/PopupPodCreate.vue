@@ -22,7 +22,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import * as api from '@/util/clientApiV2'
+import * as apiv2 from '@/util/apiv2.js'
 import { popupEmitter } from '@/util/popupSimple'
 
 export default defineComponent({
@@ -33,7 +33,7 @@ export default defineComponent({
 		const podTypes = ref<{ label: string; value: string }[]>([])
 
 		;(async () => {
-			const { plugins } = await api.podListPlugins({})
+			const { plugins } = await apiv2.podListPlugins({})
 			podTypes.value = plugins.map(({ name, namePretty }) => ({
 				label: namePretty,
 				value: name,
