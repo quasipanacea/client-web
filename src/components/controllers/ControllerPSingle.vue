@@ -10,7 +10,6 @@
 
 <script lang="ts">
 import { defineComponent, shallowRef } from 'vue'
-import { FormKit } from '@formkit/vue'
 
 import { popupEmitter } from '../../util/popupSimple'
 import type { Events } from '../../util/popupSimple'

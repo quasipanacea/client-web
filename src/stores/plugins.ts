@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 
-import * as apiv3 from '@/util/apiv3'
+import { tc } from '@/util/trpc'
 
-const data = await apiv3.pluginList({})
+const data = await tc.pluginList.query()
 
 export const usePluginsStore = defineStore('plugins', {
 	state: () => {
@@ -10,7 +10,7 @@ export const usePluginsStore = defineStore('plugins', {
 			.filter((item) => item.resource === 'overviews')
 			.map((item) => item.name)
 
-		const currentPlugin = data.plugins[0]
+		const currentPlugin = data.plugins[0].name
 
 		return {
 			plugins,

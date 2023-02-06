@@ -1,19 +1,18 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": [
-		"env.d.ts",
-		"src/**/*",
-		"src/**/*.vue",
-		"common/**/*.vue",
-		"common/schemaV2.ts"
-	],
+	"include": ["env.d.ts", "src/**/*", "common/**/*.vue", "common/**/*.ts"],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
+		"allowImportingTsExtensions": true,
 		"lib": ["ES2022", "DOM"],
 		"composite": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@src/*": ["../server-deno/src/*"],
+			"npm:@trpc/server": ["./node_modules/@trpc/server"],
+			"npm:@trpc/server/*": ["./node_modules/@trpc/server/*"],
+			"npm:zod": ["./node_modules/zod"]
 		}
 	}
 }

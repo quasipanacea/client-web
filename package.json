@@ -15,6 +15,8 @@
 		"@codemirror/lang-markdown": "^6.0.5",
 		"@codemirror/state": "^6.2.0",
 		"@formkit/vue": "1.0.0-beta.12",
+		"@trpc/client": "^10.10.0",
+		"@trpc/server": "^10.10.0",
 		"bulma": "^0.9.4",
 		"codemirror": "^6.0.1",
 		"d3": "^7.8.0",

@@ -21,6 +21,16 @@
 	--settings-border: 10px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0 !important;
+	padding: 0 !important;
+}
 
 .pure-menu-item:hover {
 	cursor: pointer;
@@ -29,13 +39,13 @@
 dialog {
 	margin: 0 auto;
 	padding: 5px;
-	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
-	border: 1px solid rgba(0,0,0,0.2);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+		0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: var(--settings-border);
 	margin-top: 20%;
 	min-width: 400px;
 	min-height: 200px;
-
 }
 
 dialog > * {
@@ -43,9 +53,7 @@ dialog > * {
 }
 
 body {
-	/* line-height: 1.6; */
-	font-family: 'IBM Plex Sans', sans-serif;
-	/* font-size: 15px; */
+	font-family: sans-serif;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -55,30 +63,28 @@ table {
 	border-collapse: collapse;
 }
 
-/* @font-face {
+@font-face {
 	font-family: 'IBM Plex Sans';
 	font-style: normal;
-	src: url(/public/fonts/IBMPlexSans-Regular.ttf) format("truetype");
-} */
+	src: url(/public/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+}
 
-/* @font-face {
-	font-family: 'IBM Plex Sans';;
+@font-face {
+	font-family: 'IBM Plex Sans';
 	font-style: italic;
-	src: url(/public/fonts/IBMPlexSans-RegularItalic.ttf) format("truetype");
-} */
+	src: url(/public/fonts/IBMPlexSans-RegularItalic.ttf) format('truetype');
+}
 
-/* @font-face {
+@font-face {
 	font-family: 'IBM Plex Sans';
 	font-style: normal;
 	font-weight: bold;
-	src: url(/public/fonts/IBMPlexSans-Bold.ttf) format("truetype");
-} */
+	src: url(/public/fonts/IBMPlexSans-Bold.ttf) format('truetype');
+}
 
-/* @font-face {
+@font-face {
 	font-family: 'IBM Plex Sans';
 	font-style: italic;
-	font-weight: bold
-	src: url(/public/fonts/IBMPlexSans-BoldItalic.ttf) format("truetype");
-} */
-
-
+	font-weight: bold;
+	src: url(/public/fonts/IBMPlexSans-BoldItalic.ttf) format('truetype');
+}

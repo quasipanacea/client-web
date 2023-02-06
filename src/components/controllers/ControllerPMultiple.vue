@@ -12,7 +12,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { FormKit } from '@formkit/vue'
 
 import {
 	onConstructPopup,
@@ -39,7 +38,7 @@ export default defineComponent({
 			if (idx !== -1) components.value.splice(idx, 1)
 		})
 
-		function removePopup(obj: typeof components.value[0]) {
+		function removePopup(obj: (typeof components.value)[0]) {
 			const idx = components.value.findIndex((item) => item.id == obj.id)
 			components.value.splice(idx, 1)
 			// eslint-disable-next-line
@@ -50,9 +49,6 @@ export default defineComponent({
 			components,
 			removePopup,
 		}
-	},
-	components: {
-		FormKit, // SHOULD REMOVE, WITH LINT RULE
 	},
 })
 </script>
