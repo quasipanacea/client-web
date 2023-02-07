@@ -1,6 +1,12 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": ["env.d.ts", "src/**/*", "common/**/*.vue", "common/**/*.ts"],
+	"include": [
+		"env.d.ts",
+		"src/**/*",
+		"common/**/*.vue",
+		"common/**/*.ts",
+		".hidden/test.ts"
+	],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
@@ -10,9 +16,10 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@src/*": ["../server-deno/src/*"],
-			"npm:@trpc/server": ["./node_modules/@trpc/server"],
-			"npm:@trpc/server/*": ["./node_modules/@trpc/server/*"],
-			"npm:zod": ["./node_modules/zod"]
+			"@common/*": ["./common/*"],
+			"~zod": ["./node_modules/zod"],
+			"~trpc-server": ["./node_modules/@trpc/server"],
+			"~trpc-server/*": ["./node_modules/@trpc/server/*"]
 		}
 	}
 }

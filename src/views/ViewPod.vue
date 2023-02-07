@@ -41,15 +41,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, markRaw, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import * as util from '../../src/util/util'
-import * as utilsPlugin from '../../src/util/utilsPlugin'
 import type * as schema from '../../common/schemaV2'
 import * as apiv2 from '../util/apiv2'
 
-import nil from '@/components/PodNull.vue'
 import PodWorkaround from '../../common/util/PodWorkaround.vue'
 
 export default defineComponent({
@@ -57,7 +54,6 @@ export default defineComponent({
 		uuid: String,
 	},
 	components: {
-		nil,
 		PodWorkaround,
 	},
 	setup(props) {
@@ -75,15 +71,6 @@ export default defineComponent({
 
 			// get type
 			pod.value = await apiv2.podQuery({ uuid: props.uuid })
-
-			// const prettyName = util.podTypeToDirname(pod.type)
-			// const modules = await utilsPlugin.loadPluginVueComponents()
-			// for (const module in modules) {
-			// 	if (module.includes(prettyName)) {
-			// 		dynamicComponentName.value = prettyName
-			// 		dynamicComponent.value = modules[module]
-			// 	}
-			// }
 		})()
 
 		async function onDelete() {

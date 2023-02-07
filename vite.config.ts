@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import postcssNesting from 'postcss-nesting'
 
 export default defineConfig({
 	plugins: [vue()],
@@ -29,9 +28,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
+			'#trpc-server': 'npm:@trpc/server@10.10.0',
 		},
-	},
-	css: {
-		postcss: { plugins: [postcssNesting] },
 	},
 })

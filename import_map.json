@@ -1,5 +1,0 @@
-{
-	"imports": {
-		"zod": "./node_modules/zzzod"
-	}
-}
