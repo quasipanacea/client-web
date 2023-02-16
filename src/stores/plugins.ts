@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 
-import { tc } from '@/util/trpc'
+import { api } from '@/util/api'
 
-const data = await tc.pluginList.query()
+const data = await api.pluginList.query()
 
 export const usePluginsStore = defineStore('plugins', {
 	state: () => {
 		const plugins = data.plugins
-			.filter((item) => item.resource === 'overviews')
-			.map((item) => item.name)
+			.filter((plugin) => plugin.kind === 'overview')
+			.map((plugin) => plugin.id)
 
-		const currentPlugin = data.plugins[0].name
+		const currentPlugin = data.plugins[0].id
 
 		return {
 			plugins,

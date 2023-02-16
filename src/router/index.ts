@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const defaultOverview = 'by-pod'
+const defaultOverview = 'column'
 
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
-		// new routes
 		{
 			path: '/',
 			redirect: `/overview/${defaultOverview}`,
@@ -19,10 +18,6 @@ export default createRouter({
 			path: '/pod/:uuid',
 			component: () => import('@/views/ViewPod.vue'),
 			props: true,
-		},
-		{
-			path: '/note-old',
-			component: () => import('@/views/ViewNote.vue'),
 		},
 	],
 })

@@ -12,7 +12,7 @@ module.exports = {
 	env: {
 		'vue/setup-compiler-macros': true,
 	},
-	ignorePatterns: ['common/**'],
+	ignorePatterns: ['common/**', 'server-deno/**'],
 	overrides: [
 		{
 			files: ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],

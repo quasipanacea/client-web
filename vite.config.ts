@@ -28,7 +28,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
-			'#trpc-server': 'npm:@trpc/server@10.10.0',
 		},
 	},
 })

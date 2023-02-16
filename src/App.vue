@@ -1,19 +1,20 @@
 <template>
 	<nav class="root-nav">
-		<span @click="showSettings = true">
+		<span @click="showPopupSettings">
 			<FeatherSettings />
 		</span>
-		<span @click="showHelp = true">
+		<span @click="showPopupInfo">
 			<FeatherHelp />
 		</span>
 	</nav>
 	<div class="root-view">
 		<RouterView />
 	</div>
-	<dialog :open="showSettings" class="root-dialog-settings">
+
+	<PopupComponent event-name="show-popup-settings">
 		<form class="pure-form pure-form-stacked">
 			<fieldset>
-				<legend>Settings</legend>
+				<legend><h1>Settings</h1></legend>
 
 				<label for="current-plugin">Set Overview Component</label>
 				<select id="current-plugin" v-model="pluginStore.currentPlugin">
@@ -25,69 +26,55 @@
 						{{ plugin }}
 					</option>
 				</select>
-
-				<button
-					@click="showSettings = false"
-					class="pure-button pure-button-primary"
-				>
-					Close
-				</button>
 			</fieldset>
 		</form>
-	</dialog>
-	<dialog :open="showHelp" class="root-dialog-help">
+	</PopupComponent>
+	<PopupComponent event-name="show-popup-info">
 		<form class="pure-form pure-form-stacked">
 			<fieldset>
-				<legend>Help</legend>
-
+				<legend><h1>Help</h1></legend>
 				<p>
 					To learn more about Quazipanacea, please see the GitHub
 					<a href="https://github.com/quazipanacea">organization</a>.
 				</p>
-				<button
-					@click="showHelp = false"
-					class="pure-button pure-button-primary"
-				>
-					Close
-				</button>
 			</fieldset>
 		</form>
-	</dialog>
-	<ControllerPSingle />
+	</PopupComponent>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
+import { emitter } from '@/util/emitter'
 import { usePluginsStore } from '@/stores/plugins'
 import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
-import ActionPopup from '@/subprojects/actionpopup/ActionPopup.vue'
-import ControllerPMultiple from './components/controllers/ControllerPMultiple.vue'
-import ControllerPSingle from './components/controllers/ControllerPSingle.vue'
+import PopupComponent from '@/components/PopupComponent.vue'
 
 export default defineComponent({
 	setup() {
-		const showSettings = ref(false)
-		const showHelp = ref(false)
 		const pluginStore = usePluginsStore()
 
 		return {
-			showSettings,
-			showHelp,
 			pluginStore,
+			showPopupSettings() {
+				emitter.emit('show-popup-settings')
+			},
+			showPopupInfo() {
+				emitter.emit('show-popup-info')
+			},
 		}
 	},
 	components: {
 		FeatherHelp,
 		FeatherSettings,
-		ControllerPSingle,
+		PopupComponent,
 	},
 })
 </script>
 
 <style>
-@import './assets/base.css';
+@import '@/assets/base.css';
 
 html,
 body {

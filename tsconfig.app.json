@@ -1,21 +1,17 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": [
-		"env.d.ts",
-		"src/**/*",
-		"common/**/*.vue",
-		"common/**/*.ts",
-		".hidden/test.ts"
-	],
+	"include": ["env.d.ts", "globals.d.ts", "src", "common", "server-deno"],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
+		"ignoreDeprecations": "5.0",
 		"lib": ["ES2022", "DOM"],
 		"composite": true,
 		"baseUrl": ".",
+		"rootDir": "..",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@src/*": ["../server-deno/src/*"],
+			"@src/*": ["./server-deno/src/*"],
 			"@common/*": ["./common/*"],
 			"~zod": ["./node_modules/zod"],
 			"~trpc-server": ["./node_modules/@trpc/server"],

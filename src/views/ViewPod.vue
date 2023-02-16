@@ -1,13 +1,11 @@
 <template>
-	<template v-if="pod">
+	<template v-if="currentPod">
 		<div class="header">
-			<h1 class="title">{{ pod.name }}</h1>
+			<h1 class="title">{{ currentPod.name }}</h1>
 			<span class="menu">
 				<ul class="pure-menu pure-menu-horizontal">
 					<li class="pure-menu-item">
-						<RouterLink to="/overview/OverviewByPod" class="pure-menu-link"
-							>Back</RouterLink
-						>
+						<RouterLink to="/" class="pure-menu-link">Back</RouterLink>
 					</li>
 					<li
 						class="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
@@ -15,7 +13,9 @@
 						<a class="pure-menu-link">Actions</a>
 						<ul class="pure-menu-children">
 							<li class="pure-menu-item">
-								<a class="pure-menu-link" @click="onDelete">Delete</a>
+								<a class="pure-menu-link" @click="onDeletePod(currentPod.uuid)"
+									>Delete</a
+								>
 							</li>
 						</ul>
 					</li>
@@ -35,67 +35,51 @@
 				</tr>
 			</tbody>
 		</table>
-		<PodWorkaround :handler="pod.handler" />
-		<!-- <component :is="dynamicComponent" /> -->
+		<component v-if="currentModule" :is="currentModule" />
 	</template>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, shallowRef, onMounted, ref } from 'vue'
 
-import type * as schema from '../../common/schemaV2'
-import * as apiv2 from '../util/apiv2'
-
-import PodWorkaround from '../../common/util/PodWorkaround.vue'
+import type * as t from '@common/types.ts'
+import { api } from '@/util/api'
 
 export default defineComponent({
 	props: {
 		uuid: String,
 	},
-	components: {
-		PodWorkaround,
-	},
+	components: {},
 	setup(props) {
-		const router = useRouter()
+		const currentPod = ref<t.Pod_t | null>(null)
+		const currentModule = shallowRef(null)
 
-		const pod = ref<null | schema.podQuery_resT>(null)
-
-		// const dynamicComponentName = ref('nil')
-		// const dynamicComponent = ref<null | unknown>(null)
-
-		;(async () => {
-			if (!props.uuid) {
-				throw new Error('uuid is not truthy')
+		onMounted(async () => {
+			const pod = (await api.podList.query()).pods.find(
+				(item) => item.uuid === props.uuid,
+			)
+			if (!pod) {
+				throw new Error(`Failed to find pod: ${props.uuid}`)
 			}
+			currentPod.value = pod
 
-			// get type
-			pod.value = await apiv2.podQuery({ uuid: props.uuid })
-		})()
+			const camelCased = pod.pluginId.replace(/-([a-z])/g, function (g) {
+				return g[1].toUpperCase()
+			})
+			const filename = 'Pod' + camelCased[0].toUpperCase() + camelCased.slice(1)
 
-		async function onDelete() {
-			if (!props.uuid) return
-
-			await apiv2.podRemove({ uuid: props.uuid })
-			router.push('/')
-		}
-
-		// const dynamicComponent = markRaw(nil)
-		// const dynamicComponentName = ref('nil')
-		// ;(async () => {
-		// 	const modules = import.meta.glob('./File*.vue')
-		// 	const component = (await modules['./FileA.vue']()).default
-		// 	dynamicComponent.value = component
-		// 	dynamicComponentName.value = 'FileA'
-
-		// 	console.log(dynamicComponent)
-		// })()
+			const module = (
+				await import(`../../common/resource-symlinks/pods/${filename}.vue`)
+			).default
+			currentModule.value = module
+		})
 
 		return {
-			pod,
-			onDelete,
-			// dynamicComponent,
-			// dynamicComponentName,
+			currentPod,
+			currentModule,
+			async onDeletePod(uuid: string) {
+				await api.podRemove.mutate({ uuid })
+			},
 		}
 	},
 })
