@@ -1,9 +1,9 @@
 <template>
 	<nav class="root-nav">
-		<span @click="showPopupSettings">
+		<span @click="showSettingsPopup">
 			<FeatherSettings />
 		</span>
-		<span @click="showPopupInfo">
+		<span @click="showHelpPopup">
 			<FeatherHelp />
 		</span>
 	</nav>
@@ -11,7 +11,10 @@
 		<RouterView />
 	</div>
 
-	<PopupComponent event-name="show-popup-settings">
+	<PopupComponent
+		:show="boolSettingsPopup"
+		@cancel="() => (boolSettingsPopup = false)"
+	>
 		<form class="pure-form pure-form-stacked">
 			<fieldset>
 				<legend><h1>Settings</h1></legend>
@@ -29,7 +32,7 @@
 			</fieldset>
 		</form>
 	</PopupComponent>
-	<PopupComponent event-name="show-popup-info">
+	<PopupComponent :show="boolHelpPopup" @cancel="() => (boolHelpPopup = false)">
 		<form class="pure-form pure-form-stacked">
 			<fieldset>
 				<legend><h1>Help</h1></legend>
@@ -42,35 +45,26 @@
 	</PopupComponent>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-import { emitter } from '@/util/emitter'
+<script setup lang="ts">
 import { usePluginsStore } from '@/stores/plugins'
 import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
 import PopupComponent from '@/components/PopupComponent.vue'
+import { ref } from 'vue'
 
-export default defineComponent({
-	setup() {
-		const pluginStore = usePluginsStore()
+const pluginStore = usePluginsStore()
 
-		return {
-			pluginStore,
-			showPopupSettings() {
-				emitter.emit('show-popup-settings')
-			},
-			showPopupInfo() {
-				emitter.emit('show-popup-info')
-			},
-		}
-	},
-	components: {
-		FeatherHelp,
-		FeatherSettings,
-		PopupComponent,
-	},
-})
+// popup: settings
+const boolSettingsPopup = ref(false)
+function showSettingsPopup() {
+	boolSettingsPopup.value = true
+}
+
+// popup: help
+const boolHelpPopup = ref(false)
+function showHelpPopup() {
+	boolHelpPopup.value = true
+}
 </script>
 
 <style>

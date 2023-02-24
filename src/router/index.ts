@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const defaultOverview = 'column'
+const defaultOverview = 'by-collection'
 
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
