@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 
 import { api } from '@/util/api'
 
-const data = await api.pluginList.query()
-
 export const usePluginsStore = defineStore('plugins', {
-	state: () => {
+	state: async () => {
+		const data = await api.pluginList.query()
+
 		const plugins = data.plugins
 			.filter((plugin) => plugin.kind === 'overview')
 			.map((plugin) => plugin.id)
