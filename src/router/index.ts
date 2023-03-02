@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const defaultOverview = 'by-collection'
+const defaultOverview = 'graph-cytoscape'
 
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
