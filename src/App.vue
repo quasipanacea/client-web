@@ -38,7 +38,9 @@
 				<legend><h1>Help</h1></legend>
 				<p>
 					To learn more about Quazipanacea, please see the GitHub
-					<a href="https://github.com/quazipanacea">organization</a>.
+					<a href="https://github.com/quazipanacea" target="__blank"
+						>organization</a
+					>.
 				</p>
 			</fieldset>
 		</form>

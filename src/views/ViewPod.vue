@@ -13,16 +13,10 @@
 						<a class="pure-menu-link">Actions</a>
 						<ul class="pure-menu-children">
 							<li class="pure-menu-item">
-								<a
-									class="pure-menu-link"
-									@click="
-										showRenamePodPopup(currentPod?.uuid, currentPod?.name)
-									"
-									>Rename</a
-								>
+								<a class="pure-menu-link" @click="actionRename">Rename</a>
 							</li>
 							<li class="pure-menu-item">
-								<a class="pure-menu-link" @click="podRemove(currentPod.uuid)"
+								<a class="pure-menu-link" @click="actionDelete(currentPod.uuid)"
 									>Delete</a
 								>
 							</li>
@@ -31,19 +25,6 @@
 				</ul>
 			</span>
 		</div>
-
-		<table class="pure-table">
-			<thead>
-				<th>Property</th>
-				<th>Value</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td>UUID</td>
-					<td>{{ uuid }}</td>
-				</tr>
-			</tbody>
-		</table>
 		<component v-if="currentModule" :is="currentModule" />
 		<PodRenamePopup
 			:show="boolRenamePod"
@@ -57,14 +38,12 @@
 
 <script setup lang="ts">
 import { shallowRef, onMounted, ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
 
 import type * as t from '@common/types.ts'
 import { api } from '@/util/api'
 
 import PodRenamePopup from '@common/components/popups/PodRenamePopup.vue'
 
-const router = useRouter()
 const props = defineProps<{ uuid: string }>()
 
 const currentPod = ref<t.Pod_t | null>(null)
@@ -90,7 +69,11 @@ onMounted(async () => {
 	currentModule.value = module
 })
 
-async function podRemove(uuid: string) {
+async function actionRename() {
+	showRenamePodPopup(currentPod?.uuid, currentPod?.name)
+}
+
+async function actionDelete(uuid: string) {
 	if (globalThis.confirm('Are you sure?')) {
 		await api.podRemove.mutate({ uuid })
 	}
