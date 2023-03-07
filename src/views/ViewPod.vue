@@ -45,7 +45,7 @@ import { shallowRef, onMounted, ref, reactive } from 'vue'
 import type * as t from '@common/types.ts'
 import { api } from '@/util/api'
 
-import PodRenamePopup from '@common/components/popups/PodRenamePopup.vue'
+import PodRenamePopup from '@common/shared/components/popups/PodRenamePopup.vue'
 
 const props = defineProps<{ uuid: string }>()
 
@@ -53,7 +53,7 @@ const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef(null)
 
 onMounted(async () => {
-	const pod = (await api.podList.query()).pods.find(
+	const pod = (await api.core.podList.query()).pods.find(
 		(item) => item.uuid === props.uuid,
 	)
 	if (!pod) {
@@ -78,7 +78,7 @@ async function actionRename() {
 
 async function actionDelete(uuid: string) {
 	if (globalThis.confirm('Are you sure?')) {
-		await api.podRemove.mutate({ uuid })
+		await api.core.podRemove.mutate({ uuid })
 	}
 }
 

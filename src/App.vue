@@ -45,14 +45,17 @@
 			</fieldset>
 		</form>
 	</PopupComponent>
+	<ShowError />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import { usePluginsStore } from '@/stores/plugins'
 import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
 import PopupComponent from '@/components/PopupComponent.vue'
-import { ref } from 'vue'
+import ShowError from '@/components/ShowError.vue'
 
 const pluginStore = usePluginsStore()
 

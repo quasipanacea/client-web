@@ -1,11 +1,5 @@
-import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
+import { apiObj as obj } from '@common/trpcClient'
 
-import type { AppRouter } from '@common/routes'
-
-export const api = createTRPCProxyClient<AppRouter>({
-	links: [
-		httpBatchLink({
-			url: '/trpc',
-		}),
-	],
-})
+// TODO: cleanup
+export const api = obj
+export const apiObj = obj
