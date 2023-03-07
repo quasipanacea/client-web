@@ -1,5 +1,8 @@
 <template>
-	<template v-if="currentPod">
+	<div
+		v-if="currentPod"
+		style="display: grid; grid-template-rows: auto 1fr; height: 100%"
+	>
 		<div class="header">
 			<h1 style="font-size: 42px; font-weight: bold">{{ currentPod.name }}</h1>
 			<span style="position: absolute; right: 10px; top: 15px">
@@ -33,7 +36,7 @@
 			@submit="afterRenamePod"
 			@cancel="() => (boolRenamePod = false)"
 		/>
-	</template>
+	</div>
 </template>
 
 <script setup lang="ts">

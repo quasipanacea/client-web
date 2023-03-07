@@ -8,20 +8,8 @@ export default defineConfig({
 	server: {
 		port: 15_801,
 		proxy: {
-			'/api': {
+			'^/(api|trpc)': {
 				target: 'http://localhost:15800',
-				secure: false,
-				changeOrigin: true,
-			},
-			'/public': {
-				target: 'http://localhost:15800',
-				secure: false,
-				changeOrigin: true,
-			},
-			'/trpc': {
-				target: 'http://localhost:15799',
-				secure: false,
-				changeOrigin: true,
 			},
 		},
 	},
