@@ -3,29 +3,48 @@
 		v-if="currentPod"
 		style="display: grid; grid-template-rows: auto 1fr; height: 100%"
 	>
-		<div class="header">
-			<h1 style="font-size: 42px; font-weight: bold">{{ currentPod.name }}</h1>
-			<span style="position: absolute; right: 10px; top: 15px">
-				<ul class="pure-menu pure-menu-horizontal">
-					<li class="pure-menu-item">
-						<RouterLink to="/" class="pure-menu-link">Back</RouterLink>
-					</li>
-					<li
-						class="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
-					>
-						<a class="pure-menu-link">Actions</a>
-						<ul class="pure-menu-children">
-							<li class="pure-menu-item">
-								<a class="pure-menu-link" @click="actionRename">Rename</a>
-							</li>
-							<li class="pure-menu-item">
-								<a class="pure-menu-link" @click="actionDelete(currentPod.uuid)"
-									>Delete</a
-								>
-							</li>
-						</ul>
-					</li>
-				</ul>
+		<div
+			class="header"
+			style="
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-inline: 5px;
+			"
+		>
+			<h1 style="font-size: 42px; font-weight: bold; font-family: 'Work Sans'">
+				{{ currentPod.name }}
+			</h1>
+			<span style="display: flex; gap: 5px">
+				<router-link to="/">
+					<button class="button is-link">Overview</button>
+				</router-link>
+				<div
+					class="dropdown is-right"
+					:class="{ 'is-active': isDropdownActive }"
+					@click="isDropdownActive = !isDropdownActive"
+				>
+					<div class="dropdown-trigger">
+						<button
+							class="button"
+							aria-haspopup="true"
+							aria-controls="dropdown-menu"
+						>
+							<span>Actions</span>
+							<span class="icon">
+								<i class="fas fa-angle-down"></i>
+							</span>
+						</button>
+					</div>
+					<div class="dropdown-menu" id="dropdown-menu" role="menu">
+						<div class="dropdown-content">
+							<a href="#" class="dropdown-item" @click="actionRename">Rename</a>
+							<a class="dropdown-item" @click="actionDelete(currentPod.uuid)"
+								>Delete</a
+							>
+						</div>
+					</div>
+				</div>
 			</span>
 		</div>
 		<component v-if="currentModule" :is="currentModule" />
@@ -73,7 +92,8 @@ onMounted(async () => {
 })
 
 async function actionRename() {
-	showRenamePodPopup(currentPod?.uuid, currentPod?.name)
+	if (!currentPod.value) return
+	showRenamePodPopup(currentPod.value.uuid, currentPod.value.name)
 }
 
 async function actionDelete(uuid: string) {
@@ -81,6 +101,9 @@ async function actionDelete(uuid: string) {
 		await api.core.podRemove.mutate({ uuid })
 	}
 }
+
+// dropdown
+const isDropdownActive = ref<boolean>(false)
 
 // popup: rename pod
 const boolRenamePod = ref(false)

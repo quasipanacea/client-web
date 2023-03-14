@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 
-import { apiObj as api } from '@/util/api'
+import { apiObj as api } from '@common/trpcClient'
 
-export const usePluginsStore = defineStore('plugins', {
-	state: async () => {
-		const data = await api.core.pluginList.query()
+const data = await api.core.pluginList.query()
 
+export const useDefaultStore = defineStore('default', {
+	state: () => {
 		const plugins = data.plugins
 			.filter((plugin) => plugin.kind === 'overview')
 			.map((plugin) => plugin.id)
 
-		const currentPlugin = data.plugins[0].id
+		const currentPlugin = plugins[0]
 
 		return {
 			plugins,

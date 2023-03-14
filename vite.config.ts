@@ -4,7 +4,17 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-	plugins: [vue()],
+	plugins: [
+		vue({
+			template: {
+				compilerOptions: {
+					isCustomElement: (tag) => {
+						return ['ion-icon'].includes(tag)
+					},
+				},
+			},
+		}),
+	],
 	server: {
 		port: 15_801,
 		proxy: {
@@ -12,6 +22,9 @@ export default defineConfig({
 				target: 'http://localhost:15800',
 			},
 		},
+	},
+	build: {
+		target: 'ES2022',
 	},
 	resolve: {
 		alias: {

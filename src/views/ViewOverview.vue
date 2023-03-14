@@ -1,59 +1,136 @@
 <template>
-	<component v-if="currentModule" :is="currentModule" />
+	<nav class="root-nav">
+		<span @click="showSettingsPopup">
+			<FeatherSettings />
+		</span>
+		<span @click="showHelpPopup">
+			<FeatherHelp />
+		</span>
+	</nav>
+	<div
+		style="
+			position: absolute;
+			top: 30px;
+			left: 0;
+			width: 100%;
+			height: calc(100% - 30px);
+		"
+	>
+		<component v-if="currentModule" :is="currentModule" />
+	</div>
+
+	<PopupComponent
+		:show="boolSettingsPopup"
+		@cancel="() => (boolSettingsPopup = false)"
+	>
+		<form class="pure-form pure-form-stacked">
+			<fieldset>
+				<legend><h1>Settings</h1></legend>
+
+				<label for="current-plugin">Set Overview Component</label>
+				<div class="select">
+					<select id="current-plugin" v-model="defaultStore.currentPlugin">
+						<option
+							v-for="plugin in defaultStore.plugins"
+							:key="plugin"
+							:value="plugin"
+						>
+							{{ plugin }}
+						</option>
+					</select>
+				</div>
+			</fieldset>
+		</form>
+	</PopupComponent>
+	<PopupComponent :show="boolHelpPopup" @cancel="() => (boolHelpPopup = false)">
+		<form class="pure-form pure-form-stacked">
+			<fieldset>
+				<legend><h1>Help</h1></legend>
+				<p>
+					To learn more about Quazipanacea, please see the GitHub
+					<a href="https://github.com/quazipanacea" target="__blank"
+						>organization</a
+					>.
+				</p>
+			</fieldset>
+		</form>
+	</PopupComponent>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, shallowRef } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { usePluginsStore } from '@/stores/plugins'
+import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
+import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
+import PopupComponent from '@/components/PopupComponent.vue'
 
-export default defineComponent({
-	props: {
-		pluginName: String,
-	},
-	setup(props) {
-		const router = useRouter()
-		const pluginStore = usePluginsStore()
-		const currentModule = shallowRef(null)
+import { useDefaultStore } from '@/stores/default.js'
 
-		async function set(name: string) {
-			const camelCased = name.replace(/-([a-z])/g, function (g) {
-				return g[1].toUpperCase()
-			})
-			const filename =
-				'Overview' + camelCased[0].toUpperCase() + camelCased.slice(1)
+const props = defineProps<{
+	pluginName: string
+}>()
 
-			const module = (
-				await import(`../../common/resource-symlinks/overviews/${filename}.vue`)
-			).default
-			currentModule.value = module
-		}
+const router = useRouter()
+const defaultStore = useDefaultStore()
+const currentModule = shallowRef(null)
 
-		onMounted(async () => {
-			if (!props.pluginName) return
-			await set(props.pluginName)
-			pluginStore.currentPlugin = props.pluginName
-		})
-		// watch(router.currentRoute, (value) => {
-		// 	pluginStore.currentPlugin = value
-		// })
-		pluginStore.$subscribe(async (_, state) => {
-			router.push({
-				path: `/overview/${state.currentPlugin}`,
-			})
-			await set(state.currentPlugin)
-		})
+async function set(name: string) {
+	const camelCased = name.replace(/-([a-z])/g, function (g) {
+		return g[1].toUpperCase()
+	})
+	const filename =
+		'Overview' + camelCased[0].toUpperCase() + camelCased.slice(1)
 
-		return {
-			currentModule,
-		}
-	},
+	const module = (
+		await import(`../../common/resource-symlinks/overviews/${filename}.vue`)
+	).default
+	currentModule.value = module
+}
+
+onMounted(async () => {
+	if (!props.pluginName) return
+	await set(props.pluginName)
+	defaultStore.currentPlugin = props.pluginName
 })
+defaultStore.$subscribe(async (_, state) => {
+	router.push({
+		path: `/overview/${state.currentPlugin}`,
+	})
+	await set(state.currentPlugin)
+})
+
+// popup: settings
+const boolSettingsPopup = ref(false)
+function showSettingsPopup() {
+	boolSettingsPopup.value = true
+}
+
+// popup: help
+const boolHelpPopup = ref(false)
+function showHelpPopup() {
+	boolHelpPopup.value = true
+}
 </script>
 
 <style scoped>
 .plugin-root {
 	padding: 10px;
+}
+
+.root-nav {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--oc-gray-1);
+	box-shadow: 2px 2px 3px var(--oc-gray-2);
+}
+
+.root-nav > span {
+	margin: 2px;
+	cursor: pointer;
+}
+
+.root-nav > span > svg {
+	display: block;
 }
 </style>
