@@ -20,34 +20,25 @@ import { onMounted, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { api } from '@/util/api'
+import * as util from '@/util/util'
 import { useDefaultStore } from '@/stores/default.js'
 
 const props = defineProps<{
 	coverUuid: string
 }>()
 
-const router = useRouter()
-const defaultStore = useDefaultStore()
-const currentModule = shallowRef(null)
+const currentModule = shallowRef<null | unknown>(null)
 
-async function set(coverUuid: string) {
+async function updateModule(coverUuid: string) {
 	const { covers } = await api.core.coverList.query()
 	const currentCover = covers.find((item) => item.uuid === coverUuid)
 	if (!currentCover) throw new Error('currentCollection is undefined')
-	console.log(currentCover)
-	const camelCased = currentCover.pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename = 'Cover' + camelCased[0].toUpperCase() + camelCased.slice(1)
 
-	const module = (
-		await import(`../../common/resource-symlinks/cover/${filename}.vue`)
-	).default
-	currentModule.value = module
+	currentModule.value = await util.importCover(currentCover.pluginId)
 }
 
 onMounted(async () => {
 	if (!props.coverUuid) return
-	await set(props.coverUuid)
+	await updateModule(props.coverUuid)
 })
 </script>

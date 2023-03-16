@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Collection</h1>
+		<h1>Group</h1>
 		<div
 			style="
 				position: absolute;
@@ -17,38 +17,27 @@
 
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { api } from '@/util/api'
-import { useDefaultStore } from '@/stores/default.js'
+import * as util from '@/util/util'
 
 const props = defineProps<{
 	groupUuid: string
 }>()
 
-const currentModule = shallowRef(null)
+const currentModule = shallowRef<null | unknown>(null)
 
-async function set(groupUuid: string) {
-	const { collections } = await api.core.collectionList.query()
-	const currentCollection = collections.find((item) => item.uuid === groupUuid)
-	if (!currentCollection) throw new Error('currentCollection is undefined')
+async function updateModule(groupUuid: string) {
+	const { groups } = await api.core.groupList.query()
+	const currentGroup = groups.find((item) => item.uuid === groupUuid)
+	if (!currentGroup) throw new Error('currentCollection is undefined')
 
-	const camelCased = currentCollection.pluginId.replace(
-		/-([a-z])/g,
-		function (g) {
-			return g[1].toUpperCase()
-		},
-	)
-	const filename = 'Group' + camelCased[0].toUpperCase() + camelCased.slice(1)
-
-	const module = (
-		await import(`../../common/resource-symlinks/group/${filename}.vue`)
-	).default
-	currentModule.value = module
+	currentModule.value = await util.importGroup(currentGroup.pluginId)
 }
 
 onMounted(async () => {
-	if (!props.groupUuid) return
-	await set(props.groupUuid)
+	if (!props.groupUuid) throw new Error(`Failed to pass groupUuid`)
+
+	await updateModule(props.groupUuid)
 })
 </script>

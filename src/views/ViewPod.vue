@@ -62,6 +62,7 @@
 import { shallowRef, onMounted, ref, reactive } from 'vue'
 
 import type * as t from '@common/types.ts'
+import * as util from '@/util/util'
 import { api } from '@/util/api'
 
 import PodRenamePopup from '@common/shared/components/popups/PodRenamePopup.vue'
@@ -69,7 +70,7 @@ import PodRenamePopup from '@common/shared/components/popups/PodRenamePopup.vue'
 const props = defineProps<{ uuid: string }>()
 
 const currentPod = ref<t.Pod_t | null>(null)
-const currentModule = shallowRef(null)
+const currentModule = shallowRef<null | unknown>(null)
 
 onMounted(async () => {
 	const pod = (await api.core.podList.query()).pods.find(
@@ -79,16 +80,7 @@ onMounted(async () => {
 		throw new Error(`Failed to find pod: ${props.uuid}`)
 	}
 	currentPod.value = pod
-
-	const camelCased = pod.pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename = 'Pod' + camelCased[0].toUpperCase() + camelCased.slice(1)
-
-	const module = (
-		await import(`../../common/resource-symlinks/pods/${filename}.vue`)
-	).default
-	currentModule.value = module
+	currentModule.value = await util.importPod(pod.pluginId)
 })
 
 async function actionRename() {
