@@ -9,6 +9,7 @@
 		"composite": true,
 		"baseUrl": ".",
 		"rootDir": "..",
+		"typeRoots": ["./src/typings"],
 		"paths": {
 			"@/*": ["./src/*"],
 			"@src/*": ["./server-deno/src/*"],
