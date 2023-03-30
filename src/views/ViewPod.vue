@@ -47,7 +47,9 @@
 				</div>
 			</span>
 		</div>
-		<component v-if="currentModule" :is="currentModule" />
+		<div class=":pod-wrapper">
+			<component v-if="currentModule" :is="currentModule" />
+		</div>
 		<PodRenamePopup
 			:show="boolRenamePod"
 			:podUuid="dataRenamePod.podUuid"
