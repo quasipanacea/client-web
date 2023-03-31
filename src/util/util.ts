@@ -3,7 +3,7 @@ import {
 	coverPlugins,
 	overviewPlugins,
 	podPlugins,
-} from '@quazipanacea/pack-core/_client.js'
+} from '@quasipanacea/pack-core/_client.js'
 
 export async function importGroup(pluginId: string): Promise<unknown> {
 	for (const groupPlugin of groupPlugins) {

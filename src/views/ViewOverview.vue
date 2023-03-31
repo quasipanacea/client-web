@@ -47,8 +47,8 @@
 			<fieldset>
 				<legend><h1>Help</h1></legend>
 				<p>
-					To learn more about Quazipanacea, please see the GitHub
-					<a href="https://github.com/quazipanacea" target="__blank"
+					To learn more about Quasipanacea, please see the GitHub
+					<a href="https://github.com/quasipanacea" target="__blank"
 						>organization</a
 					>.
 				</p>
@@ -63,7 +63,7 @@ import { useRouter } from 'vue-router'
 
 import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
-import PopupComponent from '@quazipanacea/plugin-components/PopupComponent.vue'
+import PopupComponent from '@quasipanacea/plugin-components/PopupComponent.vue'
 
 import { useDefaultStore } from '@client/stores/default.js'
 import * as util from '@client/util/util.js'

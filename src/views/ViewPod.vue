@@ -63,8 +63,8 @@
 <script setup lang="ts">
 import { shallowRef, onMounted, ref, reactive } from 'vue'
 
-import type * as t from '@quazipanacea/common/types.ts'
-import { PodRenamePopup } from '@quazipanacea/plugin-components/popups/index.ts'
+import type * as t from '@quasipanacea/common/types.ts'
+import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
 
 import * as util from '@client/util/util'
 import { api } from '@client/util/api'
