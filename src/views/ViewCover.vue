@@ -16,18 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, shallowRef } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, shallowRef } from 'vue'
 
-import { api } from '@/util/api'
-import * as util from '@/util/util'
-import { useDefaultStore } from '@/stores/default.js'
+import { api } from '@client/util/api.js'
+import * as util from '@client/util/util.js'
 
 const props = defineProps<{
 	coverUuid: string
 }>()
 
-const currentModule = shallowRef<null | unknown>(null)
+const currentModule = shallowRef<unknown>()
 
 async function updateModule(coverUuid: string) {
 	const { covers } = await api.core.coverList.query()

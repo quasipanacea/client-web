@@ -18,14 +18,14 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
 
-import { api } from '@/util/api'
-import * as util from '@/util/util'
+import { api } from '@client/util/api.js'
+import * as util from '@client/util/util.js'
 
 const props = defineProps<{
 	groupUuid: string
 }>()
 
-const currentModule = shallowRef<null | unknown>(null)
+const currentModule = shallowRef<unknown>()
 
 async function updateModule(groupUuid: string) {
 	const { groups } = await api.core.groupList.query()

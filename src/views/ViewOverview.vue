@@ -61,29 +61,29 @@
 import { onMounted, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import FeatherHelp from '@/components/icons/IconFeatherHelp.vue'
-import FeatherSettings from '@/components/icons/IconFeatherSettings.vue'
-import PopupComponent from '@/components/PopupComponent.vue'
+import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
+import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
+import PopupComponent from '@client/components/PopupComponent.vue'
 
-import { useDefaultStore } from '@/stores/default.js'
-import * as util from '@/util/util'
+import { useDefaultStore } from '@client/stores/default.js'
+import * as util from '@client/util/util.js'
 
 const props = defineProps<{
-	pluginName: string
+	pluginId: string
 }>()
 
 const router = useRouter()
 const defaultStore = useDefaultStore()
-const currentModule = shallowRef<null | unknown>(null)
+const currentModule = shallowRef<unknown>()
 
 async function updateModule(name: string) {
 	currentModule.value = await util.importOverview(name)
 }
 
 onMounted(async () => {
-	if (!props.pluginName) return
-	await updateModule(props.pluginName)
-	defaultStore.currentPlugin = props.pluginName
+	if (!props.pluginId) return
+	await updateModule(props.pluginId)
+	defaultStore.currentPlugin = props.pluginId
 })
 defaultStore.$subscribe(async (_, state) => {
 	router.push({

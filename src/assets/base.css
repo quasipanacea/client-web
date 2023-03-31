@@ -17,6 +17,12 @@ dialog > * {
 	margin: 5px;
 }
 
+html,
+body {
+	height: 100%;
+	overflow: hidden;
+}
+
 body {
 	font-family: sans-serif;
 	text-rendering: optimizeLegibility;

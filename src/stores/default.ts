@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { apiObj as api } from '@common/trpcClient'
+import { apiObj as api } from '@quazipanacea/common/trpcClient.ts'
 
 const data = await api.core.pluginList.query()
 

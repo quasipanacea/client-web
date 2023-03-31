@@ -6,17 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import ShowError from '@/components/ShowError.vue'
+import ShowError from '@client/components/ShowError.vue'
 </script>
 
 <style>
-@import '@/assets/base.css';
-
-html,
-body {
-	height: 100%;
-	overflow: hidden;
-}
+@import '@client/assets/base.css';
 
 #app {
 	height: 100%;

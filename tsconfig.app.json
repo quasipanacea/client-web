@@ -11,9 +11,8 @@
 		"rootDir": "..",
 		"typeRoots": ["./src/typings"],
 		"paths": {
-			"@/*": ["./src/*"],
+			"@client/*": ["./src/*"],
 			"@src/*": ["./server-deno/src/*"],
-			"@common/*": ["./common/*"],
 			"~zod": ["./node_modules/zod"],
 			"~trpc-server": ["./node_modules/@trpc/server"],
 			"~trpc-server/*": ["./node_modules/@trpc/server/*"]

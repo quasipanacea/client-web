@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { defaults } from '../defaults.ts'
+
+import { defaults } from '../defaults.js'
 
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,23 +10,23 @@ export default createRouter({
 			redirect: `/overview/${defaults.defaultOverview}`,
 		},
 		{
-			path: '/overview/:pluginName',
-			component: () => import('@/views/ViewOverview.vue'),
+			path: '/overview/:pluginId',
+			component: () => import('@client/views/ViewOverview.vue'),
 			props: true,
 		},
 		{
-			path: '/pod/:uuid',
-			component: () => import('@/views/ViewPod.vue'),
+			path: '/pod/:podUuid',
+			component: () => import('@client/views/ViewPod.vue'),
 			props: true,
 		},
 		{
 			path: '/group/:groupUuid',
-			component: () => import('@/views/ViewGroup.vue'),
+			component: () => import('@client/views/ViewGroup.vue'),
 			props: true,
 		},
 		{
 			path: '/cover/:coverUuid',
-			component: () => import('@/views/ViewCover.vue'),
+			component: () => import('@client/views/ViewCover.vue'),
 			props: true,
 		},
 	],

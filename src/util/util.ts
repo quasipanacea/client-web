@@ -1,52 +1,48 @@
+import {
+	groupPlugins,
+	coverPlugins,
+	overviewPlugins,
+	podPlugins,
+} from '@quazipanacea/pack-core/_client.js'
+
 export async function importGroup(pluginId: string): Promise<unknown> {
-	const camelCased = pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename = 'Group' + camelCased[0].toUpperCase() + camelCased.slice(1)
+	for (const groupPlugin of groupPlugins) {
+		if (groupPlugin.metadata.id === pluginId) {
+			return groupPlugin.component
+		}
+	}
 
-	const module = (
-		await import(`../../common/resource-symlinks/group/${filename}.vue`)
-	).default
-
-	return module
+	throw new Error(`Failed to find group with id: ${pluginId}`)
 }
 
 export async function importCover(pluginId: string): Promise<unknown> {
-	const camelCased = pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename = 'Cover' + camelCased[0].toUpperCase() + camelCased.slice(1)
+	for (const coverPlugin of coverPlugins) {
+		if (coverPlugin.metadata.id === pluginId) {
+			return coverPlugin.component
+		}
+	}
 
-	const module = (
-		await import(`../../common/resource-symlinks/cover/${filename}.vue`)
-	).default
-
-	return module
+	throw new Error(`Failed to find cover with id: ${pluginId}`)
 }
 
 export async function importOverview(pluginId: string): Promise<unknown> {
-	const camelCased = pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename =
-		'Overview' + camelCased[0].toUpperCase() + camelCased.slice(1)
+	for (const overviewPlugin of overviewPlugins) {
+		if (overviewPlugin.metadata.id === pluginId) {
+			return overviewPlugin.component
+		}
+	}
 
-	const module = (
-		await import(`../../common/resource-symlinks/overviews/${filename}.vue`)
-	).default
-
-	return module
+	throw new Error(`Failed to find overview with id: ${pluginId}`)
 }
 
 export async function importPod(pluginId: string): Promise<unknown> {
-	const camelCased = pluginId.replace(/-([a-z])/g, function (g) {
-		return g[1].toUpperCase()
-	})
-	const filename = 'Pod' + camelCased[0].toUpperCase() + camelCased.slice(1)
+	for (const podPlugin of podPlugins) {
+		console.log(podPlugin.metadata)
 
-	const module = (
-		await import(`../../common/resource-symlinks/pods/${filename}.vue`)
-	).default
+		if (podPlugin.metadata.id === pluginId) {
+			return podPlugin.component
+		}
+	}
 
-	return module
+	throw new Error(`Failed to find pod with id: ${pluginId}`)
 }

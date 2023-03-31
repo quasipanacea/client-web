@@ -1,3 +1,4 @@
+client
 <template>
 	<div
 		v-if="currentPod"
@@ -63,24 +64,25 @@
 <script setup lang="ts">
 import { shallowRef, onMounted, ref, reactive } from 'vue'
 
-import type * as t from '@common/types.ts'
-import * as util from '@/util/util'
-import { api } from '@/util/api'
+import type * as t from '@quazipanacea/common/types.ts'
+import { PodRenamePopup } from '@quazipanacea/common-components/popups/index.ts'
 
-import PodRenamePopup from '@common/shared/components/popups/PodRenamePopup.vue'
+import * as util from '@client/util/util'
+import { api } from '@client/util/api'
 
-const props = defineProps<{ uuid: string }>()
+const props = defineProps<{ podUuid: string }>()
 
 const currentPod = ref<t.Pod_t | null>(null)
-const currentModule = shallowRef<null | unknown>(null)
+const currentModule = shallowRef<unknown>()
 
 onMounted(async () => {
 	const pod = (await api.core.podList.query()).pods.find(
-		(item) => item.uuid === props.uuid,
+		(item) => item.uuid === props.podUuid,
 	)
 	if (!pod) {
-		throw new Error(`Failed to find pod: ${props.uuid}`)
+		throw new Error(`Failed to find pod: ${props.podUuid}`)
 	}
+
 	currentPod.value = pod
 	currentModule.value = await util.importPod(pod.pluginId)
 })
