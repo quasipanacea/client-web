@@ -4,7 +4,6 @@
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
-		"ignoreDeprecations": "5.0",
 		"lib": ["ES2022", "DOM"],
 		"composite": true,
 		"baseUrl": ".",

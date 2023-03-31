@@ -63,7 +63,7 @@ import { useRouter } from 'vue-router'
 
 import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
-import PopupComponent from '@client/components/PopupComponent.vue'
+import PopupComponent from '@quazipanacea/plugin-components/PopupComponent.vue'
 
 import { useDefaultStore } from '@client/stores/default.js'
 import * as util from '@client/util/util.js'
