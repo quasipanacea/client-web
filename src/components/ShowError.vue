@@ -1,10 +1,16 @@
 <template>
 	<div
 		v-if="errors.length > 0"
-		style="position: fixed; top: 0; left: 0; width: 100%; height: 100%"
+		style="position: fixed; inset: 25px; border-radius: 10px"
 	>
-		<div style="margin: 5px; height: 95%; background-color: #ccc">
-			<h1 style="font-size: 48px; color: darkred">UNHANDLED ERROR</h1>
+		<div
+			style="
+				border-radius: 10px;
+				height: 100%;
+				background-color: var(--bulma-danger);
+			"
+		>
+			<h1 style="font-size: 48px">Unhandled Error</h1>
 			<div
 				v-for="(error, i) in errors"
 				style="background-color: orange; height: 90%; cursor: pointer"

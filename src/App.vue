@@ -9,13 +9,7 @@
 import ShowError from '@client/components/ShowError.vue'
 </script>
 
-<style>
-@import '@client/assets/base.css';
-
-#app {
-	height: 100%;
-}
-
+<style scoped>
 .root-view {
 	position: absolute;
 	width: 100%;

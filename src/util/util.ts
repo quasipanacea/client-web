@@ -37,8 +37,6 @@ export async function importOverview(pluginId: string): Promise<unknown> {
 
 export async function importPod(pluginId: string): Promise<unknown> {
 	for (const podPlugin of podPlugins) {
-		console.log(podPlugin.metadata)
-
 		if (podPlugin.metadata.id === pluginId) {
 			return podPlugin.component
 		}

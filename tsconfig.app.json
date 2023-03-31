@@ -1,20 +1,15 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": ["env.d.ts", "globals.d.ts", "src", "common", "server-deno"],
+	"include": ["env.d.ts", "globals.d.ts", "src"],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
 		"lib": ["ES2022", "DOM"],
-		"composite": true,
 		"baseUrl": ".",
 		"rootDir": "..",
 		"typeRoots": ["./src/typings"],
 		"paths": {
-			"@client/*": ["./src/*"],
-			"@src/*": ["./server-deno/src/*"],
-			"~zod": ["./node_modules/zod"],
-			"~trpc-server": ["./node_modules/@trpc/server"],
-			"~trpc-server/*": ["./node_modules/@trpc/server/*"]
+			"@client/*": ["./src/*"]
 		}
 	}
 }
