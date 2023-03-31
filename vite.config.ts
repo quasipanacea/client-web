@@ -2,15 +2,9 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default defineConfig({
-	plugins: [
-		vue(),
-		nodeResolve({
-			moduleDirectories: ['node_modules', 'dependencies'],
-		}),
-	],
+	plugins: [vue()],
 	server: {
 		port: 15_801,
 		proxy: {
