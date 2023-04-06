@@ -1,6 +1,8 @@
 <template>
+	<router-link to="/">
+		<a href="/" class="dropdown-item">Go Home</a>
+	</router-link>
 	<div>
-		<h1>Group</h1>
 		<div
 			style="
 				position: absolute;
@@ -32,7 +34,7 @@ async function updateModule(groupUuid: string) {
 	const currentGroup = groups.find((item) => item.uuid === groupUuid)
 	if (!currentGroup) throw new Error('currentCollection is undefined')
 
-	currentModule.value = await util.importGroup(currentGroup.pluginId)
+	currentModule.value = await util.importGroup(currentGroup.plugin)
 }
 
 onMounted(async () => {

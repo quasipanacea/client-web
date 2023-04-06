@@ -10,13 +10,18 @@ export default createRouter({
 			redirect: `/overview/${defaults.defaultOverview}`,
 		},
 		{
-			path: '/overview/:pluginId',
+			path: '/overview/:plugin',
 			component: () => import('@client/views/ViewOverview.vue'),
 			props: true,
 		},
 		{
 			path: '/pod/:podUuid',
 			component: () => import('@client/views/ViewPod.vue'),
+			props: true,
+		},
+		{
+			path: '/anchor/:anchorUuid',
+			component: () => import('@client/views/ViewAnchor.vue'),
 			props: true,
 		},
 		{

@@ -7,7 +7,6 @@
 		"lib": ["ES2022", "DOM"],
 		"baseUrl": ".",
 		"rootDir": "..",
-		"typeRoots": ["./src/typings"],
 		"paths": {
 			"@client/*": ["./src/*"]
 		}

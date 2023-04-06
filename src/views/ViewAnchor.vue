@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Cover</h1>
+		<h1 class="title">Anchor</h1>
 		<div
 			style="
 				position: absolute;
@@ -22,21 +22,21 @@ import { api } from '@client/util/api.js'
 import * as util from '@client/util/util.js'
 
 const props = defineProps<{
-	coverUuid: string
+	anchorUuid: string
 }>()
 
 const currentModule = shallowRef<unknown>()
 
 async function updateModule(coverUuid: string) {
-	const { covers } = await api.core.coverList.query()
-	const currentCover = covers.find((item) => item.uuid === coverUuid)
-	if (!currentCover) throw new Error('currentCollection is undefined')
+	const { anchors } = await api.core.anchorList.query()
+	const currentAnchor = anchors.find((item) => item.uuid === coverUuid)
+	if (!currentAnchor) throw new Error('currentCollection is undefined')
 
-	currentModule.value = await util.importCover(currentCover.plugin)
+	currentModule.value = await util.importAnchor(currentAnchor.plugin)
 }
 
 onMounted(async () => {
-	if (!props.coverUuid) return
-	await updateModule(props.coverUuid)
+	if (!props.anchorUuid) return
+	await updateModule(props.anchorUuid)
 })
 </script>

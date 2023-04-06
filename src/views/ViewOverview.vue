@@ -69,7 +69,7 @@ import { useDefaultStore } from '@client/stores/default.js'
 import * as util from '@client/util/util.js'
 
 const props = defineProps<{
-	pluginId: string
+	plugin: string
 }>()
 
 const router = useRouter()
@@ -81,9 +81,9 @@ async function updateModule(name: string) {
 }
 
 onMounted(async () => {
-	if (!props.pluginId) return
-	await updateModule(props.pluginId)
-	defaultStore.currentPlugin = props.pluginId
+	if (!props.plugin) return
+	await updateModule(props.plugin)
+	defaultStore.currentPlugin = props.plugin
 })
 defaultStore.$subscribe(async (_, state) => {
 	router.push({

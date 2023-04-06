@@ -83,7 +83,7 @@ onMounted(async () => {
 	}
 
 	currentPod.value = pod
-	currentModule.value = await util.importPod(pod.pluginId)
+	currentModule.value = await util.importPod(pod.plugin)
 })
 
 async function actionRename() {
