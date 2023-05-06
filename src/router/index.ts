@@ -11,27 +11,27 @@ export default createRouter({
 		},
 		{
 			path: '/overview/:plugin',
-			component: () => import('@client/views/ViewOverview.vue'),
+			component: () => import('@client/routes/RouteOverview.vue'),
 			props: true,
 		},
 		{
 			path: '/pod/:podUuid',
-			component: () => import('@client/views/ViewPod.vue'),
+			component: () => import('@client/routes/RoutePod.vue'),
 			props: true,
 		},
 		{
 			path: '/model/:modelUuid',
-			component: () => import('@client/views/ViewModel.vue'),
+			component: () => import('@client/routes/RouteModel.vue'),
 			props: true,
 		},
 		{
 			path: '/group/:groupUuid',
-			component: () => import('@client/views/ViewGroup.vue'),
+			component: () => import('@client/routes/RouteGroup.vue'),
 			props: true,
 		},
 		{
 			path: '/view/:viewUuid',
-			component: () => import('@client/views/ViewView.vue'),
+			component: () => import('@client/routes/RouteView.vue'),
 			props: true,
 		},
 	],
