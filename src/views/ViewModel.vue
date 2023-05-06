@@ -27,9 +27,9 @@ const props = defineProps<{
 
 const currentModule = shallowRef<unknown>()
 
-async function updateModule(coverUuid: string) {
+async function updateModule(viewUuid: string) {
 	const { models } = await api.core.modelList.query()
-	const currentModel = models.find((item) => item.uuid === coverUuid)
+	const currentModel = models.find((item) => item.uuid === viewUuid)
 	if (!currentModel) throw new Error('currentCollection is undefined')
 
 	currentModule.value = await util.importModel(currentModel.plugin)

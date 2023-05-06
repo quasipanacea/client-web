@@ -3,7 +3,7 @@ import {
 	podPlugins,
 	modelPlugins,
 	groupPlugins,
-	coverPlugins,
+	viewPlugins,
 } from '@quasipanacea/pack-core/_client.js'
 
 export async function importOverview(pluginId: string): Promise<unknown> {
@@ -46,12 +46,12 @@ export async function importGroup(pluginId: string): Promise<unknown> {
 	throw new Error(`Failed to find group with id: ${pluginId}`)
 }
 
-export async function importCover(pluginId: string): Promise<unknown> {
-	for (const coverPlugin of coverPlugins) {
-		if (coverPlugin.metadata.id === pluginId) {
-			return coverPlugin.component
+export async function importView(pluginId: string): Promise<unknown> {
+	for (const viewPlugin of viewPlugins) {
+		if (viewPlugin.metadata.id === pluginId) {
+			return viewPlugin.component
 		}
 	}
 
-	throw new Error(`Failed to find cover with id: ${pluginId}`)
+	throw new Error(`Failed to find view with id: ${pluginId}`)
 }

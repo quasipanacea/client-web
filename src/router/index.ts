@@ -30,8 +30,8 @@ export default createRouter({
 			props: true,
 		},
 		{
-			path: '/cover/:coverUuid',
-			component: () => import('@client/views/ViewCover.vue'),
+			path: '/view/:viewUuid',
+			component: () => import('@client/views/ViewView.vue'),
 			props: true,
 		},
 	],
