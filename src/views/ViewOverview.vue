@@ -23,24 +23,22 @@
 		:show="boolSettingsPopup"
 		@cancel="() => (boolSettingsPopup = false)"
 	>
-		<form class="pure-form pure-form-stacked">
-			<fieldset>
-				<legend><h1>Settings</h1></legend>
+		<h2 class="title is-4">Settings</h2>
 
-				<label for="current-plugin">Set Overview Component</label>
-				<div class="select">
-					<select id="current-plugin" v-model="defaultStore.currentPlugin">
-						<option
-							v-for="plugin in defaultStore.plugins"
-							:key="plugin"
-							:value="plugin"
-						>
-							{{ plugin }}
-						</option>
-					</select>
-				</div>
-			</fieldset>
-		</form>
+		<div class="control">
+			<label class="label" for="current-plugin">Set Overview Component</label>
+			<div class="select">
+				<select id="current-plugin" v-model="defaultStore.currentPlugin">
+					<option
+						v-for="plugin in defaultStore.plugins"
+						:key="plugin"
+						:value="plugin"
+					>
+						{{ plugin }}
+					</option>
+				</select>
+			</div>
+		</div>
 	</PopupComponent>
 	<PopupComponent :show="boolHelpPopup" @cancel="() => (boolHelpPopup = false)">
 		<form class="pure-form pure-form-stacked">
