@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1 class="title">Anchor</h1>
+		<h1 class="title">Model</h1>
 		<div
 			style="
 				position: absolute;
@@ -22,21 +22,21 @@ import { api } from '@client/util/api.js'
 import * as util from '@client/util/util.js'
 
 const props = defineProps<{
-	anchorUuid: string
+	modelUuid: string
 }>()
 
 const currentModule = shallowRef<unknown>()
 
 async function updateModule(coverUuid: string) {
-	const { anchors } = await api.core.anchorList.query()
-	const currentAnchor = anchors.find((item) => item.uuid === coverUuid)
-	if (!currentAnchor) throw new Error('currentCollection is undefined')
+	const { models } = await api.core.modelList.query()
+	const currentModel = models.find((item) => item.uuid === coverUuid)
+	if (!currentModel) throw new Error('currentCollection is undefined')
 
-	currentModule.value = await util.importAnchor(currentAnchor.plugin)
+	currentModule.value = await util.importModel(currentModel.plugin)
 }
 
 onMounted(async () => {
-	if (!props.anchorUuid) return
-	await updateModule(props.anchorUuid)
+	if (!props.modelUuid) return
+	await updateModule(props.modelUuid)
 })
 </script>

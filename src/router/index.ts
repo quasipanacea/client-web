@@ -20,8 +20,8 @@ export default createRouter({
 			props: true,
 		},
 		{
-			path: '/anchor/:anchorUuid',
-			component: () => import('@client/views/ViewAnchor.vue'),
+			path: '/model/:modelUuid',
+			component: () => import('@client/views/ViewModel.vue'),
 			props: true,
 		},
 		{

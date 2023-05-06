@@ -1,7 +1,7 @@
 import {
 	overviewPlugins,
 	podPlugins,
-	anchorPlugins,
+	modelPlugins,
 	groupPlugins,
 	coverPlugins,
 } from '@quasipanacea/pack-core/_client.js'
@@ -26,14 +26,14 @@ export async function importPod(pluginId: string): Promise<unknown> {
 	throw new Error(`Failed to find pod with id: ${pluginId}`)
 }
 
-export async function importAnchor(pluginId: string): Promise<unknown> {
-	for (const anchorPlugin of anchorPlugins) {
-		if (anchorPlugin.metadata.id === pluginId) {
-			return anchorPlugin.component
+export async function importModel(pluginId: string): Promise<unknown> {
+	for (const modelPlugin of modelPlugins) {
+		if (modelPlugin.metadata.id === pluginId) {
+			return modelPlugin.component
 		}
 	}
 
-	throw new Error(`Failed to find anchor with id: ${pluginId}`)
+	throw new Error(`Failed to find model with id: ${pluginId}`)
 }
 
 export async function importGroup(pluginId: string): Promise<unknown> {
