@@ -1,16 +1,7 @@
 <template>
-	<div>
-		<h1 class="title">Model</h1>
-		<div
-			style="
-				position: absolute;
-				top: 30px;
-				left: 0;
-				width: 100%;
-				height: calc(100% - 30px);
-			"
-		>
-			<component v-if="currentModule" :is="currentModule" />
+	<div style="height: 100%; position: relative">
+		<div style="position: absolute; inset: 0">
+			<component v-if="currentModule" :is="currentModule" :uuid="modelUuid" />
 		</div>
 	</div>
 </template>

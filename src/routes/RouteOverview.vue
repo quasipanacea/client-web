@@ -1,12 +1,5 @@
 <template>
-	<nav class="root-nav">
-		<span @click="showSettingsPopup">
-			<FeatherSettings />
-		</span>
-		<span @click="showHelpPopup">
-			<FeatherHelp />
-		</span>
-	</nav>
+	<TopNavigation />
 	<div
 		style="
 			position: absolute;
@@ -16,111 +9,38 @@
 			height: calc(100% - 30px);
 		"
 	>
-		<component v-if="currentModule" :is="currentModule" />
+		<component v-if="currentOverview" :is="currentOverview" />
 	</div>
-
-	<PopupComponent
-		:show="boolSettingsPopup"
-		@cancel="() => (boolSettingsPopup = false)"
-	>
-		<h2 class="title is-4">Settings</h2>
-
-		<div class="control">
-			<label class="label" for="current-plugin">Set Overview Component</label>
-			<div class="select">
-				<select id="current-plugin" v-model="defaultStore.currentPlugin">
-					<option
-						v-for="plugin in defaultStore.plugins"
-						:key="plugin"
-						:value="plugin"
-					>
-						{{ plugin }}
-					</option>
-				</select>
-			</div>
-		</div>
-	</PopupComponent>
-	<PopupComponent :show="boolHelpPopup" @cancel="() => (boolHelpPopup = false)">
-		<form class="pure-form pure-form-stacked">
-			<fieldset>
-				<legend><h1>Help</h1></legend>
-				<p>
-					To learn more about Quasipanacea, please see the GitHub
-					<a href="https://github.com/quasipanacea" target="__blank"
-						>organization</a
-					>.
-				</p>
-			</fieldset>
-		</form>
-	</PopupComponent>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, shallowRef } from 'vue'
+import { onMounted, shallowRef, watch, toRef } from 'vue'
 import { useRouter } from 'vue-router'
-
-import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
-import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
-import PopupComponent from '@quasipanacea/plugin-components/PopupComponent.vue'
 
 import { useDefaultStore } from '@client/stores/default.js'
 import * as util from '@client/util/util.js'
+import TopNavigation from '@client/components/TopNavigation.vue'
 
 const props = defineProps<{
 	plugin: string
 }>()
 
 const router = useRouter()
+const currentOverview = shallowRef<unknown>()
 const defaultStore = useDefaultStore()
-const currentModule = shallowRef<unknown>()
 
-async function updateModule(name: string) {
-	currentModule.value = await util.importOverview(name)
-}
-
-onMounted(async () => {
-	if (!props.plugin) return
-	await updateModule(props.plugin)
-	defaultStore.currentPlugin = props.plugin
-})
-defaultStore.$subscribe(async (_, state) => {
+watch(toRef(defaultStore, 'currentPlugin'), async (value) => {
 	router.push({
-		path: `/overview/${state.currentPlugin}`,
+		path: `/overview/${value}`,
 	})
-	await updateModule(state.currentPlugin)
+	await updateCurrentOverview(value)
 })
 
-// popup: settings
-const boolSettingsPopup = ref(false)
-function showSettingsPopup() {
-	boolSettingsPopup.value = true
-}
+onMounted(() => {
+	updateCurrentOverview(props.plugin)
+})
 
-// popup: help
-const boolHelpPopup = ref(false)
-function showHelpPopup() {
-	boolHelpPopup.value = true
+async function updateCurrentOverview(name: string) {
+	currentOverview.value = await util.importOverview(name)
 }
 </script>
-
-<style scoped>
-.plugin-root {
-	padding: 10px;
-}
-
-.root-nav {
-	display: flex;
-	justify-content: space-between;
-	background-color: var(--oc-gray-1);
-	box-shadow: 2px 2px 3px var(--oc-gray-2);
-}
-
-.root-nav > span {
-	margin: 2px;
-	cursor: pointer;
-}
-
-.root-nav > span > svg {
-	display: block;
-}
-</style>

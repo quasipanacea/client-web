@@ -62,6 +62,7 @@
 
 <script setup lang="ts">
 import { shallowRef, onMounted, ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type * as t from '@quasipanacea/common/types.ts'
 import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
@@ -70,6 +71,7 @@ import * as util from '@client/util/util'
 import { api } from '@client/util/api'
 
 const props = defineProps<{ podUuid: string }>()
+const router = useRouter()
 
 const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef<unknown>()
@@ -94,6 +96,7 @@ async function actionRename() {
 async function actionDelete(uuid: string) {
 	if (globalThis.confirm('Are you sure?')) {
 		await api.core.podRemove.mutate({ uuid })
+		router.push('/')
 	}
 }
 
