@@ -16,8 +16,8 @@
 		"@quasipanacea/common": "workspace:*",
 		"@quasipanacea/pack-core": "workspace:*",
 		"@quasipanacea/plugin-components": "workspace:*",
-		"@trpc/client": "^10.18.0",
-		"@trpc/server": "^10.18.0",
+		"@trpc/client": "^10.25.0",
+		"@trpc/server": "^10.25.0",
 		"@vueuse/core": "^10.1.2",
 		"bulma": "^0.9.4",
 		"mitt": "^3.0.0",
@@ -25,11 +25,12 @@
 		"purecss": "^3.0.0",
 		"vue": "^3.2.47",
 		"vue-router": "^4.1.6",
-		"zod": "^3.19.1"
+		"zod": "^3.21.4"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^15.0.2",
 		"@rushstack/eslint-patch": "^1.2.0",
+		"@tsconfig/node18": "^2.0.0",
 		"@types/jsdom": "^21.1.1",
 		"@types/node": "^18.15.11",
 		"@vitejs/plugin-vue": "^4.2.1",
