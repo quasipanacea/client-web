@@ -13,7 +13,6 @@ declare module 'cytoscape' {
 
 	interface ElementDataDefinition extends cytoscape.ElementDataDefinition {
 		label?: string
-		my: types.MyElementData
 	}
 
 	interface SingularData extends cytoscape.SingularData {

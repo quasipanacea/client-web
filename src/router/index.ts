@@ -25,11 +25,6 @@ export default createRouter({
 			props: true,
 		},
 		{
-			path: '/group/:groupUuid',
-			component: () => import('@client/routes/RouteGroup.vue'),
-			props: true,
-		},
-		{
 			path: '/view/:viewUuid',
 			component: () => import('@client/routes/RouteView.vue'),
 			props: true,
