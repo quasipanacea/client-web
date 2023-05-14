@@ -11,35 +11,34 @@
 		:show="boolSettingsPopup"
 		@cancel="() => (boolSettingsPopup = false)"
 	>
-		<h2 class="title is-4">Settings</h2>
-
-		<div class="control">
+		<h2 class="title mb-1 as-2">Settings</h2>
+		<div class="field">
 			<label class="label" for="current-plugin">Set Overview Component</label>
-			<div class="select">
-				<select id="current-plugin" v-model="defaultStore.currentPlugin">
-					<option
-						v-for="plugin in defaultStore.plugins"
-						:key="plugin"
-						:value="plugin"
-					>
-						{{ plugin }}
-					</option>
-				</select>
+			<div class="control">
+				<div class="select">
+					<select id="current-plugin" v-model="defaultStore.currentPlugin">
+						<option
+							v-for="plugin in defaultStore.plugins"
+							:key="plugin"
+							:value="plugin"
+						>
+							{{ plugin }}
+						</option>
+					</select>
+				</div>
 			</div>
 		</div>
 	</PopupComponent>
 	<PopupComponent :show="boolHelpPopup" @cancel="() => (boolHelpPopup = false)">
-		<form class="pure-form pure-form-stacked">
-			<fieldset>
-				<legend><h1>Help</h1></legend>
-				<p>
-					To learn more about Quasipanacea, please see the GitHub
-					<a href="https://github.com/quasipanacea" target="__blank"
-						>organization</a
-					>.
-				</p>
-			</fieldset>
-		</form>
+		<div class="content">
+			<h2 class="title mb-1 as-2">Help</h2>
+			<p>
+				To learn more about Quasipanacea, please see the GitHub
+				<a href="https://github.com/quasipanacea" target="__blank"
+					>organization</a
+				>.
+			</p>
+		</div>
 	</PopupComponent>
 </template>
 

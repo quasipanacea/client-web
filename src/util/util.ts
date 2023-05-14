@@ -2,7 +2,6 @@ import {
 	overviewPlugins,
 	podPlugins,
 	modelPlugins,
-	groupPlugins,
 	viewPlugins,
 } from '@quasipanacea/pack-core/_client.js'
 
@@ -34,16 +33,6 @@ export async function importModel(pluginId: string): Promise<unknown> {
 	}
 
 	throw new Error(`Failed to find model with id: ${pluginId}`)
-}
-
-export async function importGroup(pluginId: string): Promise<unknown> {
-	for (const groupPlugin of groupPlugins) {
-		if (groupPlugin.metadata.id === pluginId) {
-			return groupPlugin.component
-		}
-	}
-
-	throw new Error(`Failed to find group with id: ${pluginId}`)
 }
 
 export async function importView(pluginId: string): Promise<unknown> {
