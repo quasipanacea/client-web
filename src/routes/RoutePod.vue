@@ -50,13 +50,6 @@
 		<div class=":pod-wrapper">
 			<component v-if="currentModule" :is="currentModule" />
 		</div>
-		<PodRenamePopup
-			:show="boolRenamePod"
-			:podUuid="dataRenamePod.podUuid"
-			:oldName="dataRenamePod.oldName"
-			@submit="afterRenamePod"
-			@cancel="() => (boolRenamePod = false)"
-		/>
 	</div>
 </template>
 
@@ -69,6 +62,7 @@ import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
 
 import * as util from '@client/util/util'
 import { api } from '@client/util/api'
+import { showPopup } from '@quasipanacea/common/client/popup.js'
 
 const props = defineProps<{ podUuid: string }>()
 const router = useRouter()
@@ -104,14 +98,8 @@ async function actionDelete(uuid: string) {
 const isDropdownActive = ref<boolean>(false)
 
 // popup: rename pod
-const boolRenamePod = ref(false)
-const dataRenamePod = reactive({ podUuid: '', oldName: '' })
-function showRenamePodPopup(podUuid: string, oldName: string) {
-	dataRenamePod.podUuid = podUuid
-	dataRenamePod.oldName = oldName
-	boolRenamePod.value = true
-}
-async function afterRenamePod(value: unknown) {
-	boolRenamePod.value = false
+async function showRenamePodPopup(podUuid: string, oldName: string) {
+	await showPopup('show-pod-rename-popup', PodRenamePopup, { podUuid, oldName })
+	window.location.reload()
 }
 </script>
