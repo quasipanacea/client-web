@@ -41,7 +41,7 @@ const popupActive = ref(false)
 const popupComponent = shallowRef<unknown | null>(null)
 const popupProps = ref({})
 
-popupEmitter.attach(({ id, component, props }) => {
+popupEmitter.attach(({ id, component, props = {} }) => {
 	if (id.startsWith('show-')) {
 		popupActive.value = true
 		popupComponent.value = component
