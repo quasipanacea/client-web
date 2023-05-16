@@ -61,11 +61,12 @@ import type * as t from '@quasipanacea/common/types.ts'
 import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
 
 import * as util from '@client/util/util'
-import { api } from '@client/util/api'
+import { useApi3, type BareAppRouter } from '@quasipanacea/common/trpcClient.ts'
 import { showPopup } from '@quasipanacea/common/client/popup.js'
 
 const props = defineProps<{ podUuid: string }>()
 const router = useRouter()
+const api = useApi3<BareAppRouter>()
 
 const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef<unknown>()

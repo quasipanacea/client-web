@@ -18,12 +18,14 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
 
-import { api } from '@client/util/api.js'
+import { useApi3, type BareAppRouter } from '@quasipanacea/common/trpcClient.ts'
 import * as util from '@client/util/util.js'
 
 const props = defineProps<{
 	viewUuid: string
 }>()
+
+const api = useApi3<BareAppRouter>()
 
 const currentModule = shallowRef<unknown>()
 

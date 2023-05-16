@@ -1,10 +1,8 @@
 {
-	"extends": "@vue/tsconfig/tsconfig.json",
+	"extends": "../../tsconfig.json",
 	"include": ["env.d.ts", "globals.d.ts", "src"],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
-		"allowImportingTsExtensions": true,
-		"lib": ["ES2022", "DOM"],
 		"baseUrl": ".",
 		"rootDir": "..",
 		"paths": {

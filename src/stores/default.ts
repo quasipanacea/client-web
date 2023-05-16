@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 
-import { apiObj as api } from '@quasipanacea/common/trpcClient.ts'
+import { useApi3, type BareAppRouter } from '@quasipanacea/common/trpcClient.ts'
+
+const api = useApi3<BareAppRouter>()
 
 const data = await api.core.pluginList.query()
 
