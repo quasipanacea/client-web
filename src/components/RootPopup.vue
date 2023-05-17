@@ -41,15 +41,19 @@ const popupActive = ref(false)
 const popupComponent = shallowRef<unknown | null>(null)
 const popupProps = ref({})
 
-popupEmitter.attach(({ id, component, props = {} }) => {
-	if (id.startsWith('show-')) {
+popupEmitter.attach((msg) => {
+	if (msg.type === 'show') {
 		popupActive.value = true
-		popupComponent.value = component
-		popupProps.value = props
-	} else if (id.startsWith('hide')) {
+		popupComponent.value = msg.component
+		if (msg.props) {
+			popupProps.value = msg.props
+		}
+	} else if (msg.type === 'hide') {
 		popupActive.value = false
 		popupComponent.value = null
 		popupProps.value = {}
+	} else {
+		throw new Error(`Unknown popup message type: ${msg}`)
 	}
 })
 
@@ -57,7 +61,8 @@ function setInactive() {
 	popupActive.value = false
 	popupComponent.value = null
 	popupEmitter.post({
-		id: 'hide-cancel',
+		type: 'hide',
+		id: 'null',
 	})
 }
 </script>

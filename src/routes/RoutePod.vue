@@ -100,7 +100,7 @@ const isDropdownActive = ref<boolean>(false)
 
 // popup: rename pod
 async function showRenamePodPopup(podUuid: string, oldName: string) {
-	await showPopup('show-pod-rename-popup', PodRenamePopup, { podUuid, oldName })
+	await showPopup('pod-rename-popup', PodRenamePopup, { podUuid, oldName })
 	window.location.reload()
 }
 </script>

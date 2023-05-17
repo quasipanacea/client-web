@@ -16,14 +16,14 @@ import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
 import HelpPopup from '@client/components/popups/HelpPopup.vue'
 import SettingsPopup from './popups/SettingsPopup.vue'
 
-import { showPopup } from '@quasipanacea/common/client/popup.js'
+import { showPopupNoData } from '@quasipanacea/common/client/popup.js'
 
 async function showSettingsPopup() {
-	await showPopup('show-null', SettingsPopup)
+	await showPopupNoData('null', SettingsPopup)
 }
 
 async function showHelpPopup() {
-	await showPopup('show-null', HelpPopup)
+	await showPopupNoData('null', HelpPopup)
 }
 </script>
 
