@@ -5,11 +5,11 @@
 	>
 		<RouterView />
 	</div>
-	<RootPopup />
-	<ShowError />
+	<GlobalPopup />
+	<GlobalError />
 </template>
 
 <script setup lang="ts">
-import RootPopup from '@client/components/RootPopup.vue'
-import ShowError from '@client/components/ShowError.vue'
+import GlobalPopup from '@client/components/GlobalPopup.vue'
+import GlobalError from '@client/components/GlobalError.vue'
 </script>

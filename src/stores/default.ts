@@ -4,13 +4,11 @@ import { useApi3, type BareAppRouter } from '@quasipanacea/common/trpcClient.ts'
 
 const api = useApi3<BareAppRouter>()
 
-const data = await api.core.pluginList.query()
+const data = await api.core.pluginList.query({ kind: 'overview' })
 
 export const useDefaultStore = defineStore('default', {
 	state: () => {
-		const plugins = data.plugins
-			.filter((plugin) => plugin.kind === 'overview')
-			.map((plugin) => plugin.id)
+		const plugins = data.plugins.map((plugin) => plugin.id)
 
 		const currentPlugin = plugins[0]
 

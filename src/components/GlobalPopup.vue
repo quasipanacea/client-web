@@ -62,7 +62,7 @@ function setInactive() {
 	popupComponent.value = null
 	popupEmitter.post({
 		type: 'hide',
-		id: 'null',
+		id: 'cancel',
 	})
 }
 </script>

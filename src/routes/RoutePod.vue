@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef, onMounted, ref, reactive } from 'vue'
+import { shallowRef, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type * as t from '@quasipanacea/common/types.ts'
@@ -72,19 +72,12 @@ const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef<unknown>()
 
 onMounted(async () => {
-	const pod = (await api.core.podList.query()).pods.find(
-		(item) => item.uuid === props.podUuid,
-	)
-	if (!pod) {
-		throw new Error(`Failed to find pod: ${props.podUuid}`)
-	}
-
-	currentPod.value = pod
-	currentModule.value = await util.importPod(pod.plugin)
+	await updateData()
 })
 
 async function actionRename() {
 	if (!currentPod.value) return
+
 	showRenamePodPopup(currentPod.value.uuid, currentPod.value.name)
 }
 
@@ -98,9 +91,23 @@ async function actionDelete(uuid: string) {
 // dropdown
 const isDropdownActive = ref<boolean>(false)
 
-// popup: rename pod
 async function showRenamePodPopup(podUuid: string, oldName: string) {
-	await showPopup('pod-rename-popup', PodRenamePopup, { podUuid, oldName })
-	window.location.reload()
+	await showPopup('pod-rename-popup', PodRenamePopup, {
+		podUuid,
+		oldName,
+	})
+	await updateData()
+}
+
+async function updateData() {
+	const pod = (await api.core.podList.query()).pods.find(
+		(item) => item.uuid === props.podUuid,
+	)
+	if (!pod) {
+		throw new Error(`Failed to find pod: ${props.podUuid}`)
+	}
+
+	currentPod.value = pod
+	currentModule.value = await util.importPod(pod.plugin)
 }
 </script>
