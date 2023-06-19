@@ -10,6 +10,10 @@ export default createRouter({
 			redirect: `/overview/${defaults.defaultOverview}`,
 		},
 		{
+			path: '/plugins',
+			component: () => import('@client/routes/RoutePlugins.vue'),
+		},
+		{
 			path: '/overview/:plugin',
 			component: () => import('@client/routes/RouteOverview.vue'),
 			props: true,

@@ -1,27 +1,36 @@
 <template>
-	<div
-		v-if="errors.length > 0"
-		style="position: fixed; inset: 25px; border-radius: 10px"
-	>
+	<div v-if="errors.length > 0">
 		<div
 			style="
+				position: fixed;
+				inset: 25px;
 				border-radius: 10px;
-				height: 100%;
-				background-color: var(--bulma-danger);
+				background-color: white;
+				box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+					0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+					0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 			"
 		>
-			<h1 style="font-size: 48px">Unhandled Error</h1>
-			<div
-				v-for="(error, i) in errors"
-				style="background-color: orange; height: 90%; cursor: pointer"
-				@click="errors.splice(i, 1)"
-				:key="i"
-			>
-				<textarea
-					style="width: 80%; height: 100%"
-					v-model="error.reason"
-				></textarea>
+			<div style="padding: 5px">
+				<h1 class="title as-3">Unhandled Error</h1>
 			</div>
+			<div>
+				<div v-for="{ ev, id } in errors" :key="id">
+					<code>{{
+						ev.filename.split('/').at(-1)?.split('?')[0] +
+						':' +
+						ev.lineno +
+						':' +
+						ev.colno
+					}}</code>
+					<pre>{{ ev.error }}</pre>
+					<pre>{{ ev.message }}</pre>
+					<hr />
+				</div>
+			</div>
+			<button class="button is-black m-1" @click="errors.length = 0">
+				Close
+			</button>
 		</div>
 	</div>
 </template>
@@ -29,20 +38,29 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive } from 'vue'
 
-const errors = reactive<unknown[]>([])
+const errors = reactive<
+	{
+		ev: ErrorEvent
+		id: string
+	}[]
+>([])
 
-function _onUnhandledRejection(ev: Event) {
-	errors.push(ev)
+function onUnhandledRejection(ev: PromiseRejectionEvent) {
+	console.error('UNHANDLED REJECTION')
+	console.error(ev)
 }
-function _onError(ev: Event) {
-	errors.push(ev)
+function onError(ev: ErrorEvent) {
+	errors.push({
+		ev,
+		id: crypto.randomUUID(),
+	})
 }
 onMounted(() => {
-	window.addEventListener('unhandledrejection', _onUnhandledRejection)
-	window.addEventListener('error', _onError)
+	globalThis.addEventListener('unhandledrejection', onUnhandledRejection)
+	globalThis.addEventListener('error', onError)
 })
 onUnmounted(() => {
-	window.removeEventListener('unhandledrejection', _onUnhandledRejection)
-	window.removeEventListener('error', _onError)
+	globalThis.removeEventListener('unhandledrejection', onUnhandledRejection)
+	globalThis.removeEventListener('error', onError)
 })
 </script>

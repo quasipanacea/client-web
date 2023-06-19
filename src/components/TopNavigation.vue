@@ -13,8 +13,8 @@
 import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
 
-import HelpPopup from '@client/components/popups/HelpPopup.vue'
-import SettingsPopup from './popups/SettingsPopup.vue'
+import HelpPopup from '@client/components/popups/PopupHelp.vue'
+import SettingsPopup from './popups/PopupSettings.vue'
 
 import { showPopupNoData } from '@quasipanacea/common/client/popup.js'
 
