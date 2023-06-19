@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { useApi3, type BareAppRouter } from '@quasipanacea/common/trpcClient.ts'
+import { useApi3, type BareAppRouter } from '@quasipanacea/common/client/trpcClient.ts'
 
 const api = useApi3<BareAppRouter>()
 
