@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue'
 
-import { popupEmitter } from '@quasipanacea/common/client/popup.js'
+import { popupEmitter } from '@quasipanacea/common/client/index.js'
 
 const popupActive = ref(false)
 const popupComponent = shallowRef<unknown | null>(null)

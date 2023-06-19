@@ -57,12 +57,15 @@
 import { shallowRef, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type * as t from '@quasipanacea/common/types.ts'
+import { t } from '@quasipanacea/common/index.ts'
+import { getPlugin } from '@quasipanacea/common/client/index.ts'
 import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
 
-import * as util from '@client/util/util'
-import { useApi3, type BareAppRouter } from '@quasipanacea/common/client/trpcClient.ts'
-import { showPopup } from '@quasipanacea/common/client/popup.js'
+import {
+	showPopup,
+	useApi3,
+	type BareAppRouter,
+} from '@quasipanacea/common/client/index.js'
 
 const props = defineProps<{ podUuid: string }>()
 const router = useRouter()
@@ -108,6 +111,6 @@ async function updateData() {
 	}
 
 	currentPod.value = pod
-	currentModule.value = await util.importPod(pod.plugin)
+	currentModule.value = getPlugin('pod', pod.plugin).component
 }
 </script>

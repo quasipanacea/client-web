@@ -17,8 +17,9 @@
 import { onMounted, shallowRef, watch, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { getPlugin } from '@quasipanacea/common/client'
+
 import { useDefaultStore } from '@client/stores/default.js'
-import * as util from '@client/util/util.js'
 import TopNavigation from '@client/components/TopNavigation.vue'
 
 const props = defineProps<{
@@ -40,7 +41,7 @@ onMounted(() => {
 	updateCurrentOverview(props.plugin)
 })
 
-async function updateCurrentOverview(name: string) {
-	currentOverview.value = await util.importOverview(name)
+function updateCurrentOverview(name: string) {
+	currentOverview.value = getPlugin('overview', name).component
 }
 </script>

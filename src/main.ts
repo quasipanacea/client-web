@@ -6,9 +6,9 @@ import '@client/assets/base.css'
 
 import App from '@client/App.vue'
 import router from '@client/router/index.ts'
-import { initPlugins } from '@client/util/util.ts'
+import { initAll } from '@quasipanacea/pack-core/_client.js'
 
-await initPlugins()
+await initAll()
 
 const app = createApp(App)
 app.use(createPinia())

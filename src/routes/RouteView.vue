@@ -18,8 +18,11 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
 
-import { useApi3, type BareAppRouter } from '@quasipanacea/common/client/trpcClient.ts'
-import * as util from '@client/util/util.js'
+import {
+	getPlugin,
+	useApi3,
+	type BareAppRouter,
+} from '@quasipanacea/common/client/index.js'
 
 const props = defineProps<{
 	viewUuid: string
@@ -34,7 +37,7 @@ async function updateModule(viewUuid: string) {
 	const currentView = views.find((item) => item.uuid === viewUuid)
 	if (!currentView) throw new Error('currentCollection is undefined')
 
-	currentModule.value = await util.importView(currentView.plugin)
+	currentModule.value = getPlugin('view', currentView.plugin).component
 }
 
 onMounted(async () => {

@@ -14,9 +14,9 @@ import FeatherHelp from '@client/components/icons/IconFeatherHelp.vue'
 import FeatherSettings from '@client/components/icons/IconFeatherSettings.vue'
 
 import HelpPopup from '@client/components/popups/PopupHelp.vue'
-import SettingsPopup from './popups/PopupSettings.vue'
+import SettingsPopup from '@client/components/popups/PopupSettings.vue'
 
-import { showPopupNoData } from '@quasipanacea/common/client/popup.js'
+import { showPopupNoData } from '@quasipanacea/common/client/index.js'
 
 async function showSettingsPopup() {
 	await showPopupNoData('null', SettingsPopup)
