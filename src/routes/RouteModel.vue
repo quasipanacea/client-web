@@ -10,8 +10,8 @@
 import { onMounted, shallowRef } from 'vue'
 
 import {
-	getPlugin,
-	useApi3,
+	plugin,
+	trpcClient,
 	type BareAppRouter,
 } from '@quasipanacea/common/client/index.js'
 
@@ -19,7 +19,7 @@ const props = defineProps<{
 	modelUuid: string
 }>()
 
-const api = useApi3<BareAppRouter>()
+const api = trpcClient.yieldClient<BareAppRouter>()
 
 const currentModule = shallowRef<unknown>()
 
@@ -28,7 +28,7 @@ async function updateModule(viewUuid: string) {
 	const currentModel = models.find((item) => item.uuid === viewUuid)
 	if (!currentModel) throw new Error('currentCollection is undefined')
 
-	currentModule.value = getPlugin('model', currentModel.plugin).component
+	currentModule.value = plugin.get('model', currentModel.plugin).component
 }
 
 onMounted(async () => {

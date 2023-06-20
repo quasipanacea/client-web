@@ -27,8 +27,8 @@
 <script setup lang="ts">
 import { plugin } from '@quasipanacea/common/client/index.js'
 
-const overviewPlugins = plugin.getPlugins('overview')
-const podPlugins = plugin.getPlugins('pod')
-const modelPlugins = plugin.getPlugins('model')
-const viewPlugins = plugin.getPlugins('view')
+const overviewPlugins = plugin.list('overview')
+const podPlugins = plugin.list('pod')
+const modelPlugins = plugin.list('model')
+const viewPlugins = plugin.list('view')
 </script>

@@ -6,7 +6,7 @@
 import { onMounted, shallowRef, watch, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { getPlugin } from '@quasipanacea/common/client'
+import { plugin } from '@quasipanacea/common/client/index.js'
 
 import { useDefaultStore } from '@client/stores/default.js'
 
@@ -30,6 +30,6 @@ onMounted(() => {
 })
 
 function updateCurrentOverview(name: string) {
-	currentOverview.value = getPlugin('overview', name).component
+	currentOverview.value = plugin.get('overview', name).component
 }
 </script>

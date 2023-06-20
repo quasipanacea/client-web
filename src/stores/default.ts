@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
 import {
-	useApi3,
+	trpcClient,
 	type BareAppRouter,
 } from '@quasipanacea/common/client/index.js'
 
-const api = useApi3<BareAppRouter>()
+const api = trpcClient.yieldClient<BareAppRouter>()
 
 const data = await api.core.pluginList.query({ kind: 'overview' })
 
