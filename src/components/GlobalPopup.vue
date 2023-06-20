@@ -23,7 +23,7 @@
 			"
 		>
 			<div style="margin: 0; padding: 5px; border-bottom: 3px solid black">
-				<button class="button is-black" @click="setInactive">Close</button>
+				<button class="button is-black" @click="hidePopup">Close</button>
 			</div>
 			<div style="padding: 16px; margin: 0; overflow: auto">
 				<component :is="popupComponent" v-bind="popupProps" />
@@ -35,14 +35,19 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue'
 
-import { popupEmitter } from '@quasipanacea/common/client/index.js'
+import { popup } from '@quasipanacea/common/client/index.js'
 
 const popupActive = ref(false)
 const popupComponent = shallowRef<unknown | null>(null)
 const popupProps = ref({})
 
-popupEmitter.attach((msg) => {
+popup.popupEmitter.attach((msg) => {
 	if (msg.type === 'show') {
+		if (popupComponent.value?.__name === msg.component?.__name) {
+			hidePopup()
+			return
+		}
+
 		popupActive.value = true
 		popupComponent.value = msg.component
 		if (msg.props) {
@@ -57,12 +62,7 @@ popupEmitter.attach((msg) => {
 	}
 })
 
-function setInactive() {
-	popupActive.value = false
-	popupComponent.value = null
-	popupEmitter.post({
-		type: 'hide',
-		id: 'cancel',
-	})
+function hidePopup() {
+	popup.hideNoData('cancel')
 }
 </script>

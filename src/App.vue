@@ -1,15 +1,25 @@
 <template>
 	<div
-		class=":router-view"
-		style="position: absolute; width: 100%; height: 100%; overflow: auto"
+		style="
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			display: grid;
+			grid-template-rows: auto 1fr;
+		"
 	>
-		<RouterView />
+		<GlobalNavigation />
+		<div style="position: relative">
+			<RouterView />
+		</div>
 	</div>
+
 	<GlobalPopup />
 	<GlobalError />
 </template>
 
 <script setup lang="ts">
+import GlobalNavigation from '@client/components/GlobalNavigation.vue'
 import GlobalPopup from '@client/components/GlobalPopup.vue'
 import GlobalError from '@client/components/GlobalError.vue'
 </script>

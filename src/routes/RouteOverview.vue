@@ -1,16 +1,5 @@
 <template>
-	<TopNavigation />
-	<div
-		style="
-			position: absolute;
-			top: 30px;
-			left: 0;
-			width: 100%;
-			height: calc(100% - 30px);
-		"
-	>
-		<component v-if="currentOverview" :is="currentOverview" />
-	</div>
+	<component v-if="currentOverview" :is="currentOverview" />
 </template>
 
 <script setup lang="ts">
@@ -20,7 +9,6 @@ import { useRouter } from 'vue-router'
 import { getPlugin } from '@quasipanacea/common/client'
 
 import { useDefaultStore } from '@client/stores/default.js'
-import TopNavigation from '@client/components/TopNavigation.vue'
 
 const props = defineProps<{
 	plugin: string

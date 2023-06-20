@@ -6,6 +6,8 @@
 	--oc-gray-1: #f1f3f5;
 	--oc-gray-2: #e9ecef;
 	--oc-gray-3: #dee2e6;
+	--oc-gray-4: #ced4da;
+	--oc-gray-5: #adb5bd;
 	--oc-gray-8: #343a40;
 	--oc-gray-9: #212529;
 
@@ -21,10 +23,9 @@ dialog > * {
 	margin: 5px;
 }
 
-html,
-body {
-	height: 100%;
-	overflow: hidden;
+html {
+	/* Override BulmaCSS */
+	overflow: initial;
 }
 
 body {
@@ -32,10 +33,6 @@ body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
-
-#app {
-	height: 100%;
 }
 
 table {

@@ -1,7 +1,7 @@
 <template>
-	<h2 class="title mb-1 as-2">Settings</h2>
+	<h2 class="title is-3 mb-4">Settings</h2>
 	<div class="field">
-		<label class="label" for="current-plugin">Set Overview Component</label>
+		<label class="label" for="current-plugin">Overview Plugin</label>
 		<div class="control">
 			<div class="select">
 				<select id="current-plugin" v-model="defaultStore.currentPlugin">
