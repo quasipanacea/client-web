@@ -59,7 +59,7 @@ import { useRouter } from 'vue-router'
 
 import { t } from '@quasipanacea/common/index.ts'
 import { plugin } from '@quasipanacea/common/client/index.ts'
-import { PodRenamePopup } from '@quasipanacea/plugin-components/index.ts'
+import { PodRenamePopup } from '@quasipanacea/components/index.ts'
 
 import {
 	popup,

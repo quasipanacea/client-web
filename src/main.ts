@@ -6,7 +6,7 @@ import '@client/assets/base.css'
 
 import App from '@client/App.vue'
 import router from '@client/router/index.ts'
-import { initAll } from '@quasipanacea/pack-core/_client.js'
+import { initAll } from '@quasipanacea/plugin-pack-core/_client.js'
 
 await initAll()
 
