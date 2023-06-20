@@ -62,7 +62,7 @@ import { getPlugin } from '@quasipanacea/common/client/index.ts'
 import { PodRenamePopup } from '@quasipanacea/plugin-components/popups/index.ts'
 
 import {
-	showPopup,
+	popup,
 	useApi3,
 	type BareAppRouter,
 } from '@quasipanacea/common/client/index.js'
@@ -95,7 +95,7 @@ async function actionDelete(uuid: string) {
 const isDropdownActive = ref<boolean>(false)
 
 async function showRenamePodPopup(podUuid: string, oldName: string) {
-	await showPopup('pod-rename-popup', PodRenamePopup, {
+	await popup.show('pod-rename-popup', PodRenamePopup, {
 		podUuid,
 		oldName,
 	})
