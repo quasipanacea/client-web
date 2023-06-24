@@ -43,7 +43,10 @@ const popupProps = ref({})
 
 popup.popupEmitter.attach((msg) => {
 	if (msg.type === 'show') {
-		if (popupComponent.value?.__name === msg.component?.__name) {
+		if (
+			popupActive.value &&
+			popupComponent.value?.__name === msg.component?.__name
+		) {
 			hidePopup()
 			return
 		}

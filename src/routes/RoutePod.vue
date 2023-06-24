@@ -12,7 +12,7 @@
 				margin-inline: 5px;
 			"
 		>
-			<h1 style="font-size: 42px; font-weight: bold; font-family: 'Work Sans'">
+			<h1 style="font-size: 42px">
 				{{ currentPod.name }}
 			</h1>
 			<span style="display: flex; gap: 5px">
@@ -32,7 +32,7 @@
 						>
 							<span>Actions</span>
 							<span class="icon">
-								<i class="fas fa-angle-down"></i>
+								<ion-icon name="chevron-down-outline"></ion-icon>
 							</span>
 						</button>
 					</div>

@@ -6,10 +6,11 @@
 			position: fixed;
 			display: grid;
 			grid-template-rows: auto 1fr;
+			grid-template-columns: 1fr;
 		"
 	>
 		<GlobalNavigation />
-		<div style="position: relative">
+		<div style="position: relative; width: 100vw">
 			<RouterView />
 		</div>
 	</div>

@@ -1,6 +1,14 @@
 <template>
 	<nav class="root-nav">
-		<span class="title is-6" style="user-select: none">Quasipanacea</span>
+		<span
+			class="title is-6"
+			style="
+				user-select: none;
+				font-family: 'IBM Plex Sans', sans-serif;
+				font-weight: bold;
+			"
+			>Quasipanacea</span
+		>
 		<span @click="showSettingsPopup">
 			<FeatherSettings />
 		</span>
@@ -39,6 +47,7 @@ async function showInfoPopup() {
 
 <style scoped>
 .root-nav {
+	width: 100vw;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -46,7 +55,7 @@ async function showInfoPopup() {
 	box-shadow: 2px 2px 3px var(--oc-gray-2);
 }
 
-.root-nav > span {
+.root-nav > span:not(:first-child) {
 	padding: 1px;
 	margin: 1px;
 	border-radius: 3px;
@@ -57,7 +66,7 @@ async function showInfoPopup() {
 	flex: 1 0 auto;
 	padding: 0;
 	margin: 0;
-	margin-inline-start: 2px;
+	margin-inline-start: 4px;
 }
 
 .root-nav > span > svg {

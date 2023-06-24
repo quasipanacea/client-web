@@ -1,0 +1,53 @@
+:root {
+	--oc-white: #ffffff;
+	--oc-black: #000000;
+
+	--oc-gray-0: #f8f9fa;
+	--oc-gray-1: #f1f3f5;
+	--oc-gray-2: #e9ecef;
+	--oc-gray-3: #dee2e6;
+	--oc-gray-4: #ced4da;
+	--oc-gray-5: #adb5bd;
+	--oc-gray-8: #343a40;
+	--oc-gray-9: #212529;
+
+	--bulma-red: hsl(348, 100%, 61%);
+
+	--bulma-danger: var(--bulma-red);
+
+	--nav-border: 5px;
+	--settings-border: 10px;
+}
+
+* {
+	font-family: 'Work Sans', sans-serif;
+}
+
+html {
+	/* Override BulmaCSS */
+	overflow: initial;
+}
+
+body {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: bold;
+}
+
+dialog > * {
+	margin: 5px;
+}
+
+table {
+	border-collapse: collapse;
+}
