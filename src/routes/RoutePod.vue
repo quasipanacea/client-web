@@ -58,14 +58,13 @@ import { shallowRef, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { t } from '@quasipanacea/common/index.ts'
-import { plugin } from '@quasipanacea/common/client/index.ts'
-import { PodRenamePopup } from '@quasipanacea/components/index.ts'
-
 import {
+	format,
 	popup,
 	trpcClient,
 	type BareAppRouter,
-} from '@quasipanacea/common/client/index.js'
+} from '@quasipanacea/common/client/index.ts'
+import { PodRenamePopup } from '@quasipanacea/components/index.ts'
 
 const props = defineProps<{ podUuid: string }>()
 const router = useRouter()
@@ -110,7 +109,9 @@ async function updateData() {
 		throw new Error(`Failed to find pod: ${props.podUuid}`)
 	}
 
+	const p = format.getPluginByFormat('pod', pod.format)
+
 	currentPod.value = pod
-	currentModule.value = plugin.get('pod', pod.plugin).component
+	currentModule.value = p.component
 }
 </script>
