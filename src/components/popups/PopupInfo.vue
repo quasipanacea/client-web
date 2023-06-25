@@ -7,10 +7,6 @@
 			<a href="https://github.com/quasipanacea" target="__blank">organization</a
 			>.
 		</p>
-
-		<span class="icon">
-			<ion-icon name="heart-outline"></ion-icon>
-		</span>
 	</div>
 </template>
 

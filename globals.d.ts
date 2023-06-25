@@ -1,4 +1,3 @@
-import * as types from './src/util/types'
 import type * as cytoscape from 'cytoscape'
 
 declare global {

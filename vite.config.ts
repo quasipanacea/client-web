@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
+import { defineConfig, PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
@@ -12,6 +12,34 @@ export default defineConfig({
 				},
 			},
 		}),
+		(function filterStdImportsPlugin(): PluginOption {
+			/**
+			 * Inserts file contents into the module tree for specified import paths. This fixes
+			 * issues on Vite halting when it encounters Deno-specific import paths. Code inspired
+			 * from alex-kinokon/rollup-plugin-ignore.
+			 */
+			const defaultFileContent = 'export default {}'
+			const placeholderFilename =
+				'\0_____rollup_plugin_filter_std_imports_placeholder_____'
+
+			return {
+				name: 'filter-std-imports',
+				resolveId(source: string | undefined) {
+					if (source?.startsWith('std/')) {
+						return placeholderFilename
+					}
+
+					return null
+				},
+				load(id: string) {
+					if (id === placeholderFilename) {
+						return defaultFileContent
+					}
+
+					return null
+				},
+			}
+		})(),
 	],
 	server: {
 		port: 15_801,
