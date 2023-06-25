@@ -19,13 +19,13 @@
 		"@quasipanacea/components": "workspace:^",
 		"@quasipanacea/plugin-pack-core": "workspace:^",
 		"@quasipanacea/plugin-utility": "workspace:^",
-		"@trpc/client": "^10.18.0",
-		"@trpc/server": "^10.18.0",
+		"@trpc/client": "^10.32.0",
+		"@trpc/server": "^10.32.0",
 		"bulma": "^0.9.4",
 		"pinia": "^2.1.4",
 		"vue": "^3.3.4",
 		"vue-router": "^4.2.2",
-		"zod": "^3.19.1"
+		"zod": "^3.21.4"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^15.1.0",
