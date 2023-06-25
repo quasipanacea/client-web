@@ -16,7 +16,6 @@
 	},
 	"dependencies": {
 		"@quasipanacea/common": "workspace:^",
-		"@quasipanacea/components": "workspace:^",
 		"@quasipanacea/plugin-pack-core": "workspace:^",
 		"@quasipanacea/plugin-utility": "workspace:^",
 		"@trpc/client": "^10.32.0",

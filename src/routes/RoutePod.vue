@@ -64,7 +64,7 @@ import {
 	trpcClient,
 	type BareAppRouter,
 } from '@quasipanacea/common/client/index.ts'
-import { PodRenamePopup } from '@quasipanacea/components/index.ts'
+import { PodRenamePopup } from '@quasipanacea/common/components/index.ts'
 
 const props = defineProps<{ podUuid: string }>()
 const router = useRouter()
