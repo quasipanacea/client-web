@@ -1,9 +1,25 @@
 {
 	"extends": "./tsconfig.app.json",
-	"exclude": [],
 	"compilerOptions": {
 		"composite": true,
 		"lib": [],
-		"types": ["node", "jsdom"]
+		"typeRoots": [
+			"./node_modules/@types",
+			"./node_modules/@quasipanacea/types"
+		],
+		// TODO
+		"types": [
+			"node",
+			"jsdom",
+			"cytoscape",
+			"cytoscape-cola",
+			"cytoscape-compound-drag-and-drop",
+			"cytoscape-cxtmenu",
+			"cytoscape-edgehandles",
+			"cytoscape-fcose",
+			"cytoscape-lasso",
+			"cytoscape-undo-redo",
+			"milkdown__theme-nord"
+		]
 	}
 }

@@ -45,6 +45,7 @@ popup.popupEmitter.attach((msg) => {
 	if (msg.type === 'show') {
 		if (
 			popupActive.value &&
+			// @ts-expect-error Using undocumented "private" members
 			popupComponent.value?.__name === msg.component?.__name
 		) {
 			hidePopup()

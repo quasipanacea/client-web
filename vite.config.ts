@@ -19,8 +19,7 @@ export default defineConfig({
 			 * from alex-kinokon/rollup-plugin-ignore.
 			 */
 			const defaultFileContent = 'export default {}'
-			const placeholderFilename =
-				'\0_____rollup_plugin_filter_std_imports_placeholder_____'
+			const placeholderFilename = '\0__rollup_plugin_filter_placeholder__\0'
 
 			return {
 				name: 'filter-std-imports',

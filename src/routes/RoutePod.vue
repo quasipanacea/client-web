@@ -63,6 +63,7 @@ import {
 	popup,
 	trpcClient,
 	type BareAppRouter,
+	plugin,
 } from '@quasipanacea/common/client/index.ts'
 import { PodRenamePopup } from '@quasipanacea/common/components/index.ts'
 
@@ -109,9 +110,8 @@ async function updateData() {
 		throw new Error(`Failed to find pod: ${props.podUuid}`)
 	}
 
-	const p = format.getPluginByFormat('pod', pod.format)
-
+	const pluginModule = await format.getPluginByFormat('pod', pod.format)
 	currentPod.value = pod
-	currentModule.value = p.component
+	currentModule.value = pluginModule.component
 }
 </script>

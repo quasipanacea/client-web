@@ -106,17 +106,18 @@ function setActiveTab(tabName: string) {
 
 onMounted(async () => {
 	await restoreSettings()
+	await saveSettings()
 })
-onUnmounted(() => {
-	saveSettings()
+onUnmounted(async () => {
+	await saveSettings()
 })
 
 const mimetypeMap = ref<Record<string, string[]>>({})
 const mimetypePreferences = ref<Record<string, string>>({})
 async function restoreSettings() {
-	const storedValue = localStorage.getItem('saved-format-mappings')
+	const storedValue = (await api.core.settingsGet.query()).mimesToPlugin || {}
 	if (storedValue) {
-		mimetypePreferences.value = JSON.parse(storedValue)
+		mimetypePreferences.value = storedValue
 	}
 
 	mimetypeMap.value = (await api.core.indexGet.query()).formats
@@ -125,10 +126,9 @@ async function restoreSettings() {
 	}
 }
 
-function saveSettings() {
-	localStorage.setItem(
-		'saved-format-mappings',
-		JSON.stringify(mimetypePreferences.value, null, '\t'),
-	)
+async function saveSettings() {
+	await api.core.settingsModify.mutate({
+		mimesToPlugin: mimetypePreferences.value,
+	})
 }
 </script>

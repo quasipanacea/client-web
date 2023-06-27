@@ -7,7 +7,7 @@ import {
 
 const api = trpcClient.yieldClient<BareAppRouter>()
 
-const data = await api.core.pluginList.query({ kind: 'overview' })
+const data = await api.core.pluginList.query({ family: 'overview' })
 
 export const useDefaultStore = defineStore('default', {
 	state: () => {

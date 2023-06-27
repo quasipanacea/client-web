@@ -1,6 +1,7 @@
 import type * as cytoscape from 'cytoscape'
 
 declare global {
+	// TODO
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const Deno: any
 }
