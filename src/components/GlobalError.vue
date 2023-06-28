@@ -1,58 +1,74 @@
 <template>
-	<div v-if="errors.length > 0">
-		<div
-			style="
-				position: fixed;
-				inset: 25px;
-				border-radius: 10px;
-				background-color: white;
-				box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-					0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-					0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-			"
-		>
-			<div style="padding: 5px">
-				<h1 class="title as-3">Unhandled Error</h1>
-			</div>
-			<div>
-				<div v-for="{ ev, id } in errors" :key="id">
-					<code>{{
-						ev.filename.split('/').at(-1)?.split('?')[0] +
-						':' +
-						ev.lineno +
-						':' +
-						ev.colno
-					}}</code>
-					<pre>{{ ev.error }}</pre>
-					<pre>{{ ev.message }}</pre>
-					<hr />
-				</div>
-			</div>
-			<button class="button is-black m-1" @click="errors.length = 0">
-				Close
-			</button>
+	<dialog class="dialog" ref="dialogEl">
+		<div class="p-0">
+			<h1 class="title as-3">Unhandled Error</h1>
 		</div>
-	</div>
+		<button class="button is-black m-1" @click="errors.length = 0">
+			Close
+		</button>
+		<div
+			v-for="({ leftHeader, rightHeader, blocks }, i) in errors"
+			:key="i"
+			class="m-0"
+		>
+			<hr class="m-0" style="border: 1px solid darkslategray" />
+			<div style="display: flex; justify-content: space-between">
+				<code class="p-1">{{ leftHeader }}</code>
+				<pre class="p-1">{{ rightHeader }}</pre>
+			</div>
+			<pre
+				v-for="(block, j) in blocks"
+				:key="j"
+				class="p-2"
+			><code class="p-0">{{ block }}</code></pre>
+		</div>
+	</dialog>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive } from 'vue'
+import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 
+const dialogEl = ref<null | HTMLDialogElement>(null)
 const errors = reactive<
 	{
-		ev: ErrorEvent
 		id: string
+		leftHeader: string
+		rightHeader: string
+		blocks: string[]
 	}[]
 >([])
 
-function onUnhandledRejection(ev: PromiseRejectionEvent) {
-	console.error('UNHANDLED REJECTION')
-	console.error(ev)
+watch(errors, (value) => {
+	if (value.length > 0) {
+		if (dialogEl.value && !dialogEl.value.open) {
+			dialogEl.value.showModal()
+		}
+	} else {
+		dialogEl.value?.close()
+	}
+})
+
+async function onUnhandledRejection(ev: PromiseRejectionEvent) {
+	const err = (ev.reason.stack || ev.reason).toString()
+
+	errors.push({
+		id: crypto.randomUUID(),
+		leftHeader: '?',
+		rightHeader: 'PromiseRejectionEvent',
+		blocks: [err],
+	})
 }
 function onError(ev: ErrorEvent) {
 	errors.push({
-		ev,
 		id: crypto.randomUUID(),
+		leftHeader:
+			ev.filename.split('/').at(-1)?.split('?')[0] +
+			':' +
+			ev.lineno +
+			':' +
+			ev.colno,
+		rightHeader: 'ErrorEvent',
+		blocks: [ev.error, ev.message],
 	})
 }
 onMounted(() => {
@@ -64,3 +80,11 @@ onUnmounted(() => {
 	globalThis.removeEventListener('error', onError)
 })
 </script>
+
+<style scoped>
+.dialog {
+	width: calc(100% - 100px);
+	height: calc(100% - 100px);
+	padding: 0;
+}
+</style>

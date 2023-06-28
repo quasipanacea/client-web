@@ -10,13 +10,13 @@
 			>Quasipanacea</span
 		>
 		<span @click="showSettingsPopup">
-			<FeatherSettings />
+			<FeatherSettings width="22px" height="22px" />
 		</span>
 		<span @click="showPluginPopup">
-			<FeatherPackage />
+			<FeatherPackage width="22px" height="22px" />
 		</span>
 		<span @click="showInfoPopup">
-			<FeatherInfo />
+			<FeatherInfo width="22px" height="22px" />
 		</span>
 	</nav>
 </template>
