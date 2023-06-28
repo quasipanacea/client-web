@@ -19,6 +19,7 @@
 			"cytoscape-fcose",
 			"cytoscape-lasso",
 			"cytoscape-undo-redo",
+			"deno",
 			"milkdown__theme-nord"
 		]
 	}

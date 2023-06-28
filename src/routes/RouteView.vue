@@ -1,25 +1,12 @@
 <template>
-	<div>
-		<h1>View</h1>
-		<div
-			style="
-				position: absolute;
-				top: 30px;
-				left: 0;
-				width: 100%;
-				height: calc(100% - 30px);
-			"
-		>
-			<component v-if="currentModule" :is="currentModule" />
-		</div>
-	</div>
+	<component v-if="currentModule" :is="currentModule" />
 </template>
 
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue'
 
 import {
-	plugin,
+	pluginClient,
 	trpcClient,
 	type BareAppRouter,
 } from '@quasipanacea/common/client/index.js'
@@ -37,7 +24,7 @@ async function updateModule(viewUuid: string) {
 	const currentView = views.find((item) => item.uuid === viewUuid)
 	if (!currentView) throw new Error('currentCollection is undefined')
 
-	currentModule.value = plugin.get('view', currentView.plugin).component
+	currentModule.value = pluginClient.get('view', currentView.plugin).component
 }
 
 onMounted(async () => {

@@ -3,11 +3,21 @@
 		<router-link to="/">
 			<button class="button is-primary">Back</button>
 		</router-link>
+		<div>
+			<h2 class="title">Plugins</h2>
+		</div>
 		<div class="content" style="line-height: 1">
-			<h2 class="title as-2 mb-0">Overview Plugins</h2>
-			<ul v-for="plugin in overviewPlugins.values()" :key="plugin.metadata.id">
-				<li>{{ plugin.metadata.id }}</li>
-			</ul>
+			<div class="box">
+				<h2 class="title as-2 mb-0">Overview Plugins</h2>
+
+				<ul
+					v-for="plugin in overviewPlugins.values()"
+					:key="plugin.metadata.id"
+				>
+					<li>{{ plugin.metadata.id }}</li>
+				</ul>
+			</div>
+
 			<h2 class="title as-2 mb-0">Pod Plugins</h2>
 			<ul v-for="plugin in podPlugins.values()" :key="plugin.metadata.id">
 				<li>{{ plugin.metadata.id }}</li>
@@ -25,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { plugin } from '@quasipanacea/common/client/index.js'
+import { pluginClient } from '@quasipanacea/common/client/index.js'
 
-const overviewPlugins = plugin.list('overview')
-const podPlugins = plugin.list('pod')
-const modelPlugins = plugin.list('model')
-const viewPlugins = plugin.list('view')
+const overviewPlugins = pluginClient.list('overview')
+const podPlugins = pluginClient.list('pod')
+const modelPlugins = pluginClient.list('model')
+const viewPlugins = pluginClient.list('view')
 </script>
