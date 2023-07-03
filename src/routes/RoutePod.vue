@@ -59,11 +59,9 @@ import { useRouter } from 'vue-router'
 
 import { t } from '@quasipanacea/common/index.ts'
 import {
-	format,
 	popup,
 	trpcClient,
 	type BareAppRouter,
-	plugin,
 	pluginClient,
 } from '@quasipanacea/common/client/index.ts'
 import { PodRenamePopup } from '@quasipanacea/common/components/index.ts'

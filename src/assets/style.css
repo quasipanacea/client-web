@@ -51,3 +51,7 @@ dialog > * {
 table {
 	border-collapse: collapse;
 }
+
+.cm-editor * {
+	font-family: 'Space Mono';
+}
