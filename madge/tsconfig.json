@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"baseUrl": "..",
+		"allowJs": true,
+		"moduleResolution": "node",
+		"paths": {
+			"@client/*": ["./src/*"],
+			"@quasipanacea/*": ["../server-deno/dependencies/@quasipanacea/*"]
+		}
+	}
+}

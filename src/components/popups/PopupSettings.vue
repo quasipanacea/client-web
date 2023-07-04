@@ -17,13 +17,9 @@
 			<label class="label" for="current-plugin">Overview Plugin</label>
 			<div class="control">
 				<div class="select">
-					<select id="current-plugin" v-model="defaultStore.currentPlugin">
-						<option
-							v-for="plugin in defaultStore.plugins"
-							:key="plugin"
-							:value="plugin"
-						>
-							{{ plugin }}
+					<select id="current-plugin" v-model="defaultOverview">
+						<option v-for="id in possibleOverviews" :key="id" :value="id">
+							{{ id }}
 						</option>
 					</select>
 				</div>
@@ -70,16 +66,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
-import { useDefaultStore } from '@client/stores/default.js'
 import {
 	trpcClient,
 	type BareAppRouter,
+	pluginClient,
 } from '@quasipanacea/common/client/index.js'
 
 const api = trpcClient.yieldClient<BareAppRouter>()
-const defaultStore = useDefaultStore()
 
 const tabs = ref([
 	{
@@ -105,7 +100,8 @@ function setActiveTab(tabName: string) {
 }
 
 onMounted(async () => {
-	await restoreSettings()
+	await updateDataSettings()
+	await updateDataOverview()
 	await saveSettings()
 })
 onUnmounted(async () => {
@@ -114,7 +110,7 @@ onUnmounted(async () => {
 
 const mimetypeMap = ref<Record<string, string[]>>({})
 const mimetypePreferences = ref<Record<string, string>>({})
-async function restoreSettings() {
+async function updateDataSettings() {
 	const storedValue = (await api.core.settingsGet.query()).mimesToPlugin || {}
 	if (storedValue) {
 		mimetypePreferences.value = storedValue
@@ -125,10 +121,34 @@ async function restoreSettings() {
 		mimetypePreferences.value[mimeType] ||= pluginIds[0]
 	}
 }
-
 async function saveSettings() {
 	await api.core.settingsModify.mutate({
 		mimesToPlugin: mimetypePreferences.value,
+	})
+}
+
+const defaultOverview = ref('')
+const possibleOverviews = ref<string[]>([])
+async function updateDataOverview() {
+	possibleOverviews.value = (await pluginClient.list('overview')).map(
+		(item) => item.metadata.id,
+	)
+
+	const settingsJson = await api.core.settingsGet.query()
+	if (settingsJson.defaultOverview) {
+		defaultOverview.value = settingsJson.defaultOverview
+	}
+
+	if (!defaultOverview.value) {
+		defaultOverview.value = possibleOverviews.value[0]
+	}
+}
+watch(defaultOverview, async () => {
+	await saveOverview()
+})
+async function saveOverview() {
+	await api.core.settingsModify.mutate({
+		defaultOverview: defaultOverview.value,
 	})
 }
 </script>

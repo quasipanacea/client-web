@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { defaults } from '../defaults.js'
-
 export default createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
 			path: '/',
-			redirect: `/overview/${defaults.defaultOverview}`,
+			component: () => import('@client/routes/RouteIndex.vue'),
 		},
 		{
 			path: '/plugins',

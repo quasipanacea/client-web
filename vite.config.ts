@@ -2,13 +2,24 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig, PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import veauryVitePlugins from 'veaury/vite/index.js'
 
 export default defineConfig({
 	plugins: [
-		vue({
-			template: {
-				compilerOptions: {
-					isCustomElement: (tag) => ['ion-icon'].includes(tag),
+		// vue({
+		// 	template: {
+		// 		compilerOptions: {
+		// 			isCustomElement: (tag) => ['ion-icon'].includes(tag),
+		// 		},
+		// 	},
+		// }),
+		veauryVitePlugins({
+			type: 'vue',
+			vueOptions: {
+				template: {
+					compilerOptions: {
+						isCustomElement: (tag) => ['ion-icon'].includes(tag),
+					},
 				},
 			},
 		}),
