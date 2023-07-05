@@ -1,5 +1,5 @@
 <template>
-	<dialog class="dialog" ref="dialogEl">
+	<dialog class="dialog" ref="dialogEl" style="border: 2px solid black">
 		<div class="p-0">
 			<h1 class="title as-3">Unhandled Error</h1>
 		</div>
@@ -11,7 +11,7 @@
 			:key="i"
 			class="m-0"
 		>
-			<hr class="m-0" style="border: 1px solid darkslategray" />
+			<hr class="m-0" style="border: 1px solid black" />
 			<div style="display: flex; justify-content: space-between">
 				<code class="p-1">{{ leftHeader }}</code>
 				<pre class="p-1">{{ rightHeader }}</pre>

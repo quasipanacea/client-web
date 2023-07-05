@@ -7,8 +7,9 @@
 				font-family: 'IBM Plex Sans', sans-serif;
 				font-weight: bold;
 			"
-			>Quasipanacea</span
 		>
+			<router-link style="color: inherit" to="/">Quasipanacea</router-link>
+		</span>
 		<span @click="showSettingsPopup">
 			<FeatherSettings width="22px" height="22px" />
 		</span>

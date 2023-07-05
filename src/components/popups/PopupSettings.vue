@@ -13,8 +13,9 @@
 		</ul>
 	</div>
 	<div v-if="activeTab === 'overview'">
+		<h3 class="title is-5">Defaults</h3>
 		<div class="field">
-			<label class="label" for="current-plugin">Overview Plugin</label>
+			<label class="label" for="current-plugin">Overview</label>
 			<div class="control">
 				<div class="select">
 					<select id="current-plugin" v-model="defaultOverview">
@@ -26,11 +27,11 @@
 			</div>
 		</div>
 	</div>
-	<div v-else-if="activeTab === 'pod'">
-		<h3 class="title is-5">Formats Settings</h3>
+	<div v-else-if="activeTab === 'model'">
+		<h3 class="title is-5">Defaults</h3>
 		<div
 			class="field"
-			v-for="(compatiblePluginsIds, mimeType) in mimetypeMap"
+			v-for="(compatiblePluginsIds, mimeType) in modelMimeOptions"
 			:key="mimeType"
 		>
 			<label class="label" :for="mimeType">{{ mimeType }}</label>
@@ -40,7 +41,7 @@
 						@change="saveSettings"
 						:name="mimeType"
 						:id="mimeType"
-						v-model="mimetypePreferences[mimeType]"
+						v-model="modelMimes[mimeType]"
 					>
 						<option
 							v-for="option in compatiblePluginsIds"
@@ -54,14 +55,93 @@
 			</div>
 		</div>
 	</div>
-	<div v-else-if="activeTab === 'model'">
-		<h3 class="title is-5">No settings</h3>
+	<div v-else-if="activeTab === 'modelview'">
+		<h3 class="title is-5">Defaults</h3>
+		<div
+			class="field"
+			v-for="(compatiblePluginsIds, mimeType) in modelviewMimeOptions"
+			:key="mimeType"
+		>
+			<label class="label" :for="mimeType">{{ mimeType }}</label>
+			<div class="control">
+				<div class="select">
+					<select
+						@change="saveSettings"
+						:name="mimeType"
+						:id="mimeType"
+						v-model="modelviewMimes[mimeType]"
+					>
+						<option
+							v-for="option in compatiblePluginsIds"
+							:key="option"
+							:value="option"
+						>
+							{{ option }}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div v-else-if="activeTab === 'view'">
-		<h3 class="title is-5">No settings</h3>
+	<div v-else-if="activeTab === 'pod'">
+		<h3 class="title is-5">Defaults</h3>
+		<div
+			class="field"
+			v-for="(compatiblePluginsIds, mimeType) in podMimeOptions"
+			:key="mimeType"
+		>
+			<label class="label" :for="mimeType">{{ mimeType }}</label>
+			<div class="control">
+				<div class="select">
+					<select
+						@change="saveSettings"
+						:name="mimeType"
+						:id="mimeType"
+						v-model="podMimes[mimeType]"
+					>
+						<option
+							v-for="option in compatiblePluginsIds"
+							:key="option"
+							:value="option"
+						>
+							{{ option }}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div v-else-if="activeTab === 'podview'">
+		<h3 class="title is-5">Defaults</h3>
+		<div
+			class="field"
+			v-for="(compatiblePluginsIds, mimeType) in podviewMimeOptions"
+			:key="mimeType"
+		>
+			<label class="label" :for="mimeType">{{ mimeType }}</label>
+			<div class="control">
+				<div class="select">
+					<select
+						@change="saveSettings"
+						:name="mimeType"
+						:id="mimeType"
+						v-model="podviewMimes[mimeType]"
+					>
+						<option
+							v-for="option in compatiblePluginsIds"
+							:key="option"
+							:value="option"
+						>
+							{{ option }}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div v-else>
-		<h3 class="title is-5">Setting not found</h3>
+		<h3 class="title is-5">{{ activeTab }}</h3>
+		<p>No settings found</p>
 	</div>
 </template>
 
@@ -82,48 +162,103 @@ const tabs = ref([
 		id: 'overview',
 	},
 	{
-		title: 'Pod',
-		id: 'pod',
-	},
-	{
 		title: 'Model',
 		id: 'model',
 	},
 	{
-		title: 'View',
-		id: 'view',
+		title: 'Modelview',
+		id: 'modelview',
+	},
+	{
+		title: 'Pod',
+		id: 'pod',
+	},
+	{
+		title: 'Podview',
+		id: 'podview',
 	},
 ])
-const activeTab = ref('pod')
+const activeTab = ref('podview')
 function setActiveTab(tabName: string) {
 	activeTab.value = tabName
 }
 
 onMounted(async () => {
-	await updateDataSettings()
-	await updateDataOverview()
-	await saveSettings()
+	await Promise.all([
+		updateDataOverview(),
+		updateDataModel(),
+		updateDataModelview(),
+		updateDataPod(),
+		updateDataPodview(),
+		saveSettings(),
+	])
 })
 onUnmounted(async () => {
 	await saveSettings()
 })
 
-const mimetypeMap = ref<Record<string, string[]>>({})
-const mimetypePreferences = ref<Record<string, string>>({})
-async function updateDataSettings() {
-	const storedValue = (await api.core.settingsGet.query()).mimesToPlugin || {}
-	if (storedValue) {
-		mimetypePreferences.value = storedValue
-	}
+const podMimes = ref<Record<string, string>>({})
+const podMimeOptions = ref<Record<string, string[]>>({})
+async function updateDataPod() {
+	const settingsJson = await api.core.settingsGet.query()
+	podMimes.value = settingsJson.podMimes || {}
 
-	mimetypeMap.value = (await api.core.indexGet.query()).formats
-	for (const [mimeType, pluginIds] of Object.entries(mimetypeMap.value)) {
-		mimetypePreferences.value[mimeType] ||= pluginIds[0]
+	const indexJson = await api.core.indexGet.query()
+	podMimeOptions.value = indexJson.podMimeOptions || {}
+	for (const [mimeType, podIds] of Object.entries(podMimeOptions.value)) {
+		podMimes.value[mimeType] ||= podIds[0]
 	}
 }
+
+const podviewMimes = ref<Record<string, string>>({})
+const podviewMimeOptions = ref<Record<string, string[]>>({})
+async function updateDataPodview() {
+	const settingsJson = await api.core.settingsGet.query()
+	podviewMimes.value = settingsJson.podviewMimes || {}
+
+	const indexJson = await api.core.indexGet.query()
+	podviewMimeOptions.value = indexJson.podviewMimeOptions || {}
+	for (const [mimeType, podviewIds] of Object.entries(
+		podviewMimeOptions.value,
+	)) {
+		podviewMimes.value[mimeType] ||= podviewIds[0]
+	}
+}
+
+const modelMimes = ref<Record<string, string>>({})
+const modelMimeOptions = ref<Record<string, string[]>>({})
+async function updateDataModel() {
+	const settingsJson = await api.core.settingsGet.query()
+	modelMimes.value = settingsJson.modelMimes || {}
+
+	const indexJson = await api.core.indexGet.query()
+	modelMimeOptions.value = indexJson.modelMimeOptions || {}
+	for (const [mimeType, modelIds] of Object.entries(modelMimeOptions.value)) {
+		modelMimes.value[mimeType] ||= modelIds[0]
+	}
+}
+
+const modelviewMimes = ref<Record<string, string>>({})
+const modelviewMimeOptions = ref<Record<string, string[]>>({})
+async function updateDataModelview() {
+	const settingsJson = await api.core.settingsGet.query()
+	modelviewMimes.value = settingsJson.modelviewMimes || {}
+
+	const indexJson = await api.core.indexGet.query()
+	modelviewMimeOptions.value = indexJson.modelviewMimeOptions || {}
+	for (const [mimeType, modelviewIds] of Object.entries(
+		modelviewMimeOptions.value,
+	)) {
+		modelviewMimes.value[mimeType] ||= modelviewIds[0]
+	}
+}
+
 async function saveSettings() {
 	await api.core.settingsModify.mutate({
-		mimesToPlugin: mimetypePreferences.value,
+		modelMimes: modelMimes.value,
+		modelviewMimes: modelviewMimes.value,
+		podMimes: podMimes.value,
+		podviewMimes: podviewMimes.value,
 	})
 }
 

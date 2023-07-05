@@ -15,7 +15,7 @@
 			<h1 style="font-size: 42px">
 				{{ currentPod.name }}
 			</h1>
-			<span style="display: flex; gap: 5px">
+			<span class="is-flex" style="gap: 5px">
 				<router-link to="/">
 					<button class="button is-link">Overview</button>
 				</router-link>
@@ -67,15 +67,10 @@ import {
 import { PodRenamePopup } from '@quasipanacea/common/components/index.ts'
 
 const props = defineProps<{ podUuid: string }>()
-const router = useRouter()
 const api = trpcClient.yieldClient<BareAppRouter>()
 
 const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef<unknown>()
-
-onMounted(async () => {
-	await updateData()
-})
 
 async function actionRename() {
 	if (!currentPod.value) return
@@ -101,6 +96,9 @@ async function showRenamePodPopup(podUuid: string, oldName: string) {
 	await updateData()
 }
 
+onMounted(async () => {
+	await updateData()
+})
 async function updateData() {
 	const pod = (await api.core.podList.query()).pods.find(
 		(item) => item.uuid === props.podUuid,
@@ -109,8 +107,17 @@ async function updateData() {
 		throw new Error(`Failed to find pod: ${props.podUuid}`)
 	}
 
-	const pluginModule = await pluginClient.getPluginByFormat('pod', pod.format)
+	const settingsJson = await api.core.settingsGet.query()
+	const podviewId = settingsJson.podviewMimes?.[pod.format]
+	if (!podviewId) {
+		throw new Error(
+			`Failed to find podviewId with pod uuid ${pod.uuid} and pod format ${pod.format}`,
+		)
+	}
+
+	const plugin = pluginClient.get('podview', podviewId)
+
 	currentPod.value = pod
-	currentModule.value = pluginModule.component
+	currentModule.value = plugin.component
 }
 </script>

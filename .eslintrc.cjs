@@ -19,6 +19,12 @@ module.exports = {
 			files: ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],
 			extends: ['plugin:cypress/recommended'],
 		},
+		{
+			files: ['postcss.config.*', 'tailwind.config.*'],
+			env: {
+				commonjs: true,
+			},
+		},
 	],
 	parserOptions: {
 		ecmaVersion: 'latest',

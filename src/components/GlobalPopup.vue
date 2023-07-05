@@ -1,7 +1,7 @@
 <template>
-	<dialog class="dialog" ref="dialogEl">
+	<dialog class="dialog" ref="dialogEl" style="border: 2px solid black">
 		<div class="m-0" style="display: grid; grid-template-rows: auto 1fr">
-			<div class="m-0 p-1" style="border-bottom: 3px solid black">
+			<div class="m-0 p-1" style="border-bottom: 2px solid black">
 				<button class="button is-black" @click="hidePopup()">Close</button>
 			</div>
 			<div class="m-0 p-4" style="overflow: auto">
