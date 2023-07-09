@@ -201,10 +201,10 @@ const podMimes = ref<Record<string, string>>({})
 const podMimeOptions = ref<Record<string, string[]>>({})
 async function updateDataPod() {
 	const settingsJson = await api.core.settingsGet.query()
-	podMimes.value = settingsJson.podMimes || {}
+	podMimes.value = settingsJson?.mimes?.pod || {}
 
 	const indexJson = await api.core.indexGet.query()
-	podMimeOptions.value = indexJson.podMimeOptions || {}
+	podMimeOptions.value = indexJson?.mimes?.pod || {}
 	for (const [mimeType, podIds] of Object.entries(podMimeOptions.value)) {
 		podMimes.value[mimeType] ||= podIds[0]
 	}
@@ -214,10 +214,10 @@ const podviewMimes = ref<Record<string, string>>({})
 const podviewMimeOptions = ref<Record<string, string[]>>({})
 async function updateDataPodview() {
 	const settingsJson = await api.core.settingsGet.query()
-	podviewMimes.value = settingsJson.podviewMimes || {}
+	podviewMimes.value = settingsJson?.mimes?.podview || {}
 
 	const indexJson = await api.core.indexGet.query()
-	podviewMimeOptions.value = indexJson.podviewMimeOptions || {}
+	podviewMimeOptions.value = indexJson?.mimes?.podview || {}
 	for (const [mimeType, podviewIds] of Object.entries(
 		podviewMimeOptions.value,
 	)) {
@@ -229,10 +229,10 @@ const modelMimes = ref<Record<string, string>>({})
 const modelMimeOptions = ref<Record<string, string[]>>({})
 async function updateDataModel() {
 	const settingsJson = await api.core.settingsGet.query()
-	modelMimes.value = settingsJson.modelMimes || {}
+	modelMimes.value = settingsJson?.mimes?.model || {}
 
 	const indexJson = await api.core.indexGet.query()
-	modelMimeOptions.value = indexJson.modelMimeOptions || {}
+	modelMimeOptions.value = indexJson?.mimes?.model || {}
 	for (const [mimeType, modelIds] of Object.entries(modelMimeOptions.value)) {
 		modelMimes.value[mimeType] ||= modelIds[0]
 	}
@@ -242,10 +242,10 @@ const modelviewMimes = ref<Record<string, string>>({})
 const modelviewMimeOptions = ref<Record<string, string[]>>({})
 async function updateDataModelview() {
 	const settingsJson = await api.core.settingsGet.query()
-	modelviewMimes.value = settingsJson.modelviewMimes || {}
+	modelviewMimes.value = settingsJson?.mimes?.modelview || {}
 
 	const indexJson = await api.core.indexGet.query()
-	modelviewMimeOptions.value = indexJson.modelviewMimeOptions || {}
+	modelviewMimeOptions.value = indexJson?.mimes?.modelview || {}
 	for (const [mimeType, modelviewIds] of Object.entries(
 		modelviewMimeOptions.value,
 	)) {
@@ -255,10 +255,12 @@ async function updateDataModelview() {
 
 async function saveSettings() {
 	await api.core.settingsModify.mutate({
-		modelMimes: modelMimes.value,
-		modelviewMimes: modelviewMimes.value,
-		podMimes: podMimes.value,
-		podviewMimes: podviewMimes.value,
+		mimes: {
+			model: modelMimes.value,
+			modelview: modelviewMimes.value,
+			pod: podMimes.value,
+			podview: podviewMimes.value,
+		},
 	})
 }
 

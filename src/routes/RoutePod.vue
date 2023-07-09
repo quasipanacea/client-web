@@ -1,29 +1,25 @@
 <template>
 	<div
 		v-if="currentPod"
-		style="display: grid; grid-template-rows: auto 1fr; height: 100%"
+		style="
+			display: grid;
+			grid-template-rows: auto 1fr;
+			height: 100%;
+			padding: 5px;
+		"
 	>
 		<div
 			class="header"
-			style="
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-inline: 5px;
-			"
+			style="display: flex; justify-content: space-between; align-items: center"
 		>
-			<h1 style="font-size: 42px">
+			<h1 class="title mb-0">
 				{{ currentPod.name }}
 			</h1>
 			<span class="is-flex" style="gap: 5px">
 				<router-link to="/">
 					<button class="button is-link">Overview</button>
 				</router-link>
-				<div
-					class="dropdown is-right"
-					:class="{ 'is-active': isDropdownActive }"
-					@click="isDropdownActive = !isDropdownActive"
-				>
+				<div class="dropdown is-right is-hoverable">
 					<div class="dropdown-trigger">
 						<button
 							class="button"
@@ -47,9 +43,10 @@
 				</div>
 			</span>
 		</div>
-		<div class=":pod-wrapper">
-			<component v-if="currentModule" :is="currentModule" />
-		</div>
+		<component v-if="currentModule" :is="currentModule" />
+	</div>
+	<div v-else>
+		<p>Loading...</p>
 	</div>
 </template>
 
@@ -68,6 +65,7 @@ import { PodRenamePopup } from '@quasipanacea/common/components/index.ts'
 
 const props = defineProps<{ podUuid: string }>()
 const api = trpcClient.yieldClient<BareAppRouter>()
+const router = useRouter()
 
 const currentPod = ref<t.Pod_t | null>(null)
 const currentModule = shallowRef<unknown>()
@@ -84,9 +82,6 @@ async function actionDelete(uuid: string) {
 		router.push('/')
 	}
 }
-
-// dropdown
-const isDropdownActive = ref<boolean>(false)
 
 async function showRenamePodPopup(podUuid: string, oldName: string) {
 	await popup.show('pod-rename-popup', PodRenamePopup, {
@@ -108,7 +103,7 @@ async function updateData() {
 	}
 
 	const settingsJson = await api.core.settingsGet.query()
-	const podviewId = settingsJson.podviewMimes?.[pod.format]
+	const podviewId = settingsJson.mimes?.pod?.[pod.format]
 	if (!podviewId) {
 		throw new Error(
 			`Failed to find podviewId with pod uuid ${pod.uuid} and pod format ${pod.format}`,
