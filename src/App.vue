@@ -10,10 +10,7 @@
 		"
 	>
 		<GlobalNavigation />
-		<div
-			class="not-prose"
-			style="position: relative; width: 100vw; overflow: auto"
-		>
+		<div style="position: relative; width: 100vw; overflow: auto">
 			<RouterView />
 		</div>
 	</div>

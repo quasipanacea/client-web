@@ -18,7 +18,7 @@
 			<label class="label" for="current-plugin">Overview</label>
 			<div class="control">
 				<div class="select">
-					<select id="current-plugin" v-model="defaultOverview">
+					<select id="current-plugin" v-model="defaultOverviewPlugin">
 						<option v-for="id in possibleOverviews" :key="id" :value="id">
 							{{ id }}
 						</option>
@@ -264,7 +264,7 @@ async function saveSettings() {
 	})
 }
 
-const defaultOverview = ref('')
+const defaultOverviewPlugin = ref('')
 const possibleOverviews = ref<string[]>([])
 async function updateDataOverview() {
 	possibleOverviews.value = (await pluginClient.list('overview')).map(
@@ -272,20 +272,20 @@ async function updateDataOverview() {
 	)
 
 	const settingsJson = await api.core.settingsGet.query()
-	if (settingsJson.defaultOverview) {
-		defaultOverview.value = settingsJson.defaultOverview
+	if (settingsJson.defaultOverviewPlugin) {
+		defaultOverviewPlugin.value = settingsJson.defaultOverviewPlugin
 	}
 
-	if (!defaultOverview.value) {
-		defaultOverview.value = possibleOverviews.value[0]
+	if (!defaultOverviewPlugin.value) {
+		defaultOverviewPlugin.value = possibleOverviews.value[0]
 	}
 }
-watch(defaultOverview, async () => {
+watch(defaultOverviewPlugin, async () => {
 	await saveOverview()
 })
 async function saveOverview() {
 	await api.core.settingsModify.mutate({
-		defaultOverview: defaultOverview.value,
+		defaultOverviewPlugin: defaultOverviewPlugin.value,
 	})
 }
 </script>

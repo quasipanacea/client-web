@@ -12,6 +12,10 @@ export default createRouter({
 			component: () => import('@client/routes/RoutePlugins.vue'),
 		},
 		{
+			path: '/plugins/:pluginId',
+			component: () => import('@client/routes/RoutePlugin.vue'),
+		},
+		{
 			path: '/overview/:plugin',
 			component: () => import('@client/routes/RouteOverview.vue'),
 			props: true,

@@ -103,16 +103,17 @@ async function updateData() {
 	}
 
 	const settingsJson = await api.core.settingsGet.query()
-	const podviewId = settingsJson.mimes?.pod?.[pod.format]
-	if (!podviewId) {
-		throw new Error(
-			`Failed to find podviewId with pod uuid ${pod.uuid} and pod format ${pod.format}`,
-		)
+	const pluginId = settingsJson.defaultPodFormats?.[pod.format]?.viewPlugin
+	if (!pluginId) {
+		throw new Error(`Failed to find pluginId for pod format '${pod.format}'`)
 	}
 
-	const plugin = pluginClient.get('podview', podviewId)
+	const plugin = pluginClient.get(pluginId)
+	if (!plugin.podView?.component) {
+		throw new Error(`Plugin '${pluginId}' does not export a podView.component`)
+	}
 
 	currentPod.value = pod
-	currentModule.value = plugin.component
+	currentModule.value = plugin.podView?.component
 }
 </script>

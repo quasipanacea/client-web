@@ -44,6 +44,18 @@ h6 {
 	font-weight: bold;
 }
 
+a {
+	color: pink;
+}
+
+a:visited {
+	color: palevioletred;
+}
+
+a:hover {
+	color: plum;
+}
+
 dialog > * {
 	margin: 5px;
 }

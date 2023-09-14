@@ -13,7 +13,7 @@
 		<span @click="showSettingsPopup">
 			<FeatherSettings width="22px" height="22px" />
 		</span>
-		<span @click="showPluginPopup">
+		<span @click="gotoPlugins">
 			<FeatherPackage width="22px" height="22px" />
 		</span>
 		<span @click="showInfoPopup">
@@ -28,17 +28,19 @@ import FeatherPackage from '@client/components/icons/FeatherIconPackage.vue'
 import FeatherInfo from '@client/components/icons/FeatherIconInfo.vue'
 
 import SettingsPopup from '@client/components/popups/PopupSettings.vue'
-import PluginPopup from '@client/components/popups/PopupPlugin.vue'
 import InfoPopup from '@client/components/popups/PopupInfo.vue'
 
 import { popup } from '@quasipanacea/common/client/index.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 async function showSettingsPopup() {
 	await popup.showNoData('null', SettingsPopup)
 }
 
-async function showPluginPopup() {
-	await popup.showNoData('null', PluginPopup)
+async function gotoPlugins() {
+	router.push('/plugins')
 }
 
 async function showInfoPopup() {

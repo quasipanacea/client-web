@@ -105,16 +105,16 @@ async function updateData() {
 	}
 
 	const settingsJson = await api.core.settingsGet.query()
-	const modelviewId = settingsJson?.mimes?.modelview?.[model.format]
-	if (!modelviewId) {
+	const pluginId = settingsJson.defaultModelFormats?.[model.format]?.viewPlugin
+	if (!pluginId) {
 		throw new Error(
-			`Failed to find podviewId with pod uuid ${model.uuid} and pod format ${model.format}`,
+			`Failed to find pluginId for model format '${model.format}'`,
 		)
 	}
 
-	const plugin = pluginClient.get('modelview', modelviewId)
+	const plugin = pluginClient.get(pluginId)
 
 	currentModel.value = model
-	currentModule.value = plugin.component
+	currentModule.value = plugin.modelView?.component
 }
 </script>

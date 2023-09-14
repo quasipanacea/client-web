@@ -17,8 +17,8 @@ const api = trpcClient.yieldClient<BareAppRouter>()
 
 onBeforeMount(async () => {
 	const settingsJson = await api.core.settingsGet.query()
-	if (settingsJson.defaultOverview) {
-		router.push(`/overview/${settingsJson.defaultOverview}`)
+	if (settingsJson.defaultOverviewPlugin) {
+		router.push(`/overview/${settingsJson.defaultOverviewPlugin}`)
 	} else {
 		const overviewId = (await pluginClient.list('overview')).map(
 			(item) => item.metadata.id,

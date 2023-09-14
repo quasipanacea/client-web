@@ -1,5 +1,9 @@
 <template>
-	<component v-if="currentOverview" :is="currentOverview" />
+	<div>
+		<component v-if="currentOverview" :is="currentOverview" />
+		<p v-else>Loading...</p>
+		<!-- TODO: do Loading... with other routes-->
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -29,7 +33,13 @@ onMounted(() => {
 	updateCurrentOverview(props.plugin)
 })
 
-function updateCurrentOverview(name: string) {
-	currentOverview.value = pluginClient.get('overview', name).component
+function updateCurrentOverview(id: string) {
+	const plugin = pluginClient.get(id)
+
+	if (!plugin?.overview?.component) {
+		throw new Error(`Plugin with id: ${id} does not export overview.component`)
+	}
+
+	currentOverview.value = plugin.overview.component
 }
 </script>

@@ -24,7 +24,7 @@ async function updateModule(viewUuid: string) {
 	const currentView = views.find((item) => item.uuid === viewUuid)
 	if (!currentView) throw new Error('currentCollection is undefined')
 
-	currentModule.value = pluginClient.get('view', currentView.plugin).component
+	currentModule.value = pluginClient.get(currentView.plugin).component
 }
 
 onMounted(async () => {
