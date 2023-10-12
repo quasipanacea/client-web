@@ -23,33 +23,33 @@ export default defineConfig({
 				},
 			},
 		}),
-		(function filterStdImportsPlugin(): PluginOption {
-			/**
-			 * Inserts file contents into the module tree for specified import paths. This fixes
-			 * issues on Vite halting when it encounters Deno-specific import paths. Code inspired
-			 * from alex-kinokon/rollup-plugin-ignore.
-			 */
-			const defaultFileContent = 'export default {}'
-			const placeholderFilename = '\0__rollup_plugin_filter_placeholder__\0'
+		// (function filterStdImportsPlugin(): PluginOption {
+		// 	/**
+		// 	 * Inserts file contents into the module tree for specified import paths. This fixes
+		// 	 * issues on Vite halting when it encounters Deno-specific import paths. Code inspired
+		// 	 * from alex-kinokon/rollup-plugin-ignore.
+		// 	 */
+		// 	const defaultFileContent = 'export default {}'
+		// 	const placeholderFilename = '\0__rollup_plugin_filter_placeholder__\0'
 
-			return {
-				name: 'filter-std-imports',
-				resolveId(source: string | undefined) {
-					if (source?.startsWith('std/')) {
-						return placeholderFilename
-					}
+		// 	return {
+		// 		name: 'filter-std-imports',
+		// 		resolveId(source: string | undefined) {
+		// 			if (source?.startsWith('std/')) {
+		// 				return placeholderFilename
+		// 			}
 
-					return null
-				},
-				load(id: string) {
-					if (id === placeholderFilename) {
-						return defaultFileContent
-					}
+		// 			return null
+		// 		},
+		// 		load(id: string) {
+		// 			if (id === placeholderFilename) {
+		// 				return defaultFileContent
+		// 			}
 
-					return null
-				},
-			}
-		})(),
+		// 			return null
+		// 		},
+		// 	}
+		// })(),
 	],
 	server: {
 		port: 15_801,
