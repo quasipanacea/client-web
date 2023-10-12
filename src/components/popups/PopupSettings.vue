@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-	<div v-else-if="activeTab === 'model'">
+	<div v-else-if="activeTab === 'models'">
 		<h3 class="title is-5">Defaults</h3>
 		<div
 			class="field"
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 	</div>
-	<div v-else-if="activeTab === 'modelview'">
+	<div v-else-if="activeTab === 'Pods'">
 		<h3 class="title is-5">Defaults</h3>
 		<div
 			class="field"
@@ -70,62 +70,6 @@
 						:name="mimeType"
 						:id="mimeType"
 						v-model="modelviewMimes[mimeType]"
-					>
-						<option
-							v-for="option in compatiblePluginsIds"
-							:key="option"
-							:value="option"
-						>
-							{{ option }}
-						</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div v-else-if="activeTab === 'pod'">
-		<h3 class="title is-5">Defaults</h3>
-		<div
-			class="field"
-			v-for="(compatiblePluginsIds, mimeType) in podMimeOptions"
-			:key="mimeType"
-		>
-			<label class="label" :for="mimeType">{{ mimeType }}</label>
-			<div class="control">
-				<div class="select">
-					<select
-						@change="saveSettings"
-						:name="mimeType"
-						:id="mimeType"
-						v-model="podMimes[mimeType]"
-					>
-						<option
-							v-for="option in compatiblePluginsIds"
-							:key="option"
-							:value="option"
-						>
-							{{ option }}
-						</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div v-else-if="activeTab === 'podview'">
-		<h3 class="title is-5">Defaults</h3>
-		<div
-			class="field"
-			v-for="(compatiblePluginsIds, mimeType) in podviewMimeOptions"
-			:key="mimeType"
-		>
-			<label class="label" :for="mimeType">{{ mimeType }}</label>
-			<div class="control">
-				<div class="select">
-					<select
-						@change="saveSettings"
-						:name="mimeType"
-						:id="mimeType"
-						v-model="podviewMimes[mimeType]"
 					>
 						<option
 							v-for="option in compatiblePluginsIds"
@@ -162,20 +106,12 @@ const tabs = ref([
 		id: 'overview',
 	},
 	{
-		title: 'Model',
-		id: 'model',
+		title: 'Models',
+		id: 'models',
 	},
 	{
-		title: 'Modelview',
-		id: 'modelview',
-	},
-	{
-		title: 'Pod',
-		id: 'pod',
-	},
-	{
-		title: 'Podview',
-		id: 'podview',
+		title: 'Pods',
+		id: 'pods',
 	},
 ])
 const activeTab = ref('podview')

@@ -1,2 +1,2 @@
 common/**/*.ts
-server-deno/**
+server/**

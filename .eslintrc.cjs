@@ -13,7 +13,7 @@ module.exports = {
 		'vue/setup-compiler-macros': true,
 		es2022: true,
 	},
-	ignorePatterns: ['common/**', 'server-deno/**'],
+	ignorePatterns: ['common/**', 'server/**'],
 	overrides: [
 		{
 			files: ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],

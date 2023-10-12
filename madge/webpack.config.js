@@ -6,7 +6,7 @@ module.exports = {
 			'@client': path.resolve(__dirname, '../src/'),
 			'@quasipanacea': path.resolve(
 				__dirname,
-				'../../server-deno/dependencies/@quasipanacea/',
+				'../../server/dependencies/@quasipanacea/',
 			),
 		},
 	},

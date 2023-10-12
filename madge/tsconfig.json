@@ -5,7 +5,7 @@
 		"moduleResolution": "node",
 		"paths": {
 			"@client/*": ["./src/*"],
-			"@quasipanacea/*": ["../server-deno/dependencies/@quasipanacea/*"]
+			"@quasipanacea/*": ["../server/dependencies/@quasipanacea/*"]
 		}
 	}
 }
