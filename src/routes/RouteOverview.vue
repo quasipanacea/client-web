@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="height: 100%; width: 100%; overflow: hidden;"> <!-- TODO: display: content -->
 		<component v-if="currentOverview" :is="currentOverview" />
 		<p v-else>Loading...</p>
 		<!-- TODO: do Loading... with other routes-->
@@ -26,7 +26,7 @@ watch(toRef(defaultStore, 'currentPlugin'), async (value) => {
 	router.push({
 		path: `/overview/${value}`,
 	})
-	await updateCurrentOverview(value)
+	updateCurrentOverview(value)
 })
 
 onMounted(() => {
