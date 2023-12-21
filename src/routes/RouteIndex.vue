@@ -16,14 +16,15 @@ const router = useRouter()
 const api = trpcClient.yieldClient<BareAppRouter>()
 
 onBeforeMount(async () => {
+	const slice = (id: string) => id.slice('overview'.length + 1)
 	const settingsJson = await api.core.settingsGet.query()
 	if (settingsJson.defaultOverviewPlugin) {
-		router.push(`/overview/${settingsJson.defaultOverviewPlugin}`)
+		router.push(`/overview/${slice(settingsJson.defaultOverviewPlugin)}`)
 	} else {
-		const overviewId = (await pluginClient.list('overview')).map(
+		const overviewId = (pluginClient.list('overview')).map(
 			(item) => item.metadata.id,
 		)[0]
-		router.push(`/overview/${overviewId}`)
+		router.push(`/overview/${slice(overviewId)}`)
 	}
 })
 </script>

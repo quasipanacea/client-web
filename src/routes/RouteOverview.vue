@@ -21,10 +21,11 @@ const props = defineProps<{
 const router = useRouter()
 const currentOverview = shallowRef<unknown>()
 const defaultStore = useDefaultStore()
+const slice = (id: string) => id.slice('overview'.length + 1)
 
 watch(toRef(defaultStore, 'currentPlugin'), async (value) => {
 	router.push({
-		path: `/overview/${value}`,
+		path: `/overview/${slice(value)}`,
 	})
 	updateCurrentOverview(value)
 })
@@ -34,6 +35,7 @@ onMounted(() => {
 })
 
 function updateCurrentOverview(id: string) {
+	id = 'overview.' + id
 	const plugin = pluginClient.get(id)
 
 	if (!plugin?.overview?.component) {

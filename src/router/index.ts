@@ -21,6 +21,10 @@ export default createRouter({
 			props: true,
 		},
 		{
+			path: '/overview',
+			redirect: '/'
+		},
+		{
 			path: '/pod/:podUuid',
 			component: () => import('@client/routes/RoutePod.vue'),
 			props: true,

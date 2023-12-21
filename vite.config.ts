@@ -1,8 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig, PluginOption } from 'vite'
+import type { ViteDevServer } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import veauryVitePlugins from 'veaury/vite/index.js'
+// import history from "connect-history-api-fallback";
 
 export default defineConfig({
 	plugins: [
@@ -18,11 +20,27 @@ export default defineConfig({
 			vueOptions: {
 				template: {
 					compilerOptions: {
-						isCustomElement: (tag) => ['ion-icon'].includes(tag),
+						isCustomElement(tag: string) { return ['ion-icon'].includes(tag) }
 					},
 				},
 			},
 		}),
+		// (() => {
+		// 	// https://github.com/vitejs/vite/issues/2190
+		// 	return {
+		// 		name: 'rewrite-all',
+		// 		configureServer(server: ViteDevServer) {
+		// 			const handler = history({
+		// 				disableDotRule: true,
+		// 				rewrites: [{from: /\/$/, to: () => "/index.html"}]
+		// 			});
+
+		// 			server.middlewares.use((req, res, next) => {
+		// 				handler(req, res, next)
+		// 			});
+		// 		}
+		// 	}
+		// })()
 		// (function filterStdImportsPlugin(): PluginOption {
 		// 	/**
 		// 	 * Inserts file contents into the module tree for specified import paths. This fixes
@@ -60,7 +78,7 @@ export default defineConfig({
 		},
 	},
 	build: {
-		target: 'ES2022',
+		target: 'ES2021',
 	},
 	resolve: {
 		alias: {
